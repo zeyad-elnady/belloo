@@ -1,0 +1,268 @@
+import Link from "next/link";
+import { Fragment, useState, useEffect } from "react";
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
+import SearchModal from "../SearchModal";
+import Sidebar from "../Sidebar";
+
+const Header3 = () => {
+  const router = useRouter();
+  const { t } = useTranslation('common');
+  const [show, setShow] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleClose = () => {
+    setShow(false);
+    setSidebarOpen(false);
+  };
+  
+  const handleShow = () => {
+    setShow(true);
+    setSidebarOpen(true);
+  };
+  const [searchModal, setSearchModal] = useState(false);
+
+  const languages = [
+    { code: 'en', name: 'English', flag: '🇺🇸', nativeName: 'English', countryCode: 'EN' },
+    { code: 'ar', name: 'Arabic', flag: '🇪🇬', nativeName: 'العربية', countryCode: 'AR' },
+    { code: 'ru', name: 'Russian', flag: '🇷🇺', nativeName: 'Русский', countryCode: 'RU' }
+  ];
+
+  const baseNavigationItems = [
+    { name: t('nav.home'), href: '/' },
+    { name: t('nav.about'), href: '/about' },
+    { name: t('nav.sustainability'), href: '/sustainability' },
+    { name: t('nav.products'), href: '/products' },
+    { name: t('nav.highlights'), href: '/highlights' },
+    { name: t('nav.joinUs'), href: '/join-us' },
+    { name: t('nav.contact'), href: '/contact' }
+  ];
+
+  // Reverse navigation items for Arabic language (RTL)
+  const navigationItems = router.locale === 'ar' ? [...baseNavigationItems].reverse() : baseNavigationItems;
+
+  const currentLanguage = languages.find(lang => lang.code === router.locale) || languages[0];
+
+  const handleLanguageSelect = (language) => {
+    setLangDropdownOpen(false);
+    router.push(router.asPath, router.asPath, { locale: language.code });
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      setLangDropdownOpen(false);
+      setMobileMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Set scrolled state for styling
+      setIsScrolled(currentScrollY > 50);
+
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.modern-language-selector')) {
+        setLangDropdownOpen(false);
+      }
+      if (!event.target.closest('.mobile-menu-container') && !event.target.closest('.mobile-menu-toggle')) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [lastScrollY]);
+
+  return (
+    <Fragment>
+      <SearchModal
+        show={searchModal}
+        handleClose={() => setSearchModal(false)}
+      />
+      
+      {/* Unified Responsive Header */}
+      <header className={`unified-floating-header ${isVisible && !sidebarOpen ? 'header-visible' : 'header-hidden'} ${isScrolled ? 'scrolled' : ''} ${sidebarOpen ? 'sidebar-active' : ''}`}>
+        <div className="header-container">
+          {/* Logo */}
+          <div className="header-logo">
+            <Link legacyBehavior href="/">
+              <a className="brand-logo">
+                <img
+                  src="/assets/images/logo/logo.svg"
+                  alt="Site Logo"
+                />
+              </a>
+            </Link>
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="desktop-navigation">
+            <ul className="nav-menu">
+              {navigationItems.map((item, index) => (
+                <li key={index} className="nav-item">
+                  <Link legacyBehavior href={item.href}>
+                    <a className="nav-link">{item.name}</a>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Header Actions */}
+          <div className="header-actions">
+            {/* Language Selector */}
+            <div className="modern-language-selector" onKeyDown={handleKeyDown}>
+              <div 
+                className={`language-trigger ${langDropdownOpen ? 'active' : ''}`}
+                onClick={() => setLangDropdownOpen(!langDropdownOpen)}
+                tabIndex="0"
+                role="button"
+                aria-haspopup="listbox"
+                aria-expanded={langDropdownOpen}
+                aria-label={`Current language: ${currentLanguage.name}`}
+              >
+                <div className="current-language">
+                  <span className="flag">{currentLanguage.flag}</span>
+                  <span className="language-code">{currentLanguage.countryCode}</span>
+                  <svg className="dropdown-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+              
+              <div className={`language-dropdown ${langDropdownOpen ? 'open' : ''}`} role="listbox">
+                <div className="dropdown-content">
+                  {languages.map((language) => (
+                    <div
+                      key={language.code}
+                      className={`language-option ${currentLanguage.code === language.code ? 'selected' : ''}`}
+                      onClick={() => handleLanguageSelect(language)}
+                      role="option"
+                      tabIndex="0"
+                      aria-selected={currentLanguage.code === language.code}
+                    >
+                      <span className="option-flag">{language.flag}</span>
+                      <div className="option-text">
+                        <span className="option-name">{language.name}</span>
+                        <span className="option-native">{language.nativeName}</span>
+                      </div>
+                      {currentLanguage.code === language.code && (
+                        <svg className="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Search Button - Hidden on Mobile */}
+            <button
+              className="search-btn d-none d-md-block"
+              onClick={() => setSearchModal(true)}
+              aria-label="Search"
+            >
+              <i className="far fa-search" />
+            </button>
+
+            {/* Sidebar Button - Hidden on Mobile */}
+            <button
+              className="sidebar-btn d-none d-md-block"
+              onClick={handleShow}
+              aria-label="Open Sidebar"
+            >
+              <img src="/assets/images/bar2.png" alt="Menu" />
+            </button>
+
+            {/* Mobile Menu Toggle */}
+            <button
+              className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle Mobile Menu"
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <div className={`mobile-menu-container ${mobileMenuOpen ? 'open' : ''}`}>
+          <div className="mobile-menu-content">
+            {/* Mobile Search */}
+            <div className="mobile-search">
+              <form onSubmit={(e) => e.preventDefault()}>
+                <div className="search-group">
+                  <input
+                    type="text"
+                    className="search-input"
+                    placeholder={t('nav.searchPlaceholder')}
+                    name="search"
+                  />
+                  <button type="submit" className="search-submit">
+                    <i className="fas fa-search" />
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Mobile Navigation */}
+            <nav className="mobile-navigation">
+              <ul className="mobile-nav-menu">
+                {navigationItems.map((item, index) => (
+                  <li key={index} className="mobile-nav-item">
+                    <Link legacyBehavior href={item.href}>
+                      <a 
+                        className="mobile-nav-link"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {item.name}
+                      </a>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        {/* Mobile Menu Overlay */}
+        <div 
+          className={`mobile-menu-overlay ${mobileMenuOpen ? 'active' : ''}`}
+          onClick={() => setMobileMenuOpen(false)}
+        ></div>
+      </header>
+
+      <Sidebar show={show} handleClose={handleClose} />
+    </Fragment>
+  );
+};
+
+export default Header3;

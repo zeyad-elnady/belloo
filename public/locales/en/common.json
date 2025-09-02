@@ -1,0 +1,361 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "sustainability": "Sustainability",
+    "products": "Products",
+    "highlights": "Highlights",
+    "joinUs": "Join Us",
+    "contact": "Contact",
+    "searchPlaceholder": "Search Here"
+  },
+  "hero": {
+    "subtitle": "PREMIUM OLIVES & PICKLES",
+    "title": "The Authentic Taste of Nature, From Egypt to the World",
+    "description": "Trusted worldwide with 30+ varieties, certified quality, and flexible packaging solutions.",
+    "getQuote": "Get A Quote",
+    "exploreProducts": "Explore Products"
+  },
+  "features": {
+    "subtitle": "What We Do",
+    "title": "Premium Egyptian Olives & Pickles",
+    "description": "Bello Food is a proud Egyptian brand with decades of expertise in olives and pickled products. We combine farming heritage with modern food-safety standards to deliver authentic taste and reliable quality to more than 20 countries worldwide.",
+    "learnMore": "Learn More About Us",
+    "globalReach": {
+      "title": "Global Reach",
+      "description": "We export premium Egyptian olives and pickled products to Africa, the Middle East, Russia, and Europe — ensuring authentic taste is shared worldwide."
+    },
+    "flexiblePackaging": {
+      "title": "Flexible Packaging",
+      "description": "From elegant glass jars for retail shelves to robust bulk barrels for industry — packaging that fits every market need."
+    },
+    "certifiedQuality": {
+      "title": "Certified Quality",
+      "description": "Bello Food products are BRC, FDA, ISO, Halal, and Kosher certified — delivering trusted quality and compliance with the highest international standards."
+    },
+    "logisticsStrength": {
+      "title": "Logistics Strength",
+      "description": "With customs clearance, reliable documentation, and ready-to-ship stock, Bello Food ensures smooth and on-time delivery to markets worldwide."
+    }
+  },
+  "about": {
+    "subtitle": "Quick About Bello Food",
+    "title": "Your Trusted Partner in Premium Olives & Pickles",
+    "description": "Bello Food is a proud Egyptian brand with decades of expertise in olives and pickled products. We combine farming heritage with modern food-safety standards to deliver authentic taste and reliable quality to more than 20 countries worldwide.",
+    "checkItems": [
+      "30+ Varieties of Premium Products",
+      "International Certifications & Quality Standards"
+    ],
+    "learnMore": "Learn More About Us",
+    "productVarieties": "Product Varieties"
+  },
+  "products": {
+    "subtitle": "Popular Products",
+    "title": "Premium Egyptian Olives & Pickles",
+    "manzanillaOlives": "Manzanilla Olives",
+    "kalamataOlives": "Kalamata Olives",
+    "greenOlives": "Green Olives",
+    "stuffedOlives": "Stuffed Olives",
+    "blackOlives": "Black Olives",
+    "pickledVegetables": "Pickled Vegetables"
+  },
+  "skills": {
+    "subtitle": "Our Expertise & Skills",
+    "title": "Excellence Standards in Olives & Pickles Industry",
+    "description": "Bello Food combines decades of traditional Egyptian expertise in olive and pickle production with cutting-edge processing and packaging technologies, ensuring premium products that meet the highest global quality standards.",
+    "qualityControl": "Quality Control",
+    "processing": "Processing & Preparation",
+    "packaging": "Packaging & Supply",
+    "belloBrand": "Bello Food"
+  },
+  "cta": {
+    "title": "Looking For a Trusted Partner in Premium Olives & Pickles?",
+    "findSpecialist": "Contact Us"
+  },
+  "gallery": {
+    "gardenCaring": "Garden Caring",
+    "waterPlants": "Water The Plants"
+  },
+  "testimonials": {
+    "qualityServices": "Outstanding Quality",
+    "testimonialText": "Bello Food delivers the finest olives and pickles we've ever sourced. Consistent quality and authentic taste that reflects Egypt's rich heritage. A reliable partnership with products that exceed our customers' expectations.",
+    "authorName": "Ahmed Mahmoud",
+    "authorPosition": "Procurement Manager"
+  },
+  "blog": {
+    "subtitle": "News & Blog",
+    "title": "Read Latest News & Blog",
+    "date": "25 December 2022",
+    "comments": "5 Comments",
+    "by": "By",
+    "author": "Expert Team",
+    "posts": [
+      "New Innovations in Egyptian Olive Processing Technologies",
+      "Global Quality Standards in Premium Pickles Manufacturing",
+      "International Market Expansion and Sustainable Growth"
+    ]
+  },
+  "aboutPage": {
+    "pageTitle": "About",
+    "subtitle": "About Bello Food",
+    "title": "Your Trusted Partner in Premium Olives & Pickles",
+    "description": "Bello is a dynamic brand of IEFI, rooted in Egypt's FMCG heritage. We specialize in premium table olives and pickled products — combining traditional harvest practices with modern processing and strict food-safety controls to deliver authentic flavor and consistent quality worldwide.",
+    "checkList": [
+      "Unmatched Variety – Over 30 types of olives and pickles",
+      "Certified Quality – Internationally recognized certifications",
+      "Flexible Packaging & Supply – From retail jars to bulk barrels",
+      "Global Reach & Logistics – Export across Russia, Europe, and MEA"
+    ],
+    "learnMore": "Learn More",
+    "mission": {
+      "title": "Our Mission",
+      "description": "To deliver \"The Authentic Taste of Nature\" — bringing premium Egyptian olives and pickles to markets worldwide.",
+      "readMore": "Read More"
+    },
+    "whyBello": {
+      "title": "Why Bello",
+      "description": "Unmatched variety, certified quality, flexible packaging & supply, and global reach with dependable logistics solutions.",
+      "readMore": "Read More"
+    },
+    "features": {
+      "subtitle": "Bello Food Excellence",
+      "title": "Premium Olives & Pickles Expertise",
+      "description": "With decades of experience in Egyptian agriculture and food processing, Bello Food combines traditional harvest methods with modern quality standards to deliver authentic taste and reliable quality to over 20 countries worldwide.",
+      "qualityProducts": {
+        "title": "Premium Quality Products",
+        "description": "Over 30 varieties of premium olives and pickles, crafted with international certifications and strict quality controls."
+      },
+      "globalExport": {
+        "title": "Global Export Excellence",
+        "description": "Trusted export partner serving markets across Russia, Europe, and the Middle East with dependable logistics solutions."
+      }
+    },
+    "promise": {
+      "title": "Our Promise",
+      "description": "From Egyptian farms to your shelves — authentic taste, guaranteed quality, and dependable service worldwide.",
+      "readMore": "Read More"
+    },
+    "team": {
+      "subtitle": "Team Members",
+      "title": "Meet Our Food Industry Experts",
+      "qualityManager": "Quality Control Manager",
+      "productionManager": "Production Manager",
+      "exportCoordinator": "Export Coordinator"
+    },
+    "cta": {
+      "subtitle": "Need an Expert",
+      "title": "Looking for a Trusted Olives & Pickles Partner",
+      "description": "We are your ideal partner for supplying high-quality olive and pickle products with competitive pricing and reliable service.",
+      "findSpecialist": "Find Specialist"
+    },
+    "testimonialSection": {
+      "subtitle": "Testimonials",
+      "title": "Global Clients Feedback",
+      "qualityServices": "Outstanding Quality",
+      "testimonialText": "Bello Food delivers the finest olives and pickles we've ever sourced. Consistent quality and authentic taste that reflects Egypt's rich heritage. A reliable partnership with products that exceed our customers' expectations.",
+      "authorName": "Ahmed Mahmoud",
+      "authorPosition": "Procurement Manager"
+    }
+  },
+  "highlightsPage": {
+    "pageTitle": "Highlights",
+    "subtitle": "Our Achievements",
+    "title": "Excellence in Egyptian Food Export",
+    "stats": {
+      "countries": "Export Countries",
+      "products": "Product Varieties",
+      "satisfaction": "Client Satisfaction",
+      "experience": "Years Experience"
+    },
+    "achievements": {
+      "title": "Our Key Milestones",
+      "certification": {
+        "title": "International Food Safety Certifications",
+        "description": "Certified by leading international food safety and quality organizations"
+      },
+      "export": {
+        "title": "Global Market Leadership",
+        "description": "Successfully expanded to over 20 countries across Europe, Russia, and MEA"
+      },
+      "quality": {
+        "title": "Premium Quality Recognition",
+        "description": "Recognized by clients worldwide for consistent quality and authentic taste"
+      }
+    }
+  },
+  "joinUsPage": {
+    "pageTitle": "Join Us",
+    "subtitle": "Career Opportunities",
+    "title": "Grow Your Career with Bello Food",
+    "description": "At Bello Food, our success starts with our people. We are always looking for passionate, talented, and driven individuals to join our growing team in the food export industry.",
+    "whyWorkWithUs": {
+      "title": "Why Work With Us?",
+      "benefits": {
+        "competitive": "Competitive salary and benefits",
+        "development": "Professional development opportunities",
+        "technology": "Work with modern food processing technology",
+        "environment": "Supportive team environment",
+        "flexibility": "Flexible working arrangements"
+      }
+    },
+    "currentOpenings": {
+      "title": "Current Openings",
+      "jobs": {
+        "qualityManager": {
+          "title": "Quality Control Manager",
+          "details": "Full-time • Experience: 5+ years in food industry"
+        },
+        "exportSpecialist": {
+          "title": "Export Sales Specialist",
+          "details": "Full-time • Experience: 3+ years in international trade"
+        },
+        "productionSupervisor": {
+          "title": "Production Supervisor",
+          "details": "Full-time • Experience: 4+ years in food production"
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to Grow Your Career With Us?",
+      "description": "Send us your resume and cover letter. We'd love to hear from you!",
+      "applyNow": "Apply Now"
+    }
+  },
+  "productsPage": {
+    "pageTitle": "Products",
+    "subtitle": "Our Products",
+    "title": "Premium Egyptian Olives & Pickles — Crafted for Every Market",
+    "jarView": "Jar View",
+    "canView": "Can View",
+    "premiumOlives": {
+      "title": "Premium Olives",
+      "description": "Manzanilla, Kalamata, Green & Black olives in various preparations"
+    },
+    "pickledProducts": {
+      "title": "Pickled Products",
+      "description": "Pickled cucumbers, mixed vegetables, pepperoncini & specialty items"
+    },
+    "packagingSolutions": {
+      "title": "Packaging Solutions",
+      "description": "Retail jars, foodservice packs, bulk barrels & private label options"
+    }
+  },
+  "contactPage": {
+    "pageTitle": "Contact",
+    "subtitle": "Contact Us",
+    "title": "Get In Touch ",
+    "description": "We're here to help you. Contact us for prices ",
+    "info": {
+      "subtitle": "Contact Information",
+      "title": "How To Reach Us",
+      "address": "Address",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "subject": "Subject",
+      "message": "Your Message",
+      "submit": "Send Message"
+    }
+  },
+  "sustainabilityPage": {
+    "pageTitle": "Sustainability",
+    "subtitle": "Our Commitment",
+    "title": "Sustainability & Quality — At the Heart of Bello Food",
+    "description": "At Bello Food, sustainability isn't just a promise — it's part of who we are. From farm to shelf, we follow responsible practices that protect people, respect the environment, and deliver long-term value for our partners worldwide.",
+    "ecoFriendly": {
+      "title": "Eco-Friendly Practices",
+      "subtitle": "Protecting our planet for future generations",
+      "items": {
+        "farming": {
+          "title": "Sustainable farming methods",
+          "description": "Organic practices that preserve soil health"
+        },
+        "production": {
+          "title": "Efficient production processes",
+          "description": "Minimizing waste and energy consumption"
+        },
+        "impact": {
+          "title": "Reduced environmental impact",
+          "description": "Carbon footprint reduction initiatives"
+        },
+        "composting": {
+          "title": "Composting solutions",
+          "description": "Converting waste into valuable resources"
+        }
+      }
+    },
+    "quality": {
+      "title": "Certified Quality",
+      "subtitle": "International standards you can trust",
+      "items": {
+        "certifications": {
+          "title": "BRC, FDA, ISO certifications",
+          "description": "Global food safety and quality standards"
+        },
+        "approvals": {
+          "title": "Halal & Kosher approvals",
+          "description": "Religious dietary requirements compliance"
+        },
+        "compliance": {
+          "title": "International standards compliance",
+          "description": "Meeting global market requirements"
+        },
+        "varieties": {
+          "title": "30+ varieties with guaranteed freshness",
+          "description": "Quality assurance from farm to table"
+        }
+      }
+    },
+    "statement": "Because we believe the future of food must be both delicious and responsible."
+  },
+
+  "common": {
+    "readMore": "Read More",
+    "learnMore": "Learn More",
+    "getQuote": "Get A Quote",
+    "contactUs": "Contact Us",
+    "ourServices": "Our Services",
+    "ourProducts": "Our Products",
+    "aboutUs": "About Us",
+    "home": "Home",
+    "backToHome": "Back to Home"
+  },
+  "catalog": {
+    "title": "Download Our Product Catalog",
+    "description": "Get detailed information about our premium Egyptian olives and pickles with specifications, packaging options, and export capabilities.",
+    "selectLanguage": "Select Language:",
+    "english": "English",
+    "russian": "Russian",
+    "downloadButton": "Download Catalog"
+  },
+  "footer": {
+    "about": "Bello Food is your trusted partner in premium olives and pickled products. With decades of experience, we combine agricultural heritage with modern food safety standards to deliver authentic taste and reliable quality to over 20 countries worldwide.",
+    "aboutCompany": "Bello Food is a leading Egyptian brand specializing in premium olives and pickles, combining traditional expertise with modern quality standards.",
+    "getInTouch": "Get In Touch",
+    "location": "Location",
+    "emailUs": "Email Us",
+    "phone": "+20 1101 5111 85",
+    "address": "10th of Ramadan City, Industrial Area, Egypt",
+    "email": "marketing@bello-food.com",
+    "phoneNumber": "+20 11 0 15 111 85",
+    "website": "www.bello-food.com",
+    "followUs": "Follow Us",
+    "whatsappContact": "WhatsApp Contact",
+    "whatsappDescription": "Connect with us directly on WhatsApp for quick support and inquiries.",
+    "whatsappButton": "Chat on WhatsApp",
+    "quickLink": "Quick Link",
+    "aboutCompanyLink": "About Company",
+    "ourProducts": "Our Products",
+    "joinUs": "Join Us",
+    "contactUs": "Contact Us",
+    "yearsExperience": "Years Of Experience",
+    "copyright": "Copy© 2025 Bello Food. All Rights Reserved.",
+    "settingPrivacy": "Setting & Privacy",
+    "faqs": "Faqs",
+    "products": "Products"
+  }
+}

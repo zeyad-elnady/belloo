@@ -1,0 +1,457 @@
+/* Modern Chatbot Styling - Eye-Appealing Design */
+
+/* Chatbot Container */
+#chatbase-bubble-button {
+  position: fixed !important;
+  bottom: 30px !important;
+  right: 30px !important;
+  z-index: 9999 !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Modern Chatbot Button */
+#chatbase-bubble-button > div {
+  background: linear-gradient(135deg, 
+    #4D602C 0%, 
+    #4D602C 50%,
+    #4D602C 100%) !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50% !important;
+  width: 70px !important;
+  height: 70px !important;
+  box-shadow: 
+    0 12px 40px rgba(77, 96, 44, 0.4),
+    0 6px 20px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Hover Animation */
+#chatbase-bubble-button > div:hover {
+  transform: translateY(-5px) scale(1.05) !important;
+  box-shadow: 
+    0 20px 60px rgba(77, 96, 44, 0.5),
+    0 10px 30px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  background: linear-gradient(135deg, 
+    #F1D2A9 0%, 
+    #E6C794 50%,
+    #F1D2A9 100%) !important;
+  border-color: rgba(241, 210, 169, 0.6) !important;
+}
+
+/* Shimmer Effect */
+#chatbase-bubble-button > div::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: -100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.3), 
+    transparent) !important;
+  transition: left 0.6s ease !important;
+}
+
+#chatbase-bubble-button > div:hover::before {
+  left: 100% !important;
+}
+
+/* Chatbot Icon Styling */
+#chatbase-bubble-button svg,
+#chatbase-bubble-button img {
+  width: 32px !important;
+  height: 32px !important;
+  filter: brightness(0) saturate(100%) invert(100%) !important;
+  transition: all 0.3s ease !important;
+}
+
+#chatbase-bubble-button > div:hover svg,
+#chatbase-bubble-button > div:hover img {
+  filter: brightness(0) saturate(100%) invert(24%) sepia(25%) saturate(1000%) hue-rotate(70deg) brightness(30%) contrast(85%) !important;
+  transform: scale(1.1) !important;
+}
+
+/* Pulse Animation */
+#chatbase-bubble-button > div {
+  animation: chatbotPulse 3s ease-in-out infinite !important;
+}
+
+@keyframes chatbotPulse {
+  0%, 100% {
+    box-shadow: 
+      0 12px 40px rgba(77, 96, 44, 0.4),
+      0 6px 20px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 0 0 0 rgba(77, 96, 44, 0.4) !important;
+  }
+  50% {
+    box-shadow: 
+      0 12px 40px rgba(77, 96, 44, 0.4),
+      0 6px 20px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 0 0 20px rgba(77, 96, 44, 0.1) !important;
+  }
+}
+
+/* Modern Chat Window */
+#chatbase-chat-iframe {
+  border-radius: 25px !important;
+  box-shadow: 
+    0 25px 80px rgba(0, 0, 0, 0.3),
+    0 15px 40px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(40px) !important;
+  -webkit-backdrop-filter: blur(40px) !important;
+  overflow: hidden !important;
+}
+
+/* Chat Window Animation */
+#chatbase-chat-iframe {
+  animation: chatWindowSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transform-origin: bottom right !important;
+}
+
+@keyframes chatWindowSlideIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Notification Badge */
+#chatbase-bubble-button::after {
+  content: '💬' !important;
+  position: absolute !important;
+  top: -8px !important;
+  right: -8px !important;
+  background: linear-gradient(135deg, #F1D2A9 0%, #E6C794 100%) !important;
+  color: #4D602C !important;
+  border-radius: 50% !important;
+  width: 24px !important;
+  height: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+  box-shadow: 0 4px 12px rgba(241, 210, 169, 0.4) !important;
+  animation: notificationBounce 2s ease-in-out infinite !important;
+}
+
+@keyframes notificationBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  #chatbase-bubble-button {
+    bottom: 20px !important;
+    right: 20px !important;
+  }
+  
+  #chatbase-bubble-button > div {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  
+  #chatbase-bubble-button svg,
+  #chatbase-bubble-button img {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  
+  #chatbase-chat-iframe {
+    border-radius: 20px !important;
+    margin: 10px !important;
+  }
+}
+
+/* Custom Chat Styles */
+iframe[src*="chatbase"] {
+  border-radius: 25px !important;
+  box-shadow: 
+    0 25px 80px rgba(0, 0, 0, 0.3),
+    0 15px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Floating Animation on Scroll */
+@media (min-width: 769px) {
+  #chatbase-bubble-button {
+    animation: floatingChatbot 4s ease-in-out infinite !important;
+  }
+}
+
+@keyframes floatingChatbot {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Enhanced Glassmorphism Effect */
+#chatbase-bubble-button > div {
+  background: linear-gradient(135deg, 
+    rgba(77, 96, 44, 0.95) 0%, 
+    rgba(90, 113, 51, 0.9) 50%,
+    rgba(77, 96, 44, 0.95) 100%) !important;
+  backdrop-filter: blur(30px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+}
+
+/* Attention-Grabbing Glow */
+#chatbase-bubble-button > div {
+  position: relative !important;
+}
+
+#chatbase-bubble-button > div::after {
+  content: '' !important;
+  position: absolute !important;
+  top: -4px !important;
+  left: -4px !important;
+  right: -4px !important;
+  bottom: -4px !important;
+  background: linear-gradient(45deg, 
+    #4D602C, #F1D2A9, #4D602C, #F1D2A9) !important;
+  border-radius: 50% !important;
+  z-index: -1 !important;
+  opacity: 0 !important;
+  transition: opacity 0.3s ease !important;
+  animation: rotatingGlow 3s linear infinite !important;
+}
+
+#chatbase-bubble-button:hover > div::after {
+  opacity: 0.7 !important;
+}
+
+@keyframes rotatingGlow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Smooth Entrance Animation */
+#chatbase-bubble-button {
+  animation: chatbotEntrance 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@keyframes chatbotEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(180deg);
+  }
+  70% {
+    transform: scale(1.1) rotate(-10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Interactive States */
+#chatbase-bubble-button:active > div {
+  transform: scale(0.95) !important;
+  transition: transform 0.1s ease !important;
+}
+
+/* Modern Typography for Chat */
+.chatbase-chat-container * {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+/* Custom Scrollbar for Chat */
+.chatbase-chat-container ::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.chatbase-chat-container ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 3px !important;
+}
+
+.chatbase-chat-container ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4D602C, #F1D2A9) !important;
+  border-radius: 3px !important;
+}
+
+.chatbase-chat-container ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #F1D2A9, #4D602C) !important;
+}
+
+/* Advanced Integration with Website Theme */
+#chatbase-bubble-button {
+  /* Ensure it doesn't conflict with floating header */
+  z-index: 998 !important;
+}
+
+/* Smart positioning relative to floating header */
+@media (min-width: 1200px) {
+  .floating-header.header-visible ~ * #chatbase-bubble-button {
+    transition: bottom 0.3s ease !important;
+  }
+}
+
+/* Theme-matched colors */
+:root {
+  --chatbot-primary: #4D602C;
+  --chatbot-secondary: #F1D2A9;
+  --chatbot-accent: #4D602C;
+  --chatbot-text: #ffffff;
+  --chatbot-shadow: rgba(77, 96, 44, 0.4);
+}
+
+/* Enhanced Button States */
+#chatbase-bubble-button > div {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  will-change: transform, box-shadow !important;
+}
+
+/* Professional Micro-interactions */
+#chatbase-bubble-button > div:hover {
+  animation-play-state: paused !important;
+}
+
+/* Visual feedback for chatbot state */
+#chatbase-bubble-button.chatbot-open > div {
+  background: linear-gradient(135deg, 
+    #F1D2A9 0%, 
+    #E6C794 50%,
+    #F1D2A9 100%) !important;
+  border-color: rgba(241, 210, 169, 0.8) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 
+    0 15px 50px rgba(241, 210, 169, 0.4),
+    0 8px 25px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+#chatbase-bubble-button.chatbot-open svg,
+#chatbase-bubble-button.chatbot-open img {
+  filter: brightness(0) saturate(100%) invert(24%) sepia(25%) saturate(1000%) hue-rotate(70deg) brightness(30%) contrast(85%) !important;
+  transform: scale(1.1) rotate(45deg) !important;
+}
+
+/* Enhanced close button styling */
+#chatbase-bubble-button.chatbot-open::before {
+  content: '✕' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  color: #4D602C !important;
+  font-size: 20px !important;
+  font-weight: bold !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+}
+
+#chatbase-bubble-button.chatbot-open svg,
+#chatbase-bubble-button.chatbot-open img {
+  opacity: 0 !important;
+}
+
+/* Elegant Close Animation */
+#chatbase-chat-iframe.closing {
+  animation: chatWindowSlideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+@keyframes chatWindowSlideOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+}
+
+/* Premium Chat Window Styling */
+iframe[src*="chatbase.co"] {
+  background: rgba(77, 96, 44, 0.05) !important;
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Notification Indicator Enhancement */
+#chatbase-bubble-button.has-notification::after {
+  animation: notificationPulse 1.5s ease-in-out infinite !important;
+}
+
+@keyframes notificationPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(241, 210, 169, 0.4);
+  }
+  50% { 
+    transform: scale(1.2);
+    box-shadow: 0 6px 20px rgba(241, 210, 169, 0.6);
+  }
+}
+
+/* Modern Loading State */
+#chatbase-bubble-button.loading > div::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin: -10px 0 0 -10px !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  border-top: 2px solid #ffffff !important;
+  border-radius: 50% !important;
+  animation: chatbotSpin 1s linear infinite !important;
+}
+
+@keyframes chatbotSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Accessibility Enhancements */
+#chatbase-bubble-button:focus-visible {
+  outline: 3px solid rgba(241, 210, 169, 0.6) !important;
+  outline-offset: 4px !important;
+}
+
+/* High-contrast mode support */
+@media (prefers-contrast: high) {
+  #chatbase-bubble-button > div {
+    border-width: 3px !important;
+    border-color: #ffffff !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  #chatbase-bubble-button,
+  #chatbase-bubble-button > div,
+  #chatbase-bubble-button > div::before,
+  #chatbase-bubble-button > div::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Dark mode compatibility */
+@media (prefers-color-scheme: dark) {
+  #chatbase-bubble-button > div {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.6),
+      0 6px 20px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  }
+}
