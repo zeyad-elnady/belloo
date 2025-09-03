@@ -7,7 +7,12 @@ import MobileMenu from "./MobileMenu";
 const Header1 = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    // Only show sidebar on desktop (1200px and above)
+    if (window.innerWidth >= 1200) {
+      setShow(true);
+    }
+  };
   const [searchModal, setSearchModal] = useState(false);
   return (
     <Fragment>
@@ -106,7 +111,7 @@ const Header1 = () => {
                   </Link>
                 </div>
                 <div
-                  className="bar-button d-none d-md-block"
+                  className="bar-button d-none d-xl-block"
                   data-toggle="modal"
                   data-target="#sidebar-modal"
                   onClick={handleShow}

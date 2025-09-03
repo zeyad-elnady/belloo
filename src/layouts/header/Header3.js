@@ -22,8 +22,11 @@ const Header3 = () => {
   };
   
   const handleShow = () => {
-    setShow(true);
-    setSidebarOpen(true);
+    // Only show sidebar on desktop (1200px and above)
+    if (window.innerWidth >= 1200) {
+      setShow(true);
+      setSidebarOpen(true);
+    }
   };
   const [searchModal, setSearchModal] = useState(false);
 
@@ -43,8 +46,8 @@ const Header3 = () => {
     { name: t('nav.contact'), href: '/contact' }
   ];
 
-  // Reverse navigation items for Arabic language (RTL)
-  const navigationItems = router.locale === 'ar' ? [...baseNavigationItems].reverse() : baseNavigationItems;
+  // Keep navigation items in the same logical order for all languages
+  const navigationItems = baseNavigationItems;
 
   const currentLanguage = languages.find(lang => lang.code === router.locale) || languages[0];
 
@@ -59,6 +62,19 @@ const Header3 = () => {
       setMobileMenuOpen(false);
     }
   };
+
+  // Subtle backdrop effect for mobile menu (no scroll lock needed since menu is compact)
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.classList.add('mobile-menu-active');
+    } else {
+      document.body.classList.remove('mobile-menu-active');
+    }
+    
+    return () => {
+      document.body.classList.remove('mobile-menu-active');
+    };
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -191,9 +207,9 @@ const Header3 = () => {
               <i className="far fa-search" />
             </button>
 
-            {/* Sidebar Button - Hidden on Mobile */}
+            {/* Sidebar Button - Desktop Only */}
             <button
-              className="sidebar-btn d-none d-md-block"
+              className="sidebar-btn d-none d-xl-block"
               onClick={handleShow}
               aria-label="Open Sidebar"
             >
@@ -216,6 +232,15 @@ const Header3 = () => {
         {/* Mobile Menu */}
         <div className={`mobile-menu-container ${mobileMenuOpen ? 'open' : ''}`}>
           <div className="mobile-menu-content">
+            {/* Close Button */}
+            <button 
+              className="mobile-menu-close"
+              onClick={() => setMobileMenuOpen(false)}
+              aria-label="Close Menu"
+            >
+              <i className="fas fa-times"></i>
+            </button>
+
             {/* Mobile Search */}
             <div className="mobile-search">
               <form onSubmit={(e) => e.preventDefault()}>

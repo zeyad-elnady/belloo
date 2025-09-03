@@ -431,14 +431,305 @@ html[dir="rtl"] .post-meta span:last-child {
   margin-left: 0;
 }
 
-/* Mobile Menu RTL */
+/* Mobile Menu RTL - Comprehensive Support */
 html[dir="rtl"] .mobile-menu-toggle span {
   transform-origin: right center;
 }
 
-html[dir="rtl"] .mobile-menu-container {
-  left: auto;
-  right: 0;
+/* Floating Header Mobile Menu RTL */
+html[dir="rtl"] .unified-floating-header .mobile-menu-container {
+  left: 20px;
+  right: 20px;
+}
+
+html[dir="rtl"] .unified-floating-header .mobile-menu-close {
+  right: auto;
+  left: 12px;
+}
+
+html[dir="rtl"] .unified-floating-header .mobile-search {
+  direction: rtl;
+}
+
+html[dir="rtl"] .unified-floating-header .search-group {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .unified-floating-header .search-input {
+  text-align: right;
+  direction: rtl;
+}
+
+html[dir="rtl"] .unified-floating-header .mobile-nav-menu {
+  direction: rtl;
+}
+
+html[dir="rtl"] .unified-floating-header .mobile-nav-link {
+  text-align: right;
+  direction: rtl;
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .unified-floating-header .mobile-nav-link::after {
+  transform: rotate(-135deg);
+  right: auto;
+  left: 20px;
+}
+
+html[dir="rtl"] .unified-floating-header .mobile-nav-link:hover::after {
+  transform: rotate(-135deg) translateX(-2px);
+}
+
+/* Header Actions RTL */
+html[dir="rtl"] .unified-floating-header .header-actions {
+  flex-direction: row-reverse;
+  gap: 15px;
+}
+
+html[dir="rtl"] .unified-floating-header .header-logo {
+  order: 2;
+}
+
+html[dir="rtl"] .unified-floating-header .header-actions {
+  order: 1;
+}
+
+/* Language Selector RTL */
+html[dir="rtl"] .unified-floating-header .modern-language-selector .language-dropdown {
+  right: auto;
+  left: 0;
+}
+
+/* Desktop Navigation RTL */
+html[dir="rtl"] .unified-floating-header .desktop-navigation .nav-menu {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .unified-floating-header .nav-item {
+  margin-left: 30px;
+  margin-right: 0;
+}
+
+html[dir="rtl"] .unified-floating-header .nav-item:last-child {
+  margin-left: 0;
+}
+
+html[dir="rtl"] .unified-floating-header .nav-item:first-child {
+  margin-left: 30px;
+}
+
+/* RTL Responsive Breakpoints for Mobile Menu */
+@media (max-width: 1199px) {
+  html[dir="rtl"] .unified-floating-header .mobile-menu-close {
+    left: 20px;
+    right: auto;
+  }
+}
+
+@media (max-width: 992px) {
+  html[dir="rtl"] .unified-floating-header .mobile-menu-close {
+    left: 18px;
+    right: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  html[dir="rtl"] .unified-floating-header .mobile-menu-close {
+    left: 15px;
+    right: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  html[dir="rtl"] .unified-floating-header .mobile-menu-close {
+    left: 15px;
+    right: auto;
+  }
+}
+
+/* Fix Header Container Layout in RTL */
+html[dir="rtl"] .unified-floating-header .header-container {
+  flex-direction: row;
+}
+
+/* RTL Mobile Menu Styling */
+html[dir="rtl"] .unified-floating-header .mobile-menu-close {
+  left: 15px;
+  right: auto;
+}
+
+/* Typography improvements for Arabic */
+html[dir="rtl"] .unified-floating-header .mobile-nav-link {
+  font-family: 'Cairo', 'Montserrat', sans-serif;
+  letter-spacing: 0;
+}
+
+html[dir="rtl"] .unified-floating-header .search-input {
+  font-family: 'Cairo', 'Roboto', sans-serif;
+}
+
+/* Fix potential overflow issues in RTL */
+html[dir="rtl"] .unified-floating-header {
+  overflow: visible;
+}
+
+html[dir="rtl"] .unified-floating-header .mobile-menu-content {
+  overflow-x: hidden;
+}
+
+/* Additional RTL Layout Fixes */
+html[dir="rtl"] body {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="rtl"] .container,
+html[dir="rtl"] .container-fluid {
+  direction: rtl;
+}
+
+/* Fix any potential layout issues with main content in RTL */
+html[dir="rtl"] main,
+html[dir="rtl"] .main-content {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Ensure hero sections work properly in RTL mobile */
+html[dir="rtl"] .hero-section,
+html[dir="rtl"] .banner-section {
+  direction: rtl;
+}
+
+/* Fix Bootstrap grid system in RTL */
+html[dir="rtl"] .row {
+  direction: rtl;
+}
+
+html[dir="rtl"] [class*="col-"] {
+  direction: ltr; /* Keep individual columns LTR for proper stacking */
+}
+
+html[dir="rtl"] [class*="col-"] > * {
+  direction: rtl; /* But content inside should be RTL */
+  text-align: right;
+}
+
+/* Mobile-specific RTL fixes */
+@media (max-width: 768px) {
+  html[dir="rtl"] body {
+    overflow-x: hidden;
+  }
+  
+  html[dir="rtl"] .unified-floating-header {
+    width: calc(100% - 20px);
+    max-width: none;
+  }
+  
+  html[dir="rtl"] .hero-content {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+
+/* Fix any floating elements in RTL */
+html[dir="rtl"] .float-left {
+  float: right !important;
+}
+
+html[dir="rtl"] .float-right {
+  float: left !important;
+}
+
+html[dir="rtl"] .text-left {
+  text-align: right !important;
+}
+
+html[dir="rtl"] .text-right {
+  text-align: left !important;
+}
+
+/* Mobile Menu Toggle Animation RTL Fixes */
+html[dir="rtl"] .unified-floating-header .mobile-menu-toggle.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 5px);
+}
+
+html[dir="rtl"] .unified-floating-header .mobile-menu-toggle.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -5px);
+}
+
+/* Mobile Menu Overlay RTL */
+html[dir="rtl"] .unified-floating-header .mobile-menu-overlay {
+  direction: ltr; /* Keep overlay direction LTR for proper coverage */
+}
+
+/* Language Selector Responsive RTL */
+@media (max-width: 992px) {
+  html[dir="rtl"] .unified-floating-header .modern-language-selector .language-dropdown {
+    left: -5px;
+    right: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  html[dir="rtl"] .unified-floating-header .modern-language-selector .language-dropdown {
+    left: -8px;
+    right: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  html[dir="rtl"] .unified-floating-header .modern-language-selector .language-dropdown {
+    left: -10px;
+    right: auto;
+  }
+}
+
+/* Ensure no horizontal scroll in RTL mobile */
+html[dir="rtl"] {
+  overflow-x: hidden;
+}
+
+html[dir="rtl"] * {
+  box-sizing: border-box;
+}
+
+/* Fix mobile navigation arrows positioning - Covered by responsive breakpoints above */
+
+/* Override any conflicting mobile menu styles in RTL */
+html[dir="rtl"] .header-navigation.breakpoint-on .nav-menu {
+  left: auto !important;
+  right: -300px !important;
+  text-align: right !important;
+}
+
+html[dir="rtl"] .header-navigation.breakpoint-on .nav-menu.menu-on {
+  right: 0 !important;
+  left: auto !important;
+}
+
+/* Ensure RTL takes precedence over other mobile menu fixes */
+html[dir="rtl"] .unified-floating-header {
+  direction: rtl !important;
+}
+
+html[dir="rtl"] .unified-floating-header * {
+  box-sizing: border-box;
+}
+
+/* Fix any layout issues with container widths in RTL mobile */
+@media (max-width: 768px) {
+  html[dir="rtl"] .container-fluid {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    overflow-x: hidden;
+  }
+  
+  html[dir="rtl"] .unified-floating-header {
+    left: 10px !important;
+    right: 10px !important;
+    width: calc(100% - 20px) !important;
+  }
 }
 
 /* Sidebar RTL */

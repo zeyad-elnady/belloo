@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 const MobileMenu = ({ handleShow, logo, extraClass, barIcon }) => {
   const [toggle, setToggle] = useState(false);
 
@@ -7,6 +7,35 @@ const MobileMenu = ({ handleShow, logo, extraClass, barIcon }) => {
   const active = (value) => setActiveMenu(value === activeMenu ? null : value),
     activeSubMenu = (value) =>
       value == activeMenu ? { display: "block" } : { display: "none" };
+
+  // Close menu when clicking on menu items
+  const handleMenuItemClick = () => {
+    setToggle(false);
+  };
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (toggle) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    // Handle escape key to close menu
+    const handleEscapeKey = (event) => {
+      if (event.key === 'Escape' && toggle) {
+        setToggle(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscapeKey);
+    
+    // Cleanup function to reset overflow when component unmounts
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [toggle]);
 
   return (
     <Fragment>
@@ -49,37 +78,37 @@ const MobileMenu = ({ handleShow, logo, extraClass, barIcon }) => {
                 <ul>
                   <li className="menu-item">
                     <Link legacyBehavior href="/">
-                      Home
+                      <a onClick={handleMenuItemClick}>Home</a>
                     </Link>
                   </li>
                   <li className="menu-item">
                     <Link legacyBehavior href="/about">
-                      About
+                      <a onClick={handleMenuItemClick}>About</a>
                     </Link>
                   </li>
                   <li className="menu-item">
                     <Link legacyBehavior href="/sustainability">
-                      Sustainability
+                      <a onClick={handleMenuItemClick}>Sustainability</a>
                     </Link>
                   </li>
                   <li className="menu-item">
                     <Link legacyBehavior href="/products">
-                      Products
+                      <a onClick={handleMenuItemClick}>Products</a>
                     </Link>
                   </li>
                   <li className="menu-item">
                     <Link legacyBehavior href="/highlights">
-                      Highlights
+                      <a onClick={handleMenuItemClick}>Highlights</a>
                     </Link>
                   </li>
                   <li className="menu-item">
                     <Link legacyBehavior href="/join-us">
-                      Join Us
+                      <a onClick={handleMenuItemClick}>Join Us</a>
                     </Link>
                   </li>
                   <li className="menu-item">
                     <Link legacyBehavior href="/contact">
-                      Contact
+                      <a onClick={handleMenuItemClick}>Contact</a>
                     </Link>
                   </li>
                 </ul>
@@ -100,8 +129,18 @@ const MobileMenu = ({ handleShow, logo, extraClass, barIcon }) => {
               </div>
 
               <div
-                className="navbar-toggler"
+                className={`navbar-toggler ${toggle ? 'active' : ''}`}
                 onClick={() => setToggle(!toggle)}
+                style={{ cursor: 'pointer' }}
+                aria-label="Toggle mobile menu"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setToggle(!toggle);
+                  }
+                }}
               >
                 <span />
                 <span />

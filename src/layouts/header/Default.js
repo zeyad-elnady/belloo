@@ -7,7 +7,12 @@ import MobileMenu from "./MobileMenu";
 const Default = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    // Only show sidebar on desktop (1200px and above)
+    if (window.innerWidth >= 1200) {
+      setShow(true);
+    }
+  };
   const [searchModal, setSearchModal] = useState(false);
   return (
     <Fragment>
@@ -122,7 +127,7 @@ const Default = () => {
                     <i className="far fa-search" />
                   </span>
                   <span
-                    className="bar-btn d-none d-md-inline-block"
+                    className="bar-btn d-none d-xl-inline-block"
                     data-toggle="modal"
                     data-target="#sidebar-modal"
                     onClick={handleShow}
@@ -207,11 +212,6 @@ const Default = () => {
                   <Link legacyBehavior href="/contact">
                     <a className="main-btn primary-btn">Get a Quote</a>
                   </Link>
-                </div>
-                <div className="navbar-toggler">
-                  <span />
-                  <span />
-                  <span />
                 </div>
               </div>
             </div>
