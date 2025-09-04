@@ -6,7 +6,7 @@ html[dir="rtl"] {
 
 /* Navigation RTL */
 html[dir="rtl"] .desktop-navigation .nav-menu {
-  flex-direction: row-reverse;
+  flex-direction: row;
 }
 
 html[dir="rtl"] .nav-item {
@@ -16,7 +16,7 @@ html[dir="rtl"] .nav-item {
 
 /* Header container RTL */
 html[dir="rtl"] .header-container {
-  flex-direction: row;
+  flex-direction: row-reverse;
 }
 
 html[dir="rtl"] .header-logo {
@@ -487,6 +487,10 @@ html[dir="rtl"] .unified-floating-header .header-actions {
 }
 
 html[dir="rtl"] .unified-floating-header .header-logo {
+  order: 3;
+}
+
+html[dir="rtl"] .unified-floating-header .desktop-navigation {
   order: 2;
 }
 
@@ -502,7 +506,7 @@ html[dir="rtl"] .unified-floating-header .modern-language-selector .language-dro
 
 /* Desktop Navigation RTL */
 html[dir="rtl"] .unified-floating-header .desktop-navigation .nav-menu {
-  flex-direction: row-reverse;
+  flex-direction: row;
 }
 
 html[dir="rtl"] .unified-floating-header .nav-item {
@@ -549,7 +553,7 @@ html[dir="rtl"] .unified-floating-header .nav-item:first-child {
 
 /* Fix Header Container Layout in RTL */
 html[dir="rtl"] .unified-floating-header .header-container {
-  flex-direction: row;
+  flex-direction: row-reverse;
 }
 
 /* RTL Mobile Menu Styling */

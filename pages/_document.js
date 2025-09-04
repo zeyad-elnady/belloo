@@ -56,9 +56,8 @@ export default function Document(props) {
         <link rel="stylesheet" href="/assets/css/rtl.css" />
         {/*====== Unified Floating Header css ======*/}
         <link rel="stylesheet" href="/assets/css/floating-header.css" />
-        {/*====== Modern Chatbot css ======*/}
-        <link rel="preload" href="/assets/css/modern-chatbot.css" as="style" />
-        <link rel="stylesheet" href="/assets/css/modern-chatbot.css" />
+        {/*====== WhatsApp Button css ======*/}
+        <link rel="stylesheet" href="/assets/css/whatsapp-button.css" />
         {/*====== Tree Positioning Fix css ======*/}
         <link rel="stylesheet" href="/assets/css/tree-positioning-fix.css" />
       </Head>
