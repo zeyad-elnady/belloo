@@ -187,7 +187,7 @@
     "pageTitle": "Join Us",
     "subtitle": "Career Opportunities",
     "title": "Grow Your Career with Bello Food",
-    "description": "At Bello Food, our success starts with our people. We are always looking for passionate, talented, and driven individuals to join our growing team in the food export industry.",
+    "description": "At Bello Food, we believe our success starts with our people. We’re always looking for passionate, talented, and driven individuals to join our growing team. If you’re ready to be part of a dynamic environment where innovation, quality, and sustainability come together—this is your chance.",
     "whyWorkWithUs": {
       "title": "Why Work With Us?",
       "benefits": {
@@ -331,6 +331,56 @@
     "english": "English",
     "russian": "Russian",
     "downloadButton": "Download Catalog"
+  },
+  "specificationsPage": {
+    "pageTitle": "Packaging Specifications",
+    "packageTypes": {
+      "glassJars": "GLASS JARS",
+      "cans": "CANS", 
+      "vacuumBags": "VACUUM BAGS",
+      "plasticBuckets": "PLASTIC BUCKETS",
+      "barrels": "BARRELS",
+      "petPacks": "PET PLASTIC JARS"
+    },
+    "packages": {
+      "glassJars": {
+        "title": "GLASS JARS",
+        "description": "Premium glass jars perfect for preserving quality and taste. Ideal for retail and premium markets."
+      },
+      "cans": {
+        "title": "CANS",
+        "description": "Durable tin cans for long-term storage and commercial distribution. Perfect for wholesale markets."
+      },
+      "vacuumBags": {
+        "title": "VACUUM BAGS", 
+        "description": "High-quality vacuum sealed bags maintaining freshness and extending shelf life."
+      },
+      "plasticBuckets": {
+        "title": "PLASTIC BUCKETS",
+        "description": "Heavy-duty plastic buckets designed for bulk storage and commercial food service."
+      },
+      "barrels": {
+        "title": "BARRELS",
+        "description": "Looking for top-quality barrel packaging for pickled products? Discover a variety of options available at any time to meet all your packaging needs."
+      },
+      "petPacks": {
+        "title": "PET PLASTIC JARS",
+        "description": "Quality pet plastic jars and packages available anytime! Discover a wide range of options and details to find the perfect packaging for your needs."
+      }
+    },
+    "table": {
+      "packageSize": "Package Size",
+      "barrelType": "Barrel",
+      "petJarsType": "PET Plastic Jars",
+      "grossWeight": "Gross weight",
+      "netWeight": "Net weight", 
+      "drainedWeight": "Drained weight"
+    },
+    "contact": {
+      "title": "Need Custom Specifications?",
+      "description": "Contact us for custom packaging solutions tailored to your needs.",
+      "button": "Contact Us"
+    }
   },
   "footer": {
     "about": "Bello Food is your trusted partner in premium olives and pickled products. With decades of experience, we combine agricultural heritage with modern food safety standards to deliver authentic taste and reliable quality to over 20 countries worldwide.",

@@ -10,33 +10,203 @@ const Products = () => {
   // State to manage active product category
   const [activeCategory, setActiveCategory] = useState('greenOlives');
   
-  // State to manage view type (jar/can)
-  const [viewType, setViewType] = useState('jar');
+  // State to manage view type for each individual product
+  const [productViews, setProductViews] = useState({});
 
   // Category data
   const categories = [
     { id: 'greenOlives', name: 'Green Olives', icon: '' },
     { id: 'blackOlives', name: 'Black Olives', icon: '' },
-    { id: 'peppers', name: 'Peppers', icon: '' }
+    { id: 'peppers', name: 'Peppers', icon: '' },
+    { id: 'picklesVegetables', name: 'Pickles & Vegetables', icon: '' }
   ];
 
-  // Function to get the correct image based on category and view type
-  const getProductImage = (category) => {
-    if (viewType === 'jar') {
-      switch (category) {
-        case 'greenOlives': return '/assets/images/products/green olive.jpg';
-        case 'blackOlives': return '/assets/images/products/black olive.jpg';
-        case 'peppers': return '/assets/images/products/chili.jpg';
-        default: return '/assets/images/products/green olive.jpg';
+  // Helper function to get current view for a specific product
+  const getProductView = (productName) => {
+    const availablePackaging = getAvailablePackaging(productName);
+    return productViews[productName] || availablePackaging[0] || 'glass-jars';
+  };
+
+  // Helper function to set view for a specific product
+  const setProductView = (productName, packaging) => {
+    setProductViews(prev => ({
+      ...prev,
+      [productName]: packaging
+    }));
+  };
+
+  // Helper function to render packaging buttons
+  const renderPackagingButtons = (productName) => {
+    const availablePackaging = getAvailablePackaging(productName);
+    const currentView = getProductView(productName);
+    const packagingLabels = {
+      'glass-jars': 'Glass Jars',
+      'cans': 'Cans', 
+      'vacuum-bags': 'Vacuum',
+      'plastic-buckets': 'Buckets',
+      'barrels': 'Barrels',
+      'pet-packs': 'PET Packs'
+    };
+    
+    return availablePackaging.map((packaging) => (
+      <button 
+        key={packaging}
+        className={`view-toggle-btn ${currentView === packaging ? 'active' : ''}`}
+        onClick={() => setProductView(productName, packaging)}
+      >
+        {packagingLabels[packaging]}
+      </button>
+    ));
+  };
+
+  const getAvailablePackaging = (productName) => {
+    const packagingMap = {
+      // Green Olives - available in GLASS JARS, CANS, VACUUM BAGS + generic types
+      'Whole Green Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Pitted Green Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Sliced Green Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      
+      // Black Olives - specific availability based on actual image files
+      'Whole Black Olives': ['cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'], // Not in glass jars
+      'Pitted Black Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Sliced Black Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Whole Black Natural Kalamata Olives': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Pitted Black Natural Kalamata Olives': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Sliced Black Natural Kalamata Olives': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Whole Black Natural Picual Olives': ['glass-jars', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Pitted Black Natural Picual Olives': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Sliced Black Natural Picual Olives': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Olive Black Natural Dolce': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Pitted Black Natural Dolce': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      
+      // Peppers - based on actual image availability
+      'Pepperoncini Pepper': ['glass-jars', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Cherry Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Kardoula Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Whole Lombardi Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Sliced Lombardi Pepper': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Sliced Green Jalapeno Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Sliced Red en Jalapeno Pepper': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Habiba Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Mexican Pepper': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Macedonian Pepper': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      
+      // Artichokes
+      'Artichoke Hearts': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Artichoke Quarter': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Artichoke Bottom': ['plastic-buckets', 'barrels', 'pet-packs'], // Only generic types
+    };
+    
+    return packagingMap[productName] || ['plastic-buckets']; // Default to plastic buckets if no specific mapping
+  };
+
+  // Function to get the correct image based on product name and its current packaging view
+  const getProductImage = (productName) => {
+    const currentView = getProductView(productName);
+    const availablePackaging = getAvailablePackaging(productName);
+    
+    const folderMap = {
+      'glass-jars': 'GLASS JARS',
+      'cans': 'CANS', 
+      'vacuum-bags': 'VACUUM BAGS',
+      'plastic-buckets': 'PLASTIC BUCKETS',
+      'barrels': 'BARRELS',
+      'pet-packs': 'PET PACKS'
+    };
+    
+    // Comprehensive image mapping for each packaging type based on actual files
+    const imageMapByPackaging = {
+      'glass-jars': {
+        'Whole Green Olives': 'Whole Green Olives .jpg',
+        'Pitted Green Olives': 'Pitted Green Olives .jpg',
+        'Sliced Green Olives': 'Sliced Green Olives .jpg',
+        'Pitted Black Olives': 'Pitted Black Olives .jpg',
+        'Sliced Black Olives': 'Sliced Black Olives .jpg',
+        'Whole Black Natural Picual Olives': 'Whole Black Natural Picual Olives .jpg',
+        'Pepperoncini Pepper': 'pepperoncini Pepper.jpg',
+        'Cherry Pepper': 'Cherry Pepper.jpg',
+        'Kardoula Pepper': 'Kardoula Pepper.jpg',
+        'Whole Lombardi Pepper': 'Whole Lombardi Pepper.jpg',
+        'Sliced Green Jalapeno Pepper': 'Sliced Green Jalapeno Pepper.jpg',
+        'Habiba Pepper': 'Habiba Peppper.jpg',
+        'Artichoke Hearts': 'Artichoke Hearts .jpg',
+        'Artichoke Quarter': 'Artichoke Quarter .jpg',
+      },
+      'cans': {
+        'Whole Green Olives': 'Whole Green Olives .jpg',
+        'Pitted Green Olives': 'Pitted Green Olives .jpg',
+        'Sliced Green Olives': 'Sliced Green Olives .jpg',
+        'Whole Black Olives': 'Whole Black Olives .jpg',
+        'Pitted Black Olives': 'Pitted Black Olives .jpg',
+        'Sliced Black Olives': 'Sliced Black Olives .jpg',
+        'Cherry Pepper': 'Cherry Pepper.jpg',
+        'Habiba Pepper': 'Habiba Peppper.jpg',
+        'Kardoula Pepper': 'Kardoula Pepper.jpg',
+        'Sliced Green Jalapeno Pepper': 'Sliced Green Jalapeno Pepper.jpg',
+        'Whole Lombardi Pepper': 'Whole Lombardi Pepper.jpg',
+        'Artichoke Hearts': 'Artichoke Hearts .jpg',
+        'Artichoke Quarter': 'Artichoke Quarter .jpg',
+      },
+      'vacuum-bags': {
+        'Whole Green Olives': 'Whole Green Olives .jpg',
+        'Pitted Green Olives': 'Pitted Green Olives.jpg', // Note: no space
+        'Sliced Green Olives': 'Sliced Green Olives .jpg',
+        'Whole Black Olives': 'Whole Black Olives .jpg',
+        'Pitted Black Olives': 'Pitted Black Olives .jpg',
+        'Sliced Black Olives': 'Sliced Black Olives .jpg',
+        'Whole Black Natural Kalamata Olives': 'Whole Black Natural Kalamata Olives .jpg',
+        'Pitted Black Natural Kalamata Olives': 'Pitted Black Natural Kalamata Olives .jpg',
+        'Sliced Black Natural Kalamata Olives': 'Sliced Black Natural Kalamata Olives .jpg',
+        'Whole Black Natural Picual Olives': 'Whole Black Natural Picual Olives .jpg',
+        'Pitted Black Natural Picual Olives': 'Pitted Black Natural Picual Olives .jpg',
+        'Sliced Black Natural Picual Olives': 'Sliced  Black Natural Picual Olives .jpg', // Note: double space
+        'Olive Black Natural Dolce': 'Whole Black Natural Dolce.jpg',
+        'Pitted Black Natural Dolce': 'Pitted Black Natural Dolce.jpg',
+        'Pepperoncini Pepper': 'pepperoncini Pepper.jpg',
+        'Cherry Pepper': 'Cherry Pepper.jpg',
+        'Kardoula Pepper': 'Kardoula Pepper.jpg',
+        'Whole Lombardi Pepper': 'Whole Lombardi Pepper.jpg',
+        'Sliced Lombardi Pepper': 'Sliced Lombardi Pepper.jpg',
+        'Sliced Green Jalapeno Pepper': 'Sliced Green Jalapeno Pepper.jpg',
+        'Sliced Red en Jalapeno Pepper': 'Sliced Red en Jalapeno Pepper.jpg',
+        'Habiba Pepper': 'Habiba Peppper.jpg',
+        'Mexican Pepper': 'Mexican pepper.jpg',
+        'Macedonian Pepper': 'Macedonian pepper.jpg',
+        'Artichoke Hearts': 'Artichoke Hearts .jpg',
+        'Artichoke Quarter': 'Artichoke Quarter .jpg',
       }
-    } else { // can view
-      switch (category) {
-        case 'greenOlives': return '/assets/images/products/green olive can.jpg';
-        case 'blackOlives': return '/assets/images/products/blak olive can.jpg';
-        case 'peppers': return '/assets/images/products/chilli can.jpg';
-        default: return '/assets/images/products/green olive can.jpg';
+    };
+    
+    // Handle generic packaging types (only one image per type for all products)
+    if (currentView === 'plastic-buckets' || currentView === 'barrels' || currentView === 'pet-packs') {
+      const folder = folderMap[currentView];
+      const genericImages = {
+        'plastic-buckets': 'Untitled-14.png',
+        'barrels': 'blue.png',
+        'pet-packs': 'pet packs.png'
+      };
+      return `/assets/images/products/${folder}/${genericImages[currentView]}`;
+    }
+    
+    // For specific packaging types, use the mapped image
+    const folder = folderMap[currentView];
+    const imageMap = imageMapByPackaging[currentView];
+    const imageName = imageMap && imageMap[productName];
+    
+    if (imageName) {
+      return `/assets/images/products/${folder}/${imageName}`;
+    }
+    
+    // Fallback: try to find image in another packaging type if current doesn't have it
+    for (const [packagingType, images] of Object.entries(imageMapByPackaging)) {
+      if (images[productName] && availablePackaging.includes(packagingType)) {
+        const fallbackFolder = folderMap[packagingType];
+        return `/assets/images/products/${fallbackFolder}/${images[productName]}`;
       }
     }
+    
+    // Final fallback to a default image
+    return '/assets/images/products/GLASS JARS/Whole Green Olives .jpg';
   };
   
   return (
@@ -88,243 +258,98 @@ const Products = () => {
             {/* Green Olives Products */}
             <div className={`category-content ${activeCategory === 'greenOlives' ? 'active' : ''}`}>
           <div className="row">
-                {/* Whole Green Olives - Glass Jar */}
+                {/* Whole Green Olives */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".1s">
                     <div className="product-image">
-                      <img src={getProductImage('greenOlives')} alt="Whole Green Olives" />
+                      <img src={getProductImage('Whole Green Olives')} alt="Whole Green Olives" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Whole Green Olives')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">Whole Green Olives</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <p className="product-package">Available in multiple packaging</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Whole Green Olives')}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Pitted Green Olives - Glass Jar */}
+                {/* Pitted Green Olives */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".15s">
                     <div className="product-image">
-                      <img src={getProductImage('greenOlives')} alt="Pitted Green Olives" />
+                      <img src={getProductImage('Pitted Green Olives')} alt="Pitted Green Olives" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Pitted Green Olives')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">Pitted Green Olives</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <p className="product-package">Available in multiple packaging</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Pitted Green Olives')}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Sliced Green Olives - Glass Jar */}
+                {/* Sliced Green Olives */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".2s">
                     <div className="product-image">
-                      <img src={getProductImage('greenOlives')} alt="Sliced Green Olives" />
+                      <img src={getProductImage('Sliced Green Olives')} alt="Sliced Green Olives" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Green Olives')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">Sliced Green Olives</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <p className="product-package">Available in multiple packaging</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Sliced Green Olives')}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Whole Green Olives - 65 Tins */}
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".25s">
-                    <div className="product-image">
-                      <img src={getProductImage('greenOlives')} alt="Whole Green Olives 65 Tins" />
-                      <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="product-info">
-                      <h5 className="product-name">Whole Green Olives</h5>
-                      <p className="product-package">65 tins</p>
-                      <div className="product-details">
-                        <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Pitted Green Olives - 65 Tins */}
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".3s">
-                    <div className="product-image">
-                      <img src={getProductImage('greenOlives')} alt="Pitted Green Olives 65 Tins" />
-                      <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
-                    </Link>
-                      </div>
-                    </div>
-                    <div className="product-info">
-                      <h5 className="product-name">Pitted Green Olives</h5>
-                      <p className="product-package">65 tins</p>
-                      <div className="product-details">
-                        <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Sliced Green Olives - 65 Tins */}
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".35s">
-                    <div className="product-image">
-                      <img src={getProductImage('greenOlives')} alt="Sliced Green Olives 65 Tins" />
-                      <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
-                  </Link>
-                      </div>
-                    </div>
-                    <div className="product-info">
-                      <h5 className="product-name">Sliced Green Olives</h5>
-                      <p className="product-package">65 tins</p>
-                      <div className="product-details">
-                        <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 
             {/* Black Olives Products */}
             <div className={`category-content ${activeCategory === 'blackOlives' ? 'active' : ''}`}>
               <div className="row">
-                {/* Whole Black Olives - Glass Jar */}
+                {/* Whole Black Olives */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".1s">
                     <div className="product-image">
-                      <img src={getProductImage('blackOlives')} alt="Whole Black Olives" />
+                      <img src={getProductImage('Whole Black Olives')} alt="Whole Black Olives" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Whole Black Olives')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">Whole Black Olives</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <p className="product-package">Available in Cans & Vacuum packaging</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Whole Black Olives')}
                         </div>
                       </div>
                     </div>
@@ -335,10 +360,10 @@ const Products = () => {
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".15s">
                     <div className="product-image">
-                      <img src={getProductImage('blackOlives')} alt="Pitted Black Olives" />
+                      <img src={getProductImage('Pitted Black Olives')} alt="Pitted Black Olives" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Pitted Black Olives')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
@@ -347,18 +372,7 @@ const Products = () => {
                       <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Pitted Black Olives')}
                         </div>
                       </div>
                     </div>
@@ -369,10 +383,10 @@ const Products = () => {
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".2s">
                     <div className="product-image">
-                      <img src={getProductImage('blackOlives')} alt="Sliced Black Olives" />
+                      <img src={getProductImage('Sliced Black Olives')} alt="Sliced Black Olives" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Black Olives')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
@@ -381,193 +395,197 @@ const Products = () => {
                       <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
-                        </div>
-                      </div>
+                          {renderPackagingButtons('Sliced Black Olives')}
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
 
-                {/* Black Natural Kalamata Olives - Glass Jar */}
+                {/* Whole Black Natural Kalamata Olives - Glass Jar */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".25s">
                     <div className="product-image">
-                      <img src={getProductImage('blackOlives')} alt="Black Natural Kalamata Olives" />
+                      <img src={getProductImage('Whole Black Natural Kalamata Olives')} alt="Whole Black Natural Kalamata Olives" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Whole Black Natural Kalamata Olives')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Black Natural Kalamata Olives</h5>
+                      <h5 className="product-name">Whole Black Natural Kalamata Olives</h5>
                       <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Whole Black Natural Kalamata Olives')}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Whole Black Olives - A10 Tins */}
+                {/* Pitted Black Natural Kalamata Olives - Glass Jar */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".3s">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".27s">
                     <div className="product-image">
-                      <img src={getProductImage('blackOlives')} alt="Whole Black Olives A10 Tins" />
+                      <img src={getProductImage('Pitted Black Natural Kalamata Olives')} alt="Pitted Black Natural Kalamata Olives" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Pitted Black Natural Kalamata Olives')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Whole Black Olives</h5>
-                      <p className="product-package">A10 tins</p>
+                      <h5 className="product-name">Pitted Black Natural Kalamata Olives</h5>
+                      <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Pitted Black Natural Kalamata Olives')}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Pitted Black Olives - A10 Tins */}
+                {/* Sliced Black Natural Kalamata Olives - Glass Jar */}
+                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".29s">
+                    <div className="product-image">
+                      <img src={getProductImage('Sliced Black Natural Kalamata Olives')} alt="Sliced Black Natural Kalamata Olives" />
+                      <div className="product-overlay">
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Black Natural Kalamata Olives')}`}>
+                          <a className="inquiry-btn">View Specs</a>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="product-info">
+                      <h5 className="product-name">Sliced Black Natural Kalamata Olives</h5>
+                      <p className="product-package">Glass jar 370ml</p>
+                      <div className="product-details">
+                        <div className="view-toggle-buttons">
+                          {renderPackagingButtons('Sliced Black Natural Kalamata Olives')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Whole Black Natural Picual Olives - Glass Jar */}
+                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".31s">
+                    <div className="product-image">
+                      <img src={getProductImage('Whole Black Natural Picual Olives')} alt="Whole Black Natural Picual Olives" />
+                      <div className="product-overlay">
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Whole Black Natural Picual Olives')}`}>
+                          <a className="inquiry-btn">View Specs</a>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="product-info">
+                      <h5 className="product-name">Whole Black Natural Picual Olives</h5>
+                      <p className="product-package">Glass jar 370ml</p>
+                      <div className="product-details">
+                        <div className="view-toggle-buttons">
+                          {renderPackagingButtons('Whole Black Natural Picual Olives')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Pitted Black Natural Picual Olives - Glass Jar */}
+                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".33s">
+                    <div className="product-image">
+                      <img src={getProductImage('Pitted Black Natural Picual Olives')} alt="Pitted Black Natural Picual Olives" />
+                      <div className="product-overlay">
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Pitted Black Natural Picual Olives')}`}>
+                          <a className="inquiry-btn">View Specs</a>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="product-info">
+                      <h5 className="product-name">Pitted Black Natural Picual Olives</h5>
+                      <p className="product-package">Glass jar 370ml</p>
+                      <div className="product-details">
+                        <div className="view-toggle-buttons">
+                          {renderPackagingButtons('Pitted Black Natural Picual Olives')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sliced Black Natural Picual Olives - Glass Jar */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".35s">
                     <div className="product-image">
-                      <img src={getProductImage('blackOlives')} alt="Pitted Black Olives A10 Tins" />
+                      <img src={getProductImage('Sliced Black Natural Picual Olives')} alt="Sliced Black Natural Picual Olives" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Black Natural Picual Olives')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Pitted Black Olives</h5>
-                      <p className="product-package">A10 tins</p>
+                      <h5 className="product-name">Sliced Black Natural Picual Olives</h5>
+                      <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Sliced Black Natural Picual Olives')}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Whole Black Olives - 65 Tins */}
+                {/* Olive Black Natural Dolce - Glass Jar */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".4s">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".37s">
                     <div className="product-image">
-                      <img src={getProductImage('blackOlives')} alt="Whole Black Olives 65 Tins" />
+                      <img src={getProductImage('Olive Black Natural Dolce')} alt="Olive Black Natural Dolce" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
-                    </Link>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Olive Black Natural Dolce')}`}>
+                          <a className="inquiry-btn">View Specs</a>
+                        </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Whole Black Olives</h5>
-                      <p className="product-package">65 tins</p>
+                      <h5 className="product-name">Olive Black Natural Dolce</h5>
+                      <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Olive Black Natural Dolce')}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Pitted Black Olives - 65 Tins */}
+                {/* Pitted Black Natural Dolce - Glass Jar */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".45s">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".39s">
                     <div className="product-image">
-                      <img src={getProductImage('blackOlives')} alt="Pitted Black Olives 65 Tins" />
+                      <img src={getProductImage('Pitted Black Natural Dolce')} alt="Pitted Black Natural Dolce" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
-                  </Link>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Pitted Black Natural Dolce')}`}>
+                          <a className="inquiry-btn">View Specs</a>
+                        </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Pitted Black Olives</h5>
-                      <p className="product-package">65 tins</p>
+                      <h5 className="product-name">Pitted Black Natural Dolce</h5>
+                      <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Pitted Black Natural Dolce')}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
 
@@ -578,10 +596,10 @@ const Products = () => {
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".1s">
                     <div className="product-image">
-                      <img src={getProductImage('peppers')} alt="Pepperoncini Pepper" />
+                      <img src={getProductImage('Pepperoncini Pepper')} alt="Pepperoncini Pepper" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Pepperoncini Pepper')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
@@ -590,18 +608,7 @@ const Products = () => {
                       <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Pepperoncini Pepper')}
                         </div>
                       </div>
                     </div>
@@ -612,10 +619,10 @@ const Products = () => {
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".15s">
                     <div className="product-image">
-                      <img src={getProductImage('peppers')} alt="Cherry Pepper" />
+                      <img src={getProductImage('Cherry Pepper')} alt="Cherry Pepper" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Cherry Pepper')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
@@ -624,52 +631,76 @@ const Products = () => {
                       <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Cherry Pepper')}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Kardonla Pepper - Glass Jar */}
+                {/* Kardoula Pepper - Glass Jar */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".2s">
                     <div className="product-image">
-                      <img src={getProductImage('peppers')} alt="Kardonla Pepper" />
+                      <img src={getProductImage('Kardoula Pepper')} alt="Kardoula Pepper" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Kardoula Pepper')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Kardonla Pepper</h5>
+                      <h5 className="product-name">Kardoula Pepper</h5>
                       <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Kardoula Pepper')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Whole Lombardi Pepper - Glass Jar */}
+                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".22s">
+                    <div className="product-image">
+                      <img src={getProductImage('Whole Lombardi Pepper')} alt="Whole Lombardi Pepper" />
+                      <div className="product-overlay">
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Whole Lombardi Pepper')}`}>
+                          <a className="inquiry-btn">View Specs</a>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="product-info">
+                      <h5 className="product-name">Whole Lombardi Pepper</h5>
+                      <p className="product-package">Glass jar 370ml</p>
+                      <div className="product-details">
+                        <div className="view-toggle-buttons">
+                          {renderPackagingButtons('Whole Lombardi Pepper')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sliced Lombardi Pepper - Glass Jar */}
+                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".24s">
+                    <div className="product-image">
+                      <img src={getProductImage('Sliced Lombardi Pepper')} alt="Sliced Lombardi Pepper" />
+                      <div className="product-overlay">
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Lombardi Pepper')}`}>
+                          <a className="inquiry-btn">View Specs</a>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="product-info">
+                      <h5 className="product-name">Sliced Lombardi Pepper</h5>
+                      <p className="product-package">Glass jar 370ml</p>
+                      <div className="product-details">
+                        <div className="view-toggle-buttons">
+                          {renderPackagingButtons('Sliced Lombardi Pepper')}
                         </div>
                       </div>
                     </div>
@@ -678,12 +709,12 @@ const Products = () => {
 
                 {/* Sliced Green Jalapeno Pepper - A10 Tins */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".25s">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".26s">
                     <div className="product-image">
-                      <img src={getProductImage('peppers')} alt="Sliced Green Jalapeno Pepper" />
+                      <img src={getProductImage('Sliced Green Jalapeno Pepper')} alt="Sliced Green Jalapeno Pepper" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Green Jalapeno Pepper')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
@@ -692,66 +723,45 @@ const Products = () => {
                       <p className="product-package">A10 tins</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Sliced Green Jalapeno Pepper')}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Cherry Pepper - A10 Tins */}
+                {/* Sliced Red en Jalapeno Pepper - A10 Tins */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".3s">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".28s">
                     <div className="product-image">
-                      <img src={getProductImage('peppers')} alt="Cherry Pepper A10 Tins" />
+                      <img src={getProductImage('Sliced Red en Jalapeno Pepper')} alt="Sliced Red en Jalapeno Pepper" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Red en Jalapeno Pepper')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Cherry Pepper</h5>
+                      <h5 className="product-name">Sliced Red en Jalapeno Pepper</h5>
                       <p className="product-package">A10 tins</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Sliced Red en Jalapeno Pepper')}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
 
                 {/* Habiba Pepper - Glass Jar */}
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".35s">
                     <div className="product-image">
-                      <img src={getProductImage('peppers')} alt="Habiba Pepper" />
+                      <img src={getProductImage('Habiba Pepper')} alt="Habiba Pepper" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Habiba Pepper')}`}>
+                          <a className="inquiry-btn">View Specs</a>
                         </Link>
                       </div>
                     </div>
@@ -760,18 +770,7 @@ const Products = () => {
                       <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Habiba Pepper')}
                         </div>
                       </div>
                     </div>
@@ -782,11 +781,11 @@ const Products = () => {
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".4s">
                     <div className="product-image">
-                      <img src={getProductImage('peppers')} alt="Mexican Pepper" />
+                      <img src={getProductImage('Mexican Pepper')} alt="Mexican Pepper" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
-                    </Link>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Mexican Pepper')}`}>
+                          <a className="inquiry-btn">View Specs</a>
+                        </Link>
                       </div>
                     </div>
                     <div className="product-info">
@@ -794,18 +793,7 @@ const Products = () => {
                       <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Mexican Pepper')}
                         </div>
                       </div>
                     </div>
@@ -816,11 +804,11 @@ const Products = () => {
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                   <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".45s">
                     <div className="product-image">
-                      <img src={getProductImage('peppers')} alt="Macedonian Pepper" />
+                      <img src={getProductImage('Macedonian Pepper')} alt="Macedonian Pepper" />
                       <div className="product-overlay">
-                        <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
-                  </Link>
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Macedonian Pepper')}`}>
+                          <a className="inquiry-btn">View Specs</a>
+                        </Link>
                       </div>
                     </div>
                     <div className="product-info">
@@ -828,18 +816,81 @@ const Products = () => {
                       <p className="product-package">Glass jar 370ml</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'jar' ? 'active' : ''}`}
-                            onClick={() => setViewType('jar')}
-                          >
-                            Jar View
-                          </button>
-                          <button 
-                            className={`view-toggle-btn ${viewType === 'can' ? 'active' : ''}`}
-                            onClick={() => setViewType('can')}
-                          >
-                            Can View
-                          </button>
+                          {renderPackagingButtons('Macedonian Pepper')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Pickles & Vegetables Products */}
+            <div className={`category-content ${activeCategory === 'picklesVegetables' ? 'active' : ''}`}>
+              <div className="row">
+                {/* Artichoke Hearts - Glass Jar */}
+                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".1s">
+                    <div className="product-image">
+                      <img src={getProductImage('Artichoke Hearts')} alt="Artichoke Hearts" />
+                      <div className="product-overlay">
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Artichoke Hearts')}`}>
+                          <a className="inquiry-btn">View Specs</a>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="product-info">
+                      <h5 className="product-name">Artichoke Hearts</h5>
+                      <p className="product-package">Glass jar 370ml</p>
+                      <div className="product-details">
+                        <div className="view-toggle-buttons">
+                          {renderPackagingButtons('Artichoke Hearts')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Artichoke Quarter - Glass Jar */}
+                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".15s">
+                    <div className="product-image">
+                      <img src={getProductImage('Artichoke Quarter')} alt="Artichoke Quarter" />
+                      <div className="product-overlay">
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Artichoke Quarter')}`}>
+                          <a className="inquiry-btn">View Specs</a>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="product-info">
+                      <h5 className="product-name">Artichoke Quarter</h5>
+                      <p className="product-package">Glass jar 370ml</p>
+                      <div className="product-details">
+                        <div className="view-toggle-buttons">
+                          {renderPackagingButtons('Artichoke Quarter')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Artichoke Bottom - Glass Jar */}
+                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".2s">
+                    <div className="product-image">
+                      <img src={getProductImage('Artichoke Bottom')} alt="Artichoke Bottom" />
+                      <div className="product-overlay">
+                        <Link legacyBehavior href="/contact">
+                          <a className="inquiry-btn">Get Quote</a>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="product-info">
+                      <h5 className="product-name">Artichoke Bottom</h5>
+                      <p className="product-package">Glass jar 370ml</p>
+                      <div className="product-details">
+                        <div className="view-toggle-buttons">
+                          {renderPackagingButtons('Artichoke Bottom')}
                         </div>
                       </div>
                     </div>

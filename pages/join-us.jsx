@@ -58,16 +58,158 @@ const JoinUs = () => {
               </div>
             </div>
           </div>
-          <div className="row mt-40">
-            <div className="col-lg-12 text-center">
-              <div className="cta-content wow fadeInUp">
-                <h3 className="mb-30">{t('joinUsPage.cta.title')}</h3>
-                <p className="mb-40">
-                  {t('joinUsPage.cta.description')}
-                </p>
-                <Link legacyBehavior href="/contact">
-                  <a className="main-btn primary-btn">{t('joinUsPage.cta.applyNow')}</a>
-                </Link>
+          {/* Application Form Section */}
+          <div className="row justify-content-center mt-60">
+            <div className="col-lg-10 col-xl-8">
+              <div className="application-form-wrapper">
+                <div className="section-title text-center mb-50 wow fadeInDown">
+                  <h3>Application Form</h3>
+                  <p className="mt-20">
+                    Ready to join our team? Fill out the application form below and we'll get back to you soon.
+                  </p>
+                </div>
+                
+                <form className="application-form wow fadeInUp" onSubmit={async (e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target);
+                  
+                  // Here you would typically send the form data to your backend
+                  console.log('Form submitted:', {
+                    name: formData.get('name'),
+                    title: formData.get('title'),
+                    position: formData.get('position'),
+                    company: formData.get('company'),
+                    phone: formData.get('phone'),
+                    email: formData.get('email'),
+                    cv: formData.get('cv')
+                  });
+                  
+                  // Show success message
+                  alert('Application submitted successfully! We will review your application and get back to you soon.');
+                  e.target.reset();
+                }}>
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <div className="form-group mb-30">
+                        <label htmlFor="name" className="form-label">Name *</label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          className="form-control"
+                          placeholder="Your full name"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="form-group mb-30">
+                        <label htmlFor="title" className="form-label">Title *</label>
+                        <input
+                          type="text"
+                          id="title"
+                          name="title"
+                          className="form-control"
+                          placeholder="Your professional title"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <div className="form-group mb-30">
+                        <label htmlFor="position" className="form-label">Position Applied For *</label>
+                        <select
+                          id="position"
+                          name="position"
+                          className="form-control"
+                          required
+                        >
+                          <option value="">Select a position</option>
+                          <option value="quality-manager">Quality Manager</option>
+                          <option value="export-specialist">Export Specialist</option>
+                          <option value="production-supervisor">Production Supervisor</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="form-group mb-30">
+                        <label htmlFor="company" className="form-label">Current Company</label>
+                        <input
+                          type="text"
+                          id="company"
+                          name="company"
+                          className="form-control"
+                          placeholder="Current employer (if applicable)"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <div className="form-group mb-30">
+                        <label htmlFor="phone" className="form-label">Cell Phone *</label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          className="form-control"
+                          placeholder="+1 (555) 123-4567"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="form-group mb-30">
+                        <label htmlFor="email" className="form-label">Email *</label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          className="form-control"
+                          placeholder="your.email@example.com"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="row">
+                    <div className="col-lg-12">
+                      <div className="form-group mb-40">
+                        <label htmlFor="cv" className="form-label">Upload CV *</label>
+                        <div className="file-upload-wrapper">
+                          <input
+                            type="file"
+                            id="cv"
+                            name="cv"
+                            className="form-control file-input"
+                            accept=".pdf,.doc,.docx"
+                            required
+                          />
+                          <div className="file-upload-info">
+                            <small className="text-muted">
+                              Accepted formats: PDF, DOC, DOCX (Max size: 5MB)
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="row">
+                    <div className="col-lg-12 text-center">
+                      <button type="submit" className="main-btn primary-btn">
+                        <i className="far fa-paper-plane mr-2" />
+                        Submit Application
+                      </button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
