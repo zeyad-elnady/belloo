@@ -89,7 +89,6 @@ const Products = () => {
       'Sliced Red en Jalapeno Pepper': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       'Habiba Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       'Mexican Pepper': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Macedonian Pepper': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       
       // Artichokes
       'Artichoke Hearts': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
@@ -171,7 +170,6 @@ const Products = () => {
         'Sliced Red en Jalapeno Pepper': 'Sliced Red en Jalapeno Pepper.jpg',
         'Habiba Pepper': 'Habiba Peppper.jpg',
         'Mexican Pepper': 'Mexican pepper.jpg',
-        'Macedonian Pepper': 'Macedonian pepper.jpg',
         'Artichoke Hearts': 'Artichoke Hearts .jpg',
         'Artichoke Quarter': 'Artichoke Quarter .jpg',
       }
@@ -800,28 +798,6 @@ const Products = () => {
                   </div>
                 </div>
 
-                {/* Macedonian Pepper - Glass Jar */}
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                  <div className="product-card mb-40 wow fadeInUp" data-wow-delay=".45s">
-                    <div className="product-image">
-                      <img src={getProductImage('Macedonian Pepper')} alt="Macedonian Pepper" />
-                      <div className="product-overlay">
-                        <Link legacyBehavior href={`/specifications?package=${getProductView('Macedonian Pepper')}`}>
-                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="product-info">
-                      <h5 className="product-name">{t('productsPage.products.macedonianPepper')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
-                      <div className="product-details">
-                        <div className="view-toggle-buttons">
-                          {renderPackagingButtons('Macedonian Pepper')}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 

@@ -96,7 +96,7 @@ const Default = () => {
             <div className="col-lg-6">
               {/*====== Copyright Text ======*/}
               <div className="copyright-text">
-                <p>Copy© 2023 Gadden. All Rights Reserved.</p>
+                <p>Copy© 2024 Bello. All Rights Reserved.</p>
               </div>
             </div>
             <div className="col-lg-6">

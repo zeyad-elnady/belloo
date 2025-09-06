@@ -50,7 +50,7 @@ const App = ({ Component, pageProps }) => {
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         {/*====== Title ======*/}
-        <title>Gadden - Garden &amp; Landscaping React NextJS Template</title>
+        <title>Bello - Premium Olive Products &amp; Mediterranean Specialties</title>
         {/*====== Favicon Icon ======*/}
         <link
           rel="shortcut icon"

@@ -10,19 +10,19 @@ const Sustainability = () => {
       <PageBanner pageName={t('sustainabilityPage.pageTitle')} />
       
       {/* Hero Section */}
-      <section className="sustainability-hero-section pt-100 pb-80">
+      <section className="sustainability-hero-section pt-120 pb-100">
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-lg-10">
-              <div className="section-title text-center mb-60 wow fadeInDown">
+            <div className="col-lg-8">
+              <div className="section-title text-center mb-70 wow fadeInDown">
                 <span className="sub-title">
                   <i className="flaticon-plant" />
                   {t('sustainabilityPage.subtitle')}
                 </span>
-                <h2>{t('sustainabilityPage.title')}</h2>
+                <h2 className="sustainability-main-title">{t('sustainabilityPage.title')}</h2>
               </div>
-              <div className="hero-description text-center wow fadeInUp mb-50">
-                <p className="lead">
+              <div className="hero-description text-center wow fadeInUp">
+                <p className="lead-text">
                   {t('sustainabilityPage.description')}
                 </p>
               </div>
@@ -31,132 +31,134 @@ const Sustainability = () => {
         </div>
       </section>
 
-      {/* Main Content Cards Section */}
-      <section className="sustainability-content-section pb-100">
+      {/* Main Content Grid */}
+      <section className="sustainability-content-section pb-120">
         <div className="container">
-          <div className="row justify-content-center">
-            {/* Eco-Friendly Practices Card */}
-            <div className="col-lg-6 col-md-12 mb-40">
-              <div className="sustainability-card eco-friendly-card wow fadeInLeft">
+          
+          {/* Commitment Card */}
+          <div className="row mb-80">
+            <div className="col-lg-12">
+              <div className="sustainability-card commitment-card wow fadeInUp">
                 <div className="card-header">
-                  <div className="icon-wrapper">
-                    <div className="card-icon">
+                  <div className="icon-container">
+                    <div className="icon-circle">
                       <i className="fas fa-leaf"></i>
                     </div>
                   </div>
-                  <h3 className="card-title">{t('sustainabilityPage.ecoFriendly.title')}</h3>
-                  <p className="card-subtitle">{t('sustainabilityPage.ecoFriendly.subtitle')}</p>
+                  <h3 className="card-title">{t('sustainabilityPage.commitment.title')}</h3>
                 </div>
-                <div className="card-body">
-                  <ul className="modern-check-list">
-                    <li>
-                      <div className="check-icon">
-                        <i className="fas fa-check"></i>
+                <div className="card-content">
+                  <div className="commitment-items-grid">
+                    {t('sustainabilityPage.commitment.items', { returnObjects: true }).map((item, index) => (
+                      <div key={index} className="commitment-item">
+                        <div className="item-icon">
+                          <i className="fas fa-check"></i>
+                        </div>
+                        <span className="item-text">{item}</span>
                       </div>
-                      <div className="check-content">
-                        <strong>{t('sustainabilityPage.ecoFriendly.items.farming.title')}</strong>
-                        <span>{t('sustainabilityPage.ecoFriendly.items.farming.description')}</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="check-icon">
-                        <i className="fas fa-check"></i>
-                      </div>
-                      <div className="check-content">
-                        <strong>{t('sustainabilityPage.ecoFriendly.items.production.title')}</strong>
-                        <span>{t('sustainabilityPage.ecoFriendly.items.production.description')}</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="check-icon">
-                        <i className="fas fa-check"></i>
-                      </div>
-                      <div className="check-content">
-                        <strong>{t('sustainabilityPage.ecoFriendly.items.impact.title')}</strong>
-                        <span>{t('sustainabilityPage.ecoFriendly.items.impact.description')}</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="check-icon">
-                        <i className="fas fa-check"></i>
-                      </div>
-                      <div className="check-content">
-                        <strong>{t('sustainabilityPage.ecoFriendly.items.composting.title')}</strong>
-                        <span>{t('sustainabilityPage.ecoFriendly.items.composting.description')}</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Certified Quality Card */}
-            <div className="col-lg-6 col-md-12 mb-40">
-              <div className="sustainability-card quality-card wow fadeInRight">
-                <div className="card-header">
-                  <div className="icon-wrapper">
-                    <div className="card-icon">
-                      <i className="fas fa-award"></i>
-                    </div>
+                    ))}
                   </div>
-                  <h3 className="card-title">{t('sustainabilityPage.quality.title')}</h3>
-                  <p className="card-subtitle">{t('sustainabilityPage.quality.subtitle')}</p>
-                </div>
-                <div className="card-body">
-                  <ul className="modern-check-list">
-                    <li>
-                      <div className="check-icon">
-                        <i className="fas fa-check"></i>
-                      </div>
-                      <div className="check-content">
-                        <strong>{t('sustainabilityPage.quality.items.certifications.title')}</strong>
-                        <span>{t('sustainabilityPage.quality.items.certifications.description')}</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="check-icon">
-                        <i className="fas fa-check"></i>
-                      </div>
-                      <div className="check-content">
-                        <strong>{t('sustainabilityPage.quality.items.approvals.title')}</strong>
-                        <span>{t('sustainabilityPage.quality.items.approvals.description')}</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="check-icon">
-                        <i className="fas fa-check"></i>
-                      </div>
-                      <div className="check-content">
-                        <strong>{t('sustainabilityPage.quality.items.compliance.title')}</strong>
-                        <span>{t('sustainabilityPage.quality.items.compliance.description')}</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="check-icon">
-                        <i className="fas fa-check"></i>
-                      </div>
-                      <div className="check-content">
-                        <strong>{t('sustainabilityPage.quality.items.varieties.title')}</strong>
-                        <span>{t('sustainabilityPage.quality.items.varieties.description')}</span>
-                      </div>
-                    </li>
-                  </ul>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Bottom Statement */}
-          <div className="row justify-content-center mt-60">
-            <div className="col-lg-10">
-              <div className="sustainability-statement text-center wow fadeInUp">
+          {/* Quality Assurance Card */}
+          <div className="row mb-80">
+            <div className="col-lg-12">
+              <div className="sustainability-card quality-card wow fadeInUp" data-wow-delay=".1s">
+                <div className="card-header">
+                  <div className="icon-container">
+                    <div className="icon-circle quality-icon">
+                      <i className="fas fa-award"></i>
+                    </div>
+                  </div>
+                  <h3 className="card-title">{t('sustainabilityPage.qualityAssurance.title')}</h3>
+                </div>
+                <div className="card-content">
+                  <p className="card-description">
+                    {t('sustainabilityPage.qualityAssurance.description')}
+                  </p>
+                  <div className="certifications-section">
+                    <h4 className="certifications-title">{t('sustainabilityPage.qualityAssurance.certifications.title')}</h4>
+                    <div className="certifications-grid">
+                      {t('sustainabilityPage.qualityAssurance.certifications.items', { returnObjects: true }).map((cert, index) => (
+                        <div key={index} className="certification-item">
+                          <div className="cert-icon">
+                            <i className="fas fa-certificate"></i>
+                          </div>
+                          <span className="cert-text">{cert}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Global Reach & Customer Promise - Two Column Layout */}
+          <div className="row">
+            <div className="col-lg-6 mb-50">
+              <div className="sustainability-card global-reach-card wow fadeInLeft" data-wow-delay=".2s">
+                <div className="card-header">
+                  <div className="icon-container">
+                    <div className="icon-circle global-icon">
+                      <i className="fas fa-globe"></i>
+                    </div>
+                  </div>
+                  <h3 className="card-title">{t('sustainabilityPage.globalReach.title')}</h3>
+                </div>
+                <div className="card-content">
+                  <p className="card-description">
+                    {t('sustainabilityPage.globalReach.description')}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="col-lg-6 mb-50">
+              <div className="sustainability-card promise-card wow fadeInRight" data-wow-delay=".3s">
+                <div className="card-header">
+                  <div className="icon-container">
+                    <div className="icon-circle promise-icon">
+                      <i className="fas fa-handshake"></i>
+                    </div>
+                  </div>
+                  <h3 className="card-title">{t('sustainabilityPage.customerPromise.title')}</h3>
+                </div>
+                <div className="card-content">
+                  <div className="promise-items-grid">
+                    {t('sustainabilityPage.customerPromise.items', { returnObjects: true }).map((item, index) => (
+                      <div key={index} className="promise-item">
+                        <div className="item-icon">
+                          <i className="fas fa-star"></i>
+                        </div>
+                        <span className="item-text">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Closing Statement */}
+      <section className="closing-statement-section pb-120">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-8">
+              <div className="statement-container text-center wow fadeInUp">
                 <div className="statement-icon">
                   <i className="fas fa-quote-left"></i>
                 </div>
-                <h3 className="statement-text">
+                <blockquote className="statement-text">
                   {t('sustainabilityPage.statement')}
-                </h3>
-                <div className="statement-decoration"></div>
+                </blockquote>
+                <div className="statement-line"></div>
               </div>
             </div>
           </div>

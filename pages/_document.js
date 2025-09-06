@@ -15,7 +15,17 @@ export default function Document(props) {
         {/*====== Flaticon css ======*/}
         <link
           rel="stylesheet"
-          href="/assets/fonts/flaticon/flaticon_gadden.css"
+          href="/assets/fonts/flaticon/flaticon_bello.css"
+        />
+        {/*====== Contact Enhanced CSS ======*/}
+        <link
+          rel="stylesheet"
+          href="/assets/css/contact-enhanced.css"
+        />
+        {/*====== Sustainability Modern CSS ======*/}
+        <link
+          rel="stylesheet"
+          href="/assets/css/sustainability-modern.css"
         />
         {/*====== FontAwesome css ======*/}
         <link

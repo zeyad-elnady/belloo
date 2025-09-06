@@ -29,7 +29,7 @@ const Header1 = () => {
                 {/*====== Top Left ======*/}
                 <div className="top-left">
                   <span>
-                    Welcome to Gadden a modern Gardening &amp; Landscape Contact
+                    Welcome to Bello - Premium Mediterranean Products Contact
                     Us
                   </span>
                 </div>

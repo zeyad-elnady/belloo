@@ -16,20 +16,23 @@ const Contact = () => {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10">
-              <div className="section-title text-center mb-60 wow fadeInDown">
+              <div className="section-title text-center wow fadeInDown">
                 <span className="sub-title">
                   <i className="flaticon-plant" />
                   {t('contactPage.info.subtitle')}
                 </span>
                 <h2>{t('contactPage.info.title')}</h2>
+                <p className="section-description">
+                  {t('contactPage.description') || 'We\'re here to help you. Contact us for prices and premium Mediterranean products'}
+                </p>
               </div>
             </div>
           </div>
-          <div className="contact-info-wrapper wow fadeInUp">
+          <div className="contact-info-wrapper wow fadeInUp" data-wow-delay="0.2s">
             <div className="row justify-content-center">
               <div className="col-lg-4 col-md-6 mb-40">
                 {/*====== Contact Info Item ======*/}
-                <div className="contact-info-item-professional text-center">
+                <div className="contact-info-item-professional text-center wow fadeInUp" data-wow-delay="0.1s">
                   <div className="icon-wrapper">
                     <div className="icon">
                       <i className="fas fa-map-marker-alt"></i>
@@ -43,7 +46,7 @@ const Contact = () => {
               </div>
               <div className="col-lg-4 col-md-6 mb-40">
                 {/*====== Contact Info Item ======*/}
-                <div className="contact-info-item-professional text-center">
+                <div className="contact-info-item-professional text-center wow fadeInUp" data-wow-delay="0.2s">
                   <div className="icon-wrapper">
                     <div className="icon">
                       <i className="fas fa-envelope"></i>
@@ -62,7 +65,7 @@ const Contact = () => {
               </div>
               <div className="col-lg-4 col-md-6 mb-40">
                 {/*====== Contact Info Item ======*/}
-                <div className="contact-info-item-professional text-center">
+                <div className="contact-info-item-professional text-center wow fadeInUp" data-wow-delay="0.3s">
                   <div className="icon-wrapper">
                     <div className="icon">
                       <i className="fas fa-phone"></i>
@@ -256,7 +259,7 @@ const Contact = () => {
           <div className="row justify-content-center">
             <div className="col-xl-4 col-md-6">
               {/*====== Single Info Item ======*/}
-              <div className="single-info-item style-one mb-40 wow fadeInUp">
+              <div className="single-info-item style-one mb-40 wow fadeInUp" data-wow-delay="0.1s">
                 <div className="shape shape-one">
                   <span>
                     <img
@@ -278,7 +281,7 @@ const Contact = () => {
             </div>
             <div className="col-xl-4 col-md-6">
               {/*====== Single Info Item ======*/}
-              <div className="single-info-item style-two mb-40 wow fadeInDown">
+              <div className="single-info-item style-two mb-40 wow fadeInDown" data-wow-delay="0.2s">
                 <div className="shape shape-one">
                   <span>
                     <img
@@ -292,15 +295,21 @@ const Contact = () => {
                   <h4 className="title">
                     {t('footer.whatsappDescription')}
                   </h4>
-                  <Link legacyBehavior href="/contact">
-                    <a className="main-btn golden-btn">{t('footer.whatsappButton')}</a>
-                  </Link>
+                  <a
+                    href="https://wa.me/201101511185?text=Hello%20Bello%20Food%2C%20I%20would%20like%20to%20inquire%20about%20your%20products"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="main-btn golden-btn"
+                  >
+                    <i className="fab fa-whatsapp" style={{marginRight: '8px'}}></i>
+                    {t('footer.whatsappButton')}
+                  </a>
                 </div>
               </div>
             </div>
             <div className="col-xl-4 col-md-6">
               {/*====== Single Info Item ======*/}
-              <div className="single-info-item style-three mb-40 wow fadeInUp">
+              <div className="single-info-item style-three mb-40 wow fadeInUp" data-wow-delay="0.3s">
                 <div className="shape shape-one">
                   <span>
                     <img
@@ -312,7 +321,7 @@ const Contact = () => {
                 <div className="info">
                   <span>{t('joinUsPage.subtitle')}</span>
                   <h4 className="title">
-                    {t('joinUsPage.description')}
+                    Join our team! We're looking for passionate individuals to grow with us.
                   </h4>
                   <Link legacyBehavior href="/join-us">
                     <a className="main-btn primary-btn">{t('joinUsPage.cta.applyNow')}</a>

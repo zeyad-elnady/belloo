@@ -204,8 +204,8 @@ const Index = () => {
           </div>
                     </div>
                   </div>
-          <div className="row">
-            <div className="col-xl-3 col-md-6 col-sm-12">
+          <div className="row justify-content-center">
+            <div className="col-lg-3 col-md-6 col-sm-12">
               <div
                 className="features-thumb-item-two mb-40 wow fadeInDown"
                 data-wow-delay=".2s"
@@ -219,10 +219,38 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-            <div className="col-xl-3 col-md-6 col-sm-12">
+            <div className="col-lg-3 col-md-6 col-sm-12">
               <div
                 className="features-thumb-item-two mb-40 wow fadeInUp"
                 data-wow-delay=".25s"
+              >
+                <div className="text">
+                    <div className="icon">
+                      <img src="/assets/images/icon/002-02.png" alt="Certified Quality Icon" />
+                    </div>
+                  <h5 className="title">{t('features.certifiedQuality.title')}</h5>
+                  <p>{t('features.certifiedQuality.description')}</p>
+                  </div>
+                </div>
+              </div>
+            <div className="col-lg-3 col-md-6 col-sm-12">
+              <div
+                className="features-thumb-item-two mb-40 wow fadeInDown"
+                data-wow-delay=".3s"
+              >
+                  <div className="text">
+                  <div className="icon">
+                    <img src="/assets/images/icon/001-04.png" alt="Unmatched Variety Icon" />
+                  </div>
+                  <h5 className="title">{t('features.unmatchedVariety.title')}</h5>
+                  <p>{t('features.unmatchedVariety.description')}</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-3 col-md-6 col-sm-12">
+              <div
+                className="features-thumb-item-two mb-40 wow fadeInUp"
+                data-wow-delay=".35s"
               >
                 <div className="text">
                     <div className="icon">
@@ -233,24 +261,10 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-            <div className="col-xl-3 col-md-6 col-sm-12">
+            <div className="col-lg-3 col-md-6 col-sm-12">
               <div
                 className="features-thumb-item-two mb-40 wow fadeInDown"
-                data-wow-delay=".3s"
-              >
-                  <div className="text">
-                  <div className="icon">
-                    <img src="/assets/images/icon/002-02.png" alt="Certified Quality Icon" />
-                  </div>
-                  <h5 className="title">{t('features.certifiedQuality.title')}</h5>
-                  <p>{t('features.certifiedQuality.description')}</p>
-                </div>
-              </div>
-            </div>
-            <div className="col-xl-3 col-md-6 col-sm-12">
-              <div
-                className="features-thumb-item-two mb-40 wow fadeInUp"
-                data-wow-delay=".35s"
+                data-wow-delay=".4s"
               >
                   <div className="text">
                   <div className="icon">
