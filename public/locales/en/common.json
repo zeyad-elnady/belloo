@@ -187,7 +187,7 @@
     "pageTitle": "Join Us",
     "subtitle": "Career Opportunities",
     "title": "Grow Your Career with Bello Food",
-    "description": "At Bello Food, we believe our success starts with our people. We’re always looking for passionate, talented, and driven individuals to join our growing team. If you’re ready to be part of a dynamic environment where innovation, quality, and sustainability come together—this is your chance.",
+    "description": "At Bello Food, we believe our success starts with our people. We're always looking for passionate, talented, and driven individuals to join our growing team. If you're ready to be part of a dynamic environment where innovation, quality, and sustainability come together—this is your chance.",
     "whyWorkWithUs": {
       "title": "Why Work With Us?",
       "benefits": {
@@ -215,6 +215,39 @@
         }
       }
     },
+    "applicationForm": {
+      "title": "Application Form",
+      "description": "Ready to join our team? Fill out the application form below and we'll get back to you soon.",
+      "fields": {
+        "name": "Name",
+        "namePlaceholder": "Your full name",
+        "title": "Title",
+        "titlePlaceholder": "Your professional title",
+        "position": "Position Applied For",
+        "positionPlaceholder": "Select a position",
+        "company": "Current Company",
+        "companyPlaceholder": "Current employer (if applicable)",
+        "phone": "Cell Phone",
+        "phonePlaceholder": "+20 1XX XXX XXXX",
+        "email": "Email",
+        "emailPlaceholder": "your.email@example.com",
+        "cvLink": "CV Google Drive Link (Optional)",
+        "cvLinkPlaceholder": "https://drive.google.com/file/d/your-cv-file-id/view"
+      },
+      "positions": {
+        "qualityManager": "Quality Manager",
+        "exportSpecialist": "Export Specialist",
+        "productionSupervisor": "Production Supervisor",
+        "other": "Other"
+      },
+      "helpTexts": {
+        "cvLink": "You can optionally share your CV via Google Drive link. If provided, make sure the sharing settings allow \"Anyone with the link can view\""
+      },
+      "submitButton": "Submit Application",
+      "submittingButton": "Submitting...",
+      "successMessage": "Application submitted successfully! We will review your application and get back to you soon.",
+      "errorMessage": "Sorry, there was an error submitting your application. Please try again or contact us directly."
+    },
     "cta": {
       "title": "Ready to Grow Your Career With Us?",
       "description": "Send us your resume and cover letter. We'd love to hear from you!",
@@ -238,6 +271,59 @@
     "packagingSolutions": {
       "title": "Packaging Solutions",
       "description": "Retail jars, foodservice packs, bulk barrels & private label options"
+    },
+    "categories": {
+      "greenOlives": "Green Olives",
+      "blackOlives": "Black Olives", 
+      "peppers": "Peppers",
+      "picklesVegetables": "Pickles & Vegetables"
+    },
+    "packagingTypes": {
+      "glassJars": "Glass Jars",
+      "cans": "Cans",
+      "vacuum": "Vacuum",
+      "buckets": "Buckets", 
+      "barrels": "Barrels",
+      "petPacks": "PET Packs"
+    },
+    "products": {
+      "wholeGreenOlives": "Whole Green Olives",
+      "pittedGreenOlives": "Pitted Green Olives", 
+      "slicedGreenOlives": "Sliced Green Olives",
+      "wholeBlackOlives": "Whole Black Olives",
+      "pittedBlackOlives": "Pitted Black Olives",
+      "slicedBlackOlives": "Sliced Black Olives",
+      "wholeBlackNaturalKalamataOlives": "Whole Black Natural Kalamata Olives",
+      "pittedBlackNaturalKalamataOlives": "Pitted Black Natural Kalamata Olives",
+      "slicedBlackNaturalKalamataOlives": "Sliced Black Natural Kalamata Olives",
+      "wholeBlackNaturalPicualOlives": "Whole Black Natural Picual Olives",
+      "pittedBlackNaturalPicualOlives": "Pitted Black Natural Picual Olives",
+      "slicedBlackNaturalPicualOlives": "Sliced Black Natural Picual Olives",
+      "oliveBlackNaturalDolce": "Olive Black Natural Dolce",
+      "pittedBlackNaturalDolce": "Pitted Black Natural Dolce",
+      "pepperonciniPepper": "Pepperoncini Pepper",
+      "cherryPepper": "Cherry Pepper",
+      "kardoulaPepper": "Kardoula Pepper",
+      "wholeLombardiPepper": "Whole Lombardi Pepper",
+      "slicedLombardiPepper": "Sliced Lombardi Pepper",
+      "slicedGreenJalapenoPepper": "Sliced Green Jalapeno Pepper",
+      "slicedRedJalapenoPepper": "Sliced Red en Jalapeno Pepper",
+      "habibaPepper": "Habiba Pepper",
+      "mexicanPepper": "Mexican Pepper",
+      "macedonianPepper": "Macedonian Pepper",
+      "artichokeHearts": "Artichoke Hearts",
+      "artichokeQuarter": "Artichoke Quarter",
+      "artichokeBottom": "Artichoke Bottom"
+    },
+    "descriptions": {
+      "availableMultiplePackaging": "Available in multiple packaging",
+      "glassJar370ml": "Glass jar 370ml",
+      "cansVacuumPackaging": "Available in Cans & Vacuum packaging",
+      "a10Tins": "A10 tins"
+    },
+    "buttons": {
+      "viewSpecs": "View Specs",
+      "getQuote": "Get Quote"
     }
   },
   "contactPage": {
@@ -381,6 +467,24 @@
       "description": "Contact us for custom packaging solutions tailored to your needs.",
       "button": "Contact Us"
     }
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "description": "Stay updated with our latest products, exclusive offers, and industry news. Subscribe to our newsletter today!",
+    "emailPlaceholder": "Enter your email address",
+    "subscribe": "Subscribe Now",
+    "subscribing": "Subscribing...",
+    "successMessage": "✅ Thank you for subscribing! You'll receive our latest updates and offers.",
+    "errorMessage": "Sorry, there was an error. Please try again or contact us directly.",
+    "benefits": {
+      "updates": "Latest product updates",
+      "offers": "Exclusive offers & discounts",
+      "news": "Industry insights & news"
+    },
+    "privacyNotice": "We respect your privacy. Unsubscribe at any time.",
+    "errorValidation": "Please enter a valid email address.",
+    "duplicateMessage": "✅ You are already subscribed to our newsletter!",
+    "successWithWelcome": "🎉 Successfully subscribed! Check your email for a welcome message."
   },
   "footer": {
     "about": "Bello Food is your trusted partner in premium olives and pickled products. With decades of experience, we combine agricultural heritage with modern food safety standards to deliver authentic taste and reliable quality to over 20 countries worldwide.",

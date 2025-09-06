@@ -108,7 +108,73 @@ const Contact = () => {
                 {/*====== Contact Form Wrapper ======*/}
                 <div className="contact-form-wrapper mb-50 wow fadeInRight">
                   <form
-                    onSubmit={(e) => e.preventDefault()}
+                    onSubmit={async (e) => {
+                      console.log('Contact form submission started');
+                      e.preventDefault();
+                      
+                      try {
+                        const formData = new FormData(e.target);
+                        
+                        // Validate required fields
+                        const name = formData.get('name');
+                        const email = formData.get('email');
+                        const phone = formData.get('phone');
+                        const subject = formData.get('subject');
+                        const message = formData.get('message');
+                        
+                        if (!name || !email || !phone || !subject || !message) {
+                          alert('Please fill in all required fields.');
+                          return;
+                        }
+                        
+                        // Prepare data for Google Sheets
+                        const submissionData = {
+                          name: name.trim(),
+                          email: email.trim(),
+                          phone: phone.trim(),
+                          subject: subject.trim(),
+                          message: message.trim(),
+                          submissionDate: new Date().toLocaleString(),
+                          timestamp: new Date().toISOString()
+                        };
+                        
+                        // Show loading state
+                        const submitButton = e.target.querySelector('button[type="submit"]');
+                        if (submitButton) {
+                          const originalText = submitButton.innerHTML;
+                          submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+                          submitButton.disabled = true;
+                          
+                          try {
+                            console.log('Submitting contact message...');
+                            
+                            const response = await fetch('https://script.google.com/macros/s/AKfycbzU0_lALt_WwPx7QH8nRlE7OI84rxuvBfFtLzlyjwjV5uTWKw0cBfR3nkrzdAYYuOjQDw/exec', {
+                              method: 'POST',
+                              mode: 'no-cors',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify(submissionData)
+                            });
+                            
+                            console.log('Contact message sent successfully');
+                            alert('✅ Thank you! Your message has been sent successfully. We will get back to you soon.');
+                            e.target.reset();
+                            
+                          } catch (error) {
+                            console.error('Contact submission error:', error);
+                            alert('Your message may have been sent. If you don\'t receive a confirmation, please contact us directly.');
+                          } finally {
+                            // Restore button state
+                            submitButton.innerHTML = originalText;
+                            submitButton.disabled = false;
+                          }
+                        }
+                      } catch (error) {
+                        console.error('Contact form error:', error);
+                        alert('There was an error processing your message. Please try again.');
+                      }
+                    }}
                     className="contact-form"
                   >
                     <div className="form_group">
@@ -143,7 +209,7 @@ const Contact = () => {
                         type="text"
                         className="form_control"
                         placeholder={t('contactPage.form.phone')}
-                        name="number"
+                        name="phone"
                         required
                       />
                     </div>
@@ -172,7 +238,7 @@ const Contact = () => {
                       />
                     </div>
                     <div className="form_group">
-                      <button className="main-btn primary-btn">
+                      <button type="submit" className="main-btn primary-btn">
                         {t('contactPage.form.submit')}
                       </button>
                     </div>

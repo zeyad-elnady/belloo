@@ -50,6 +50,8 @@ export default function Document(props) {
         <link rel="stylesheet" href="/assets/css/default.css" />
         {/*====== Style css ======*/}
         <link rel="stylesheet" href="/assets/css/style.css" />
+        {/*====== Product Fixes css ======*/}
+        <link rel="stylesheet" href="/assets/css/product-fixes.css" />
         {/*====== Mobile Menu Fix css ======*/}
         <link rel="stylesheet" href="/assets/css/mobile-menu-fix.css" />
         {/*====== RTL css ======*/}

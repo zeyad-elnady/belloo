@@ -15,10 +15,10 @@ const Products = () => {
 
   // Category data
   const categories = [
-    { id: 'greenOlives', name: 'Green Olives', icon: '' },
-    { id: 'blackOlives', name: 'Black Olives', icon: '' },
-    { id: 'peppers', name: 'Peppers', icon: '' },
-    { id: 'picklesVegetables', name: 'Pickles & Vegetables', icon: '' }
+    { id: 'greenOlives', name: t('productsPage.categories.greenOlives'), icon: '' },
+    { id: 'blackOlives', name: t('productsPage.categories.blackOlives'), icon: '' },
+    { id: 'peppers', name: t('productsPage.categories.peppers'), icon: '' },
+    { id: 'picklesVegetables', name: t('productsPage.categories.picklesVegetables'), icon: '' }
   ];
 
   // Helper function to get current view for a specific product
@@ -40,12 +40,12 @@ const Products = () => {
     const availablePackaging = getAvailablePackaging(productName);
     const currentView = getProductView(productName);
     const packagingLabels = {
-      'glass-jars': 'Glass Jars',
-      'cans': 'Cans', 
-      'vacuum-bags': 'Vacuum',
-      'plastic-buckets': 'Buckets',
-      'barrels': 'Barrels',
-      'pet-packs': 'PET Packs'
+      'glass-jars': t('productsPage.packagingTypes.glassJars'),
+      'cans': t('productsPage.packagingTypes.cans'), 
+      'vacuum-bags': t('productsPage.packagingTypes.vacuum'),
+      'plastic-buckets': t('productsPage.packagingTypes.buckets'),
+      'barrels': t('productsPage.packagingTypes.barrels'),
+      'pet-packs': t('productsPage.packagingTypes.petPacks')
     };
     
     return availablePackaging.map((packaging) => (
@@ -265,13 +265,13 @@ const Products = () => {
                       <img src={getProductImage('Whole Green Olives')} alt="Whole Green Olives" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Whole Green Olives')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Whole Green Olives</h5>
-                      <p className="product-package">Available in multiple packaging</p>
+                      <h5 className="product-name">{t('productsPage.products.wholeGreenOlives')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.availableMultiplePackaging')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Whole Green Olives')}
@@ -288,13 +288,13 @@ const Products = () => {
                       <img src={getProductImage('Pitted Green Olives')} alt="Pitted Green Olives" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Pitted Green Olives')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Pitted Green Olives</h5>
-                      <p className="product-package">Available in multiple packaging</p>
+                      <h5 className="product-name">{t('productsPage.products.pittedGreenOlives')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.availableMultiplePackaging')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Pitted Green Olives')}
@@ -311,13 +311,13 @@ const Products = () => {
                       <img src={getProductImage('Sliced Green Olives')} alt="Sliced Green Olives" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Green Olives')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Sliced Green Olives</h5>
-                      <p className="product-package">Available in multiple packaging</p>
+                      <h5 className="product-name">{t('productsPage.products.slicedGreenOlives')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.availableMultiplePackaging')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Green Olives')}
@@ -340,13 +340,13 @@ const Products = () => {
                       <img src={getProductImage('Whole Black Olives')} alt="Whole Black Olives" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Whole Black Olives')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Whole Black Olives</h5>
-                      <p className="product-package">Available in Cans & Vacuum packaging</p>
+                      <h5 className="product-name">{t('productsPage.products.wholeBlackOlives')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.cansVacuumPackaging')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Whole Black Olives')}
@@ -363,13 +363,13 @@ const Products = () => {
                       <img src={getProductImage('Pitted Black Olives')} alt="Pitted Black Olives" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Pitted Black Olives')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Pitted Black Olives</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.pittedBlackOlives')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Pitted Black Olives')}
@@ -386,13 +386,13 @@ const Products = () => {
                       <img src={getProductImage('Sliced Black Olives')} alt="Sliced Black Olives" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Black Olives')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Sliced Black Olives</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.slicedBlackOlives')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Black Olives')}
@@ -409,13 +409,13 @@ const Products = () => {
                       <img src={getProductImage('Whole Black Natural Kalamata Olives')} alt="Whole Black Natural Kalamata Olives" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Whole Black Natural Kalamata Olives')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Whole Black Natural Kalamata Olives</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.wholeBlackNaturalKalamataOlives')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Whole Black Natural Kalamata Olives')}
@@ -432,13 +432,13 @@ const Products = () => {
                       <img src={getProductImage('Pitted Black Natural Kalamata Olives')} alt="Pitted Black Natural Kalamata Olives" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Pitted Black Natural Kalamata Olives')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Pitted Black Natural Kalamata Olives</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.pittedBlackNaturalKalamataOlives')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Pitted Black Natural Kalamata Olives')}
@@ -455,13 +455,13 @@ const Products = () => {
                       <img src={getProductImage('Sliced Black Natural Kalamata Olives')} alt="Sliced Black Natural Kalamata Olives" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Black Natural Kalamata Olives')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Sliced Black Natural Kalamata Olives</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.slicedBlackNaturalKalamataOlives')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Black Natural Kalamata Olives')}
@@ -478,13 +478,13 @@ const Products = () => {
                       <img src={getProductImage('Whole Black Natural Picual Olives')} alt="Whole Black Natural Picual Olives" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Whole Black Natural Picual Olives')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Whole Black Natural Picual Olives</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.wholeBlackNaturalPicualOlives')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Whole Black Natural Picual Olives')}
@@ -501,13 +501,13 @@ const Products = () => {
                       <img src={getProductImage('Pitted Black Natural Picual Olives')} alt="Pitted Black Natural Picual Olives" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Pitted Black Natural Picual Olives')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Pitted Black Natural Picual Olives</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.pittedBlackNaturalPicualOlives')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Pitted Black Natural Picual Olives')}
@@ -524,13 +524,13 @@ const Products = () => {
                       <img src={getProductImage('Sliced Black Natural Picual Olives')} alt="Sliced Black Natural Picual Olives" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Black Natural Picual Olives')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Sliced Black Natural Picual Olives</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.slicedBlackNaturalPicualOlives')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Black Natural Picual Olives')}
@@ -547,13 +547,13 @@ const Products = () => {
                       <img src={getProductImage('Olive Black Natural Dolce')} alt="Olive Black Natural Dolce" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Olive Black Natural Dolce')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Olive Black Natural Dolce</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.oliveBlackNaturalDolce')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Olive Black Natural Dolce')}
@@ -570,13 +570,13 @@ const Products = () => {
                       <img src={getProductImage('Pitted Black Natural Dolce')} alt="Pitted Black Natural Dolce" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Pitted Black Natural Dolce')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Pitted Black Natural Dolce</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.pittedBlackNaturalDolce')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Pitted Black Natural Dolce')}
@@ -599,13 +599,13 @@ const Products = () => {
                       <img src={getProductImage('Pepperoncini Pepper')} alt="Pepperoncini Pepper" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Pepperoncini Pepper')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Pepperoncini Pepper</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.pepperonciniPepper')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Pepperoncini Pepper')}
@@ -622,13 +622,13 @@ const Products = () => {
                       <img src={getProductImage('Cherry Pepper')} alt="Cherry Pepper" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Cherry Pepper')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Cherry Pepper</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.cherryPepper')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Cherry Pepper')}
@@ -645,13 +645,13 @@ const Products = () => {
                       <img src={getProductImage('Kardoula Pepper')} alt="Kardoula Pepper" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Kardoula Pepper')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Kardoula Pepper</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.kardoulaPepper')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Kardoula Pepper')}
@@ -668,13 +668,13 @@ const Products = () => {
                       <img src={getProductImage('Whole Lombardi Pepper')} alt="Whole Lombardi Pepper" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Whole Lombardi Pepper')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Whole Lombardi Pepper</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.wholeLombardiPepper')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Whole Lombardi Pepper')}
@@ -691,13 +691,13 @@ const Products = () => {
                       <img src={getProductImage('Sliced Lombardi Pepper')} alt="Sliced Lombardi Pepper" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Lombardi Pepper')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Sliced Lombardi Pepper</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.slicedLombardiPepper')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Lombardi Pepper')}
@@ -714,13 +714,13 @@ const Products = () => {
                       <img src={getProductImage('Sliced Green Jalapeno Pepper')} alt="Sliced Green Jalapeno Pepper" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Green Jalapeno Pepper')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Sliced Green Jalapeno Pepper</h5>
-                      <p className="product-package">A10 tins</p>
+                      <h5 className="product-name">{t('productsPage.products.slicedGreenJalapenoPepper')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.a10Tins')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Green Jalapeno Pepper')}
@@ -737,13 +737,13 @@ const Products = () => {
                       <img src={getProductImage('Sliced Red en Jalapeno Pepper')} alt="Sliced Red en Jalapeno Pepper" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Sliced Red en Jalapeno Pepper')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Sliced Red en Jalapeno Pepper</h5>
-                      <p className="product-package">A10 tins</p>
+                      <h5 className="product-name">{t('productsPage.products.slicedRedJalapenoPepper')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.a10Tins')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Red en Jalapeno Pepper')}
@@ -761,13 +761,13 @@ const Products = () => {
                       <img src={getProductImage('Habiba Pepper')} alt="Habiba Pepper" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Habiba Pepper')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Habiba Pepper</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.habibaPepper')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Habiba Pepper')}
@@ -784,13 +784,13 @@ const Products = () => {
                       <img src={getProductImage('Mexican Pepper')} alt="Mexican Pepper" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Mexican Pepper')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Mexican Pepper</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.mexicanPepper')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Mexican Pepper')}
@@ -807,13 +807,13 @@ const Products = () => {
                       <img src={getProductImage('Macedonian Pepper')} alt="Macedonian Pepper" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Macedonian Pepper')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Macedonian Pepper</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.macedonianPepper')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Macedonian Pepper')}
@@ -835,13 +835,13 @@ const Products = () => {
                       <img src={getProductImage('Artichoke Hearts')} alt="Artichoke Hearts" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Artichoke Hearts')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Artichoke Hearts</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.artichokeHearts')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Artichoke Hearts')}
@@ -858,13 +858,13 @@ const Products = () => {
                       <img src={getProductImage('Artichoke Quarter')} alt="Artichoke Quarter" />
                       <div className="product-overlay">
                         <Link legacyBehavior href={`/specifications?package=${getProductView('Artichoke Quarter')}`}>
-                          <a className="inquiry-btn">View Specs</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Artichoke Quarter</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.artichokeQuarter')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Artichoke Quarter')}
@@ -881,13 +881,13 @@ const Products = () => {
                       <img src={getProductImage('Artichoke Bottom')} alt="Artichoke Bottom" />
                       <div className="product-overlay">
                         <Link legacyBehavior href="/contact">
-                          <a className="inquiry-btn">Get Quote</a>
+                          <a className="inquiry-btn">{t('productsPage.buttons.getQuote')}</a>
                         </Link>
                       </div>
                     </div>
                     <div className="product-info">
-                      <h5 className="product-name">Artichoke Bottom</h5>
-                      <p className="product-package">Glass jar 370ml</p>
+                      <h5 className="product-name">{t('productsPage.products.artichokeBottom')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Artichoke Bottom')}

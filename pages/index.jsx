@@ -927,6 +927,127 @@ const Index = () => {
         </div>
       </section>
       {/*====== End Blog Section  ======*/}
+      {/*====== Start Newsletter Section ======*/}
+      <section className="newsletter-section white-bg py-40">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-6 col-md-8">
+              {/*====== Newsletter Form ======*/}
+              <div className="newsletter-form-wrapper wow fadeInUp" data-wow-delay=".2s">
+                <form 
+                  onSubmit={async (e) => {
+                    console.log('Newsletter form submission started');
+                    e.preventDefault();
+
+                    try {
+                      const formData = new FormData(e.target);
+                      const email = formData.get('email');
+
+                      if (!email || !email.trim()) {
+                        alert(t('newsletter.errorValidation') || 'Please enter a valid email address.');
+                        return;
+                      }
+
+                      // Show loading state
+                      const submitButton = e.target.querySelector('button[type="submit"]');
+                      if (submitButton) {
+                        const originalText = submitButton.innerHTML;
+                        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>' + t('newsletter.subscribing');
+                        submitButton.disabled = true;
+
+                        try {
+                          console.log('Submitting newsletter subscription...');
+
+                          // Use form data for better compatibility with Google Apps Script
+                          const formData = new FormData();
+                          formData.append('email', email.trim());
+                          formData.append('source', 'Homepage');
+                          formData.append('language', router.locale || 'en');
+                          
+                          const response = await fetch('https://script.google.com/macros/s/AKfycbw8CS8rMqQ2E4WzNkpRKJ0tNXn8Lg6Y17BMXAv-Iw3rjTzxfb7UlCKWmndPCmHbDarDkQ/exec', {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            body: formData
+                          });
+
+                          // With no-cors mode, we can't read the response, so we assume success
+                          console.log('Newsletter subscription sent successfully');
+                          alert(t('newsletter.successWithWelcome') || '🎉 Successfully subscribed! If you don\'t receive a welcome email, you may already be subscribed.');
+                          e.target.reset();
+
+                        } catch (error) {
+                          console.error('Newsletter submission error:', error);
+                          alert(t('newsletter.errorMessage'));
+                        } finally {
+                          // Restore button state
+                          submitButton.innerHTML = originalText;
+                          submitButton.disabled = false;
+                        }
+                      }
+                    } catch (error) {
+                      console.error('Newsletter form error:', error);
+                      alert('There was an error processing your subscription. Please try again.');
+                    }
+                  }}
+                  className="newsletter-form d-flex align-items-center"
+                  style={{
+                    background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
+                    padding: '8px',
+                    borderRadius: '50px',
+                    border: '2px solid #e9ecef',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                  }}
+                >
+                  <div className="form-group flex-fill mb-0" style={{ marginRight: '8px' }}>
+                    <input 
+                      type="email" 
+                      name="email"
+                      className="form-control newsletter-input" 
+                      placeholder={t('newsletter.emailPlaceholder')}
+                      required
+                      style={{
+                        height: '48px',
+                        padding: '0 20px',
+                        borderRadius: '40px',
+                        border: 'none',
+                        backgroundColor: 'transparent',
+                        color: '#2F2F2F',
+                        fontSize: '15px',
+                        fontWeight: '400',
+                        transition: 'all 0.3s ease',
+                        boxShadow: 'none'
+                      }}
+                    />
+                  </div>
+                  <button 
+                    type="submit" 
+                    className="newsletter-btn"
+                    style={{ 
+                      height: '48px',
+                      borderRadius: '40px',
+                      padding: '0 30px',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      minWidth: '140px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.3px',
+                      transition: 'all 0.3s ease',
+                      border: 'none',
+                      backgroundColor: '#4D602C',
+                      color: '#fff',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <i className="far fa-envelope mr-2"></i>
+                    {t('newsletter.subscribe')}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*====== End Newsletter Section ======*/}
     </Layout>
   );
 };
