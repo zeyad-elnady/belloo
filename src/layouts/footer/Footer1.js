@@ -133,11 +133,11 @@ const Footer1 = () => {
                     </li>
                     <li>
                       <a
-                        href="/assets/images/gallery/thumb-widget-4.jpg"
+                        href="/assets/images/gallery/thumb-widget-4.png"
                         className="img-popup"
                       >
                         <img
-                          src="/assets/images/gallery/thumb-widget-4.jpg"
+                          src="/assets/images/gallery/thumb-widget-4.png"
                           alt="Image"
                         />
                         <div className="hover-overlay">
@@ -147,11 +147,11 @@ const Footer1 = () => {
                     </li>
                     <li>
                       <a
-                        href="/assets/images/gallery/thumb-widget-5.jpg"
+                        href="/assets/images/gallery/thumb-widget-5.png"
                         className="img-popup"
                       >
                         <img
-                          src="/assets/images/gallery/thumb-widget-5.jpg"
+                          src="/assets/images/gallery/thumb-widget-5.png"
                           alt="Image"
                         />
                         <div className="hover-overlay">
@@ -161,11 +161,11 @@ const Footer1 = () => {
                     </li>
                     <li>
                       <a
-                        href="/assets/images/gallery/thumb-widget-6.jpg"
+                        href="/assets/images/gallery/thumb-widget-6.png"
                         className="img-popup"
                       >
                         <img
-                          src="/assets/images/gallery/thumb-widget-6.jpg"
+                          src="/assets/images/gallery/thumb-widget-6.png"
                           alt="Image"
                         />
                         <div className="hover-overlay">

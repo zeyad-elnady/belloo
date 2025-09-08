@@ -196,20 +196,30 @@
     "subtitle": "Career Opportunities",
     "title": "Grow Your Career with Bello Food",
     "description": "At Bello Food, we believe our success starts with our people. We're always looking for passionate, talented, and driven individuals to join our growing team. If you're ready to be part of a dynamic environment where innovation, quality, and sustainability come together—this is your chance.",
+    "whyWorkWithUs": {
+      "title": "Why Work With Us?",
+      "benefits": {
+        "competitive": "Competitive salary and benefits package",
+        "development": "Professional development and growth opportunities",
+        "technology": "Work with cutting-edge food processing technology",
+        "environment": "Positive and collaborative work environment",
+        "flexibility": "Work-life balance and flexible schedule options"
+      }
+    },
     "currentOpenings": {
       "title": "Job Listings",
       "jobs": {
-        "job1": {
+        "qualityManager": {
           "title": "Quality Control Manager",
-          "details": "Short description of the role and requirements for quality control management in food industry"
+          "details": "Lead our quality assurance team to ensure all products meet international food safety standards and certifications."
         },
-        "job2": {
+        "exportSpecialist": {
           "title": "Export Sales Specialist",
-          "details": "Short description of the role and requirements for international trade and export operations"
+          "details": "Develop and manage export relationships across global markets including Europe, Russia, and the Middle East."
         },
-        "job3": {
+        "productionSupervisor": {
           "title": "Production Supervisor",
-          "details": "Short description of the role and requirements for food production supervision and management"
+          "details": "Oversee daily production operations ensuring efficiency, quality, and adherence to safety protocols."
         }
       }
     },

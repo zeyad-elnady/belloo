@@ -25,41 +25,919 @@ const JoinUs = () => {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-6 mb-40">
-              <div className="career-item wow fadeInLeft">
-                <h4>{t('joinUsPage.whyWorkWithUs.title')}</h4>
-                <ul className="check-style-one mt-30">
-                  <li><i className="far fa-check" />{t('joinUsPage.whyWorkWithUs.benefits.competitive')}</li>
-                  <li><i className="far fa-check" />{t('joinUsPage.whyWorkWithUs.benefits.development')}</li>
-                  <li><i className="far fa-check" />{t('joinUsPage.whyWorkWithUs.benefits.technology')}</li>
-                  <li><i className="far fa-check" />{t('joinUsPage.whyWorkWithUs.benefits.environment')}</li>
-                  <li><i className="far fa-check" />{t('joinUsPage.whyWorkWithUs.benefits.flexibility')}</li>
+          {/* Why Work With Us Section */}
+          <div className="row justify-content-center mb-60">
+            <div className="col-lg-8">
+              <div className="career-item wow fadeInUp text-center">
+                <h4 style={{
+                  color: '#2c3e50',
+                  fontSize: '32px',
+                  fontWeight: '700',
+                  marginBottom: '20px',
+                  fontFamily: '"Montserrat", sans-serif'
+                }}>{t('joinUsPage.whyWorkWithUs.title')}</h4>
+                <div style={{
+                  width: '80px',
+                  height: '4px',
+                  background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                  borderRadius: '2px',
+                  margin: '0 auto 40px auto'
+                }}></div>
+                <ul className="check-style-one mt-30" style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
+                  gap: '15px 40px',
+                  listStyle: 'none',
+                  padding: 0,
+                  maxWidth: '800px',
+                  margin: '0 auto'
+                }}>
+                  <li style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    color: '#666',
+                    minWidth: '300px'
+                  }}><i className="far fa-check" style={{
+                    color: '#4d602c',
+                    marginRight: '12px',
+                    fontSize: '18px'
+                  }} />{t('joinUsPage.whyWorkWithUs.benefits.competitive')}</li>
+                  <li style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    color: '#666',
+                    minWidth: '300px'
+                  }}><i className="far fa-check" style={{
+                    color: '#4d602c',
+                    marginRight: '12px',
+                    fontSize: '18px'
+                  }} />{t('joinUsPage.whyWorkWithUs.benefits.development')}</li>
+                  <li style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    color: '#666',
+                    minWidth: '300px'
+                  }}><i className="far fa-check" style={{
+                    color: '#4d602c',
+                    marginRight: '12px',
+                    fontSize: '18px'
+                  }} />{t('joinUsPage.whyWorkWithUs.benefits.technology')}</li>
+                  <li style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    color: '#666',
+                    minWidth: '300px'
+                  }}><i className="far fa-check" style={{
+                    color: '#4d602c',
+                    marginRight: '12px',
+                    fontSize: '18px'
+                  }} />{t('joinUsPage.whyWorkWithUs.benefits.environment')}</li>
+                  <li style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    color: '#666',
+                    minWidth: '300px'
+                  }}><i className="far fa-check" style={{
+                    color: '#4d602c',
+                    marginRight: '12px',
+                    fontSize: '18px'
+                  }} />{t('joinUsPage.whyWorkWithUs.benefits.flexibility')}</li>
                 </ul>
               </div>
             </div>
-            <div className="col-lg-6 mb-40">
-              <div className="career-item wow fadeInRight">
-                <h4>{t('joinUsPage.currentOpenings.title')}</h4>
-                <div className="job-list mt-30">
-                  <div className="job-item mb-20">
-                    <h6>{t('joinUsPage.currentOpenings.jobs.qualityManager.title')}</h6>
-                    <p>{t('joinUsPage.currentOpenings.jobs.qualityManager.details')}</p>
+          </div>
+          
+          {/* Job Listings Section */}
+          <div className="row justify-content-center mb-60">
+            <div className="col-lg-12">
+              <div className="career-openings-section wow fadeInUp">
+                <div className="section-header mb-40 text-center">
+                  <h4 style={{
+                    color: '#2c3e50',
+                    fontSize: '32px',
+                    fontWeight: '700',
+                    marginBottom: '10px',
+                    fontFamily: '"Montserrat", sans-serif'
+                  }}>{t('joinUsPage.currentOpenings.title')}</h4>
+                  <div style={{
+                    width: '80px',
+                    height: '4px',
+                    background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                    borderRadius: '2px',
+                    margin: '0 auto 20px auto'
+                  }}></div>
+                  <p style={{
+                    color: '#666',
+                    fontSize: '18px',
+                    lineHeight: '1.6',
+                    margin: 0,
+                    maxWidth: '600px',
+                    margin: '0 auto'
+                  }}>
+                    Join our dynamic team and grow your career in the food export industry
+                  </p>
+                </div>
+                
+                <div className="row justify-content-center">
+                  {/* Quality Manager Position */}
+                  <div className="col-lg-4 col-md-6 mb-30">
+                    <div 
+                      className="job-offer-card wow fadeInUp" 
+                      data-wow-delay="0.1s"
+                      style={{
+                        background: '#ffffff',
+                        borderRadius: '16px',
+                        padding: '30px 25px',
+                        height: '100%',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.08)',
+                        border: '1px solid #f0f0f0',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        transition: 'all 0.3s ease',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        flexDirection: 'column'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-5px)';
+                        e.currentTarget.style.boxShadow = '0 15px 40px rgba(77, 96, 44, 0.15)';
+                        e.currentTarget.style.borderColor = '#4d602c';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)';
+                        e.currentTarget.style.borderColor = '#f0f0f0';
+                      }}
+                    >
+                      {/* Accent Line */}
+                      <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '4px',
+                        background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)'
+                      }}></div>
+                      
+                      <div className="job-header" style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginBottom: '15px',
+                        flexDirection: 'column',
+                        textAlign: 'center'
+                      }}>
+                        <div style={{
+                          width: '60px',
+                          height: '60px',
+                          background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                          borderRadius: '15px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginBottom: '15px'
+                        }}>
+                          <i className="fas fa-clipboard-check" style={{ fontSize: '28px', color: '#ffffff' }}></i>
+                        </div>
+                        <div>
+                          <h5 style={{
+                            color: '#2c3e50',
+                            fontSize: '20px',
+                            fontWeight: '700',
+                            margin: '0 0 8px 0',
+                            lineHeight: '1.2',
+                            fontFamily: '"Montserrat", sans-serif'
+                          }}>
+                            {t('joinUsPage.currentOpenings.jobs.qualityManager.title')}
+                          </h5>
+                          <span style={{
+                            color: '#4d602c',
+                            fontSize: '13px',
+                            fontWeight: '600',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.5px'
+                          }}>Full Time • Quality Department</span>
+                        </div>
+                      </div>
+                      
+                      <p style={{
+                        color: '#666',
+                        fontSize: '15px',
+                        lineHeight: '1.6',
+                        margin: '0 0 20px 0',
+                        textAlign: 'center',
+                        flex: 1
+                      }}>
+                        {t('joinUsPage.currentOpenings.jobs.qualityManager.details')}
+                      </p>
+                      
+                      <div className="job-tags" style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '8px',
+                        marginBottom: '20px',
+                        justifyContent: 'center'
+                      }}>
+                        <span style={{
+                          background: '#f8f9fa',
+                          color: '#4d602c',
+                          padding: '6px 12px',
+                          borderRadius: '20px',
+                          fontSize: '12px',
+                          fontWeight: '500'
+                        }}>Food Safety</span>
+                        <span style={{
+                          background: '#f8f9fa',
+                          color: '#4d602c',
+                          padding: '6px 12px',
+                          borderRadius: '20px',
+                          fontSize: '12px',
+                          fontWeight: '500'
+                        }}>ISO Standards</span>
+                        <span style={{
+                          background: '#f8f9fa',
+                          color: '#4d602c',
+                          padding: '6px 12px',
+                          borderRadius: '20px',
+                          fontSize: '12px',
+                          fontWeight: '500'
+                        }}>Leadership</span>
+                      </div>
+                      
+                      <button 
+                        onClick={() => {
+                          document.getElementById('application-form').scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                          });
+                        }}
+                        style={{
+                          background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                          color: '#ffffff',
+                          border: 'none',
+                          padding: '12px 24px',
+                          borderRadius: '25px',
+                          fontSize: '14px',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          justifyContent: 'center',
+                          width: '100%'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.05)';
+                          e.currentTarget.style.boxShadow = '0 5px 15px rgba(77, 96, 44, 0.3)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1)';
+                          e.currentTarget.style.boxShadow = 'none';
+                        }}
+                      >
+                        Apply Now <i className="fas fa-arrow-right" style={{ fontSize: '12px' }}></i>
+                      </button>
+                    </div>
                   </div>
-                  <div className="job-item mb-20">
-                    <h6>{t('joinUsPage.currentOpenings.jobs.exportSpecialist.title')}</h6>
-                    <p>{t('joinUsPage.currentOpenings.jobs.exportSpecialist.details')}</p>
+                  
+                  {/* Export Specialist Position */}
+                  <div className="col-lg-4 col-md-6 mb-30">
+                    <div 
+                      className="job-offer-card wow fadeInUp" 
+                      data-wow-delay="0.2s"
+                      style={{
+                        background: '#ffffff',
+                        borderRadius: '16px',
+                        padding: '30px 25px',
+                        height: '100%',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.08)',
+                        border: '1px solid #f0f0f0',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        transition: 'all 0.3s ease',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        flexDirection: 'column'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-5px)';
+                        e.currentTarget.style.boxShadow = '0 15px 40px rgba(77, 96, 44, 0.15)';
+                        e.currentTarget.style.borderColor = '#4d602c';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)';
+                        e.currentTarget.style.borderColor = '#f0f0f0';
+                      }}
+                    >
+                      {/* Accent Line */}
+                      <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '4px',
+                        background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)'
+                      }}></div>
+                      
+                      <div className="job-header" style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginBottom: '15px',
+                        flexDirection: 'column',
+                        textAlign: 'center'
+                      }}>
+                        <div style={{
+                          width: '60px',
+                          height: '60px',
+                          background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                          borderRadius: '15px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginBottom: '15px'
+                        }}>
+                          <i className="fas fa-globe-americas" style={{ fontSize: '28px', color: '#ffffff' }}></i>
+                        </div>
+                        <div>
+                          <h5 style={{
+                            color: '#2c3e50',
+                            fontSize: '20px',
+                            fontWeight: '700',
+                            margin: '0 0 8px 0',
+                            lineHeight: '1.2',
+                            fontFamily: '"Montserrat", sans-serif'
+                          }}>
+                            {t('joinUsPage.currentOpenings.jobs.exportSpecialist.title')}
+                          </h5>
+                          <span style={{
+                            color: '#4d602c',
+                            fontSize: '13px',
+                            fontWeight: '600',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.5px'
+                          }}>Full Time • Sales Department</span>
+                        </div>
+                      </div>
+                      
+                      <p style={{
+                        color: '#666',
+                        fontSize: '15px',
+                        lineHeight: '1.6',
+                        margin: '0 0 20px 0',
+                        textAlign: 'center',
+                        flex: 1
+                      }}>
+                        {t('joinUsPage.currentOpenings.jobs.exportSpecialist.details')}
+                      </p>
+                      
+                      <div className="job-tags" style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '8px',
+                        marginBottom: '20px',
+                        justifyContent: 'center'
+                      }}>
+                        <span style={{
+                          background: '#f8f9fa',
+                          color: '#4d602c',
+                          padding: '6px 12px',
+                          borderRadius: '20px',
+                          fontSize: '12px',
+                          fontWeight: '500'
+                        }}>Export Sales</span>
+                        <span style={{
+                          background: '#f8f9fa',
+                          color: '#4d602c',
+                          padding: '6px 12px',
+                          borderRadius: '20px',
+                          fontSize: '12px',
+                          fontWeight: '500'
+                        }}>International Trade</span>
+                        <span style={{
+                          background: '#f8f9fa',
+                          color: '#4d602c',
+                          padding: '6px 12px',
+                          borderRadius: '20px',
+                          fontSize: '12px',
+                          fontWeight: '500'
+                        }}>Relationship Management</span>
+                      </div>
+                      
+                      <button 
+                        onClick={() => {
+                          document.getElementById('application-form').scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                          });
+                        }}
+                        style={{
+                          background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                          color: '#ffffff',
+                          border: 'none',
+                          padding: '12px 24px',
+                          borderRadius: '25px',
+                          fontSize: '14px',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          justifyContent: 'center',
+                          width: '100%'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.05)';
+                          e.currentTarget.style.boxShadow = '0 5px 15px rgba(77, 96, 44, 0.3)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1)';
+                          e.currentTarget.style.boxShadow = 'none';
+                        }}
+                      >
+                        Apply Now <i className="fas fa-arrow-right" style={{ fontSize: '12px' }}></i>
+                      </button>
+                    </div>
                   </div>
-                  <div className="job-item mb-20">
-                    <h6>{t('joinUsPage.currentOpenings.jobs.productionSupervisor.title')}</h6>
-                    <p>{t('joinUsPage.currentOpenings.jobs.productionSupervisor.details')}</p>
+                  
+                  {/* Production Supervisor Position */}
+                  <div className="col-lg-4 col-md-6 mb-30">
+                    <div 
+                      className="job-offer-card wow fadeInUp" 
+                      data-wow-delay="0.3s"
+                      style={{
+                        background: '#ffffff',
+                        borderRadius: '16px',
+                        padding: '30px 25px',
+                        height: '100%',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.08)',
+                        border: '1px solid #f0f0f0',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        transition: 'all 0.3s ease',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        flexDirection: 'column'
+                      }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-5px)';
+                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(77, 96, 44, 0.15)';
+                      e.currentTarget.style.borderColor = '#4d602c';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)';
+                      e.currentTarget.style.borderColor = '#f0f0f0';
+                    }}
+                  >
+                    {/* Accent Line */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '4px',
+                      background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)'
+                    }}></div>
+                    
+                    <div className="job-header" style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: '15px',
+                      flexDirection: 'column',
+                      textAlign: 'center'
+                    }}>
+                      <div style={{
+                        width: '60px',
+                        height: '60px',
+                        background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                        borderRadius: '15px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginBottom: '15px'
+                      }}>
+                        <i className="fas fa-cogs" style={{ fontSize: '28px', color: '#ffffff' }}></i>
+                      </div>
+                      <div>
+                        <h5 style={{
+                          color: '#2c3e50',
+                          fontSize: '20px',
+                          fontWeight: '700',
+                          margin: '0 0 8px 0',
+                          lineHeight: '1.2',
+                          fontFamily: '"Montserrat", sans-serif'
+                        }}>
+                          {t('joinUsPage.currentOpenings.jobs.productionSupervisor.title')}
+                        </h5>
+                        <span style={{
+                          color: '#4d602c',
+                          fontSize: '13px',
+                          fontWeight: '600',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px'
+                        }}>Full Time • Production Department</span>
+                      </div>
+                    </div>
+                    
+                    <p style={{
+                      color: '#666',
+                      fontSize: '15px',
+                      lineHeight: '1.6',
+                      margin: '0 0 20px 0',
+                      textAlign: 'center',
+                      flex: 1
+                    }}>
+                      {t('joinUsPage.currentOpenings.jobs.productionSupervisor.details')}
+                    </p>
+                    
+                    <div className="job-tags" style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '8px',
+                      marginBottom: '20px',
+                      justifyContent: 'center'
+                    }}>
+                      <span style={{
+                        background: '#f8f9fa',
+                        color: '#4d602c',
+                        padding: '6px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '500'
+                      }}>Production Management</span>
+                      <span style={{
+                        background: '#f8f9fa',
+                        color: '#4d602c',
+                        padding: '6px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '500'
+                      }}>Safety Protocols</span>
+                      <span style={{
+                        background: '#f8f9fa',
+                        color: '#4d602c',
+                        padding: '6px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '500'
+                      }}>Team Leadership</span>
+                    </div>
+                    
+                    <button 
+                      onClick={() => {
+                        document.getElementById('application-form').scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'start'
+                        });
+                      }}
+                      style={{
+                        background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                        color: '#ffffff',
+                        border: 'none',
+                        padding: '10px 20px',
+                        borderRadius: '25px',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                        e.currentTarget.style.boxShadow = '0 5px 15px rgba(77, 96, 44, 0.3)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      Apply Now <i className="fas fa-arrow-right" style={{ fontSize: '12px' }}></i>
+                    </button>
+                  </div>
+                  
+                  {/* Export Specialist Position */}
+                  <div 
+                    className="job-offer-card wow fadeInUp" 
+                    data-wow-delay="0.2s"
+                    style={{
+                      background: '#ffffff',
+                      borderRadius: '16px',
+                      padding: '30px 25px',
+                      marginBottom: '20px',
+                      boxShadow: '0 8px 25px rgba(0,0,0,0.08)',
+                      border: '1px solid #f0f0f0',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-5px)';
+                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(77, 96, 44, 0.15)';
+                      e.currentTarget.style.borderColor = '#4d602c';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)';
+                      e.currentTarget.style.borderColor = '#f0f0f0';
+                    }}
+                  >
+                    {/* Accent Line */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '4px',
+                      background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)'
+                    }}></div>
+                    
+                    <div className="job-header" style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: '15px'
+                    }}>
+                      <div style={{
+                        width: '50px',
+                        height: '50px',
+                        background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '15px'
+                      }}>
+                        <i className="fas fa-globe-americas" style={{ fontSize: '22px', color: '#ffffff' }}></i>
+                      </div>
+                      <div>
+                        <h5 style={{
+                          color: '#2c3e50',
+                          fontSize: '20px',
+                          fontWeight: '700',
+                          margin: 0,
+                          lineHeight: '1.2',
+                          fontFamily: '"Montserrat", sans-serif'
+                        }}>
+                          {t('joinUsPage.currentOpenings.jobs.exportSpecialist.title')}
+                        </h5>
+                        <span style={{
+                          color: '#4d602c',
+                          fontSize: '13px',
+                          fontWeight: '600',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px'
+                        }}>Full Time • Sales Department</span>
+                      </div>
+                    </div>
+                    
+                    <p style={{
+                      color: '#666',
+                      fontSize: '15px',
+                      lineHeight: '1.6',
+                      margin: '0 0 20px 0'
+                    }}>
+                      {t('joinUsPage.currentOpenings.jobs.exportSpecialist.details')}
+                    </p>
+                    
+                    <div className="job-tags" style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '8px',
+                      marginBottom: '20px'
+                    }}>
+                      <span style={{
+                        background: '#f8f9fa',
+                        color: '#4d602c',
+                        padding: '6px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '500'
+                      }}>Export Sales</span>
+                      <span style={{
+                        background: '#f8f9fa',
+                        color: '#4d602c',
+                        padding: '6px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '500'
+                      }}>International Trade</span>
+                      <span style={{
+                        background: '#f8f9fa',
+                        color: '#4d602c',
+                        padding: '6px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '500'
+                      }}>Relationship Management</span>
+                    </div>
+                    
+                    <button 
+                      onClick={() => {
+                        document.getElementById('application-form').scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'start'
+                        });
+                      }}
+                      style={{
+                        background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                        color: '#ffffff',
+                        border: 'none',
+                        padding: '10px 20px',
+                        borderRadius: '25px',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                        e.currentTarget.style.boxShadow = '0 5px 15px rgba(77, 96, 44, 0.3)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      Apply Now <i className="fas fa-arrow-right" style={{ fontSize: '12px' }}></i>
+                    </button>
+                  </div>
+                  
+                  {/* Production Supervisor Position */}
+                  <div 
+                    className="job-offer-card wow fadeInUp" 
+                    data-wow-delay="0.3s"
+                    style={{
+                      background: '#ffffff',
+                      borderRadius: '16px',
+                      padding: '30px 25px',
+                      marginBottom: '20px',
+                      boxShadow: '0 8px 25px rgba(0,0,0,0.08)',
+                      border: '1px solid #f0f0f0',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-5px)';
+                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(77, 96, 44, 0.15)';
+                      e.currentTarget.style.borderColor = '#4d602c';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)';
+                      e.currentTarget.style.borderColor = '#f0f0f0';
+                    }}
+                  >
+                    {/* Accent Line */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '4px',
+                      background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)'
+                    }}></div>
+                    
+                    <div className="job-header" style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: '15px'
+                    }}>
+                      <div style={{
+                        width: '50px',
+                        height: '50px',
+                        background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '15px'
+                      }}>
+                        <i className="fas fa-cogs" style={{ fontSize: '22px', color: '#ffffff' }}></i>
+                      </div>
+                      <div>
+                        <h5 style={{
+                          color: '#2c3e50',
+                          fontSize: '20px',
+                          fontWeight: '700',
+                          margin: 0,
+                          lineHeight: '1.2',
+                          fontFamily: '"Montserrat", sans-serif'
+                        }}>
+                          {t('joinUsPage.currentOpenings.jobs.productionSupervisor.title')}
+                        </h5>
+                        <span style={{
+                          color: '#4d602c',
+                          fontSize: '13px',
+                          fontWeight: '600',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px'
+                        }}>Full Time • Production Department</span>
+                      </div>
+                    </div>
+                    
+                    <p style={{
+                      color: '#666',
+                      fontSize: '15px',
+                      lineHeight: '1.6',
+                      margin: '0 0 20px 0'
+                    }}>
+                      {t('joinUsPage.currentOpenings.jobs.productionSupervisor.details')}
+                    </p>
+                    
+                    <div className="job-tags" style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '8px',
+                      marginBottom: '20px'
+                    }}>
+                      <span style={{
+                        background: '#f8f9fa',
+                        color: '#4d602c',
+                        padding: '6px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '500'
+                      }}>Production Management</span>
+                      <span style={{
+                        background: '#f8f9fa',
+                        color: '#4d602c',
+                        padding: '6px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '500'
+                      }}>Safety Protocols</span>
+                      <span style={{
+                        background: '#f8f9fa',
+                        color: '#4d602c',
+                        padding: '6px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '500'
+                      }}>Team Leadership</span>
+                    </div>
+                    
+                    <button 
+                      onClick={() => {
+                        document.getElementById('application-form').scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'start'
+                        });
+                      }}
+                      style={{
+                        background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                        color: '#ffffff',
+                        border: 'none',
+                        padding: '12px 24px',
+                        borderRadius: '25px',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        justifyContent: 'center',
+                        width: '100%'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                        e.currentTarget.style.boxShadow = '0 5px 15px rgba(77, 96, 44, 0.3)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      Apply Now <i className="fas fa-arrow-right" style={{ fontSize: '12px' }}></i>
+                    </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           {/* Application Form Section */}
-          <div className="row justify-content-center mt-60">
+          <div className="row justify-content-center mt-60" id="application-form">
             <div className="col-lg-10 col-xl-8">
               <div className="application-form-wrapper">
                 <div className="section-title text-center mb-50 wow fadeInDown">
@@ -71,7 +949,7 @@ const JoinUs = () => {
                 
                   <form className="application-form" onSubmit={async (e) => {
                     console.log('Form submission started');
-                    e.preventDefault();
+                  e.preventDefault();
                   
                   try {
                     const formData = new FormData(e.target);
@@ -139,7 +1017,7 @@ const JoinUs = () => {
                         
                         console.log('Application submitted successfully');
                         alert('✅ Application submitted successfully! We will review your application and get back to you soon.');
-                        e.target.reset();
+                  e.target.reset();
                         
                       } catch (error) {
                         console.error('Submission error:', error);
@@ -250,19 +1128,19 @@ const JoinUs = () => {
                     <div className="col-lg-12">
                       <div className="form-group mb-40">
                         <label htmlFor="cv" className="form-label">{t('joinUsPage.applicationForm.fields.cvLink')}</label>
-                        <input
+                          <input
                           type="url"
-                          id="cv"
-                          name="cv"
+                            id="cv"
+                            name="cv"
                           className="form-control"
                           placeholder={t('joinUsPage.applicationForm.fields.cvLinkPlaceholder')}
                           pattern="https://drive\.google\.com/.*"
                           title="Please enter a valid Google Drive link"
-                        />
-                        <div className="file-upload-info">
-                          <small className="text-muted">
+                          />
+                          <div className="file-upload-info">
+                            <small className="text-muted">
                             {t('joinUsPage.applicationForm.helpTexts.cvLink')}
-                          </small>
+                            </small>
                         </div>
                       </div>
                     </div>

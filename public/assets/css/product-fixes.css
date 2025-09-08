@@ -731,3 +731,124 @@
     font-size: 12px !important;
   }
 }
+
+/* Modern Job Offer Cards */
+.job-offer-card {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.job-offer-card:hover {
+  transform: translateY(-5px) !important;
+}
+
+.job-offer-card .job-header {
+  align-items: flex-start;
+}
+
+.job-offer-card .job-tags {
+  min-height: 40px;
+  align-items: flex-start;
+}
+
+.career-openings-section .section-header {
+  position: relative;
+}
+
+.career-openings-section .section-header::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(77, 96, 44, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* Mobile responsive styles for job cards */
+@media (max-width: 768px) {
+  /* Stack job cards vertically on mobile */
+  .career-openings-section .row .col-lg-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  
+  .job-offer-card {
+    padding: 25px 20px !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .job-offer-card .job-header {
+    align-items: center !important;
+    text-align: center !important;
+  }
+  
+  .job-offer-card .job-header > div:first-child {
+    margin-right: 0 !important;
+    margin-bottom: 15px;
+  }
+  
+  .job-offer-card .job-header h5 {
+    font-size: 18px !important;
+    margin-bottom: 5px;
+  }
+  
+  .job-offer-card .job-tags {
+    margin-bottom: 15px !important;
+    justify-content: center !important;
+  }
+  
+  .job-offer-card .job-tags span {
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+  }
+  
+  .job-offer-card p {
+    font-size: 14px !important;
+    margin-bottom: 15px !important;
+    text-align: center !important;
+  }
+  
+  .job-offer-card button {
+    width: 100%;
+    justify-content: center !important;
+    padding: 12px 20px !important;
+  }
+  
+  .career-openings-section .section-header h4 {
+    font-size: 28px !important;
+  }
+  
+  .career-openings-section .section-header p {
+    font-size: 16px !important;
+  }
+  
+  /* Why Work With Us section mobile styles */
+  .career-item ul {
+    gap: '10px 20px' !important;
+  }
+  
+  .career-item ul li {
+    min-width: 250px !important;
+    font-size: 15px !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .job-offer-card {
+    padding: 20px 15px !important;
+  }
+  
+  .job-offer-card .job-header h5 {
+    font-size: 16px !important;
+  }
+  
+  .job-offer-card .job-header span {
+    font-size: 12px !important;
+  }
+  
+  .career-openings-section .section-header h4 {
+    font-size: 22px !important;
+  }
+}

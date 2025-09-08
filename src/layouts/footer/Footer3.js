@@ -133,7 +133,7 @@ const Footer3 = () => {
                       <li>
                         <a href="#">
                           <img
-                            src="/assets/images/gallery/thumb-widget-2.jpg"
+                            src="/assets/images/gallery/thumb-widget-2.png"
                             alt="Image"
                           />
                           <div className="hover-overlay">
@@ -144,7 +144,7 @@ const Footer3 = () => {
                       <li>
                         <a href="#">
                           <img
-                            src="/assets/images/gallery/thumb-widget-3.jpg"
+                            src="/assets/images/gallery/thumb-widget-3.png"
                             alt="Image"
                           />
                           <div className="hover-overlay">
@@ -155,7 +155,7 @@ const Footer3 = () => {
                       <li>
                         <a href="#">
                           <img
-                            src="/assets/images/gallery/thumb-widget-4.jpg"
+                            src="/assets/images/gallery/thumb-widget-4.png"
                             alt="Image"
                           />
                           <div className="hover-overlay">
@@ -166,7 +166,7 @@ const Footer3 = () => {
                       <li>
                         <a href="#">
                           <img
-                            src="/assets/images/gallery/thumb-widget-5.jpg"
+                            src="/assets/images/gallery/thumb-widget-5.png"
                             alt="Image"
                           />
                           <div className="hover-overlay">
@@ -177,7 +177,7 @@ const Footer3 = () => {
                       <li>
                         <a href="#">
                           <img
-                            src="/assets/images/gallery/thumb-widget-6.jpg"
+                            src="/assets/images/gallery/thumb-widget-6.png"
                             alt="Image"
                           />
                           <div className="hover-overlay">

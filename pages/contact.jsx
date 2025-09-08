@@ -410,7 +410,7 @@ const Contact = () => {
                       textTransform: 'uppercase',
                       letterSpacing: '1.2px'
                     }}>{t('common.contactUs')}</span>
-                  </div>
+                </div>
                   
                   <h4 style={{ 
                     color: '#ffffff', 
@@ -454,7 +454,7 @@ const Contact = () => {
                     >
                       {t('common.getQuote') || 'Get A Quote'}
                       <i className="fas fa-arrow-right" style={{ marginLeft: '10px', fontSize: '12px' }}></i>
-                    </Link>
+                  </Link>
                   </div>
                 </div>
               </div>
@@ -525,7 +525,7 @@ const Contact = () => {
                       textTransform: 'uppercase',
                       letterSpacing: '1.2px'
                     }}>{t('common.contactUs')}</span>
-                  </div>
+                </div>
                   
                   <h4 style={{ 
                     color: '#ffffff', 
@@ -652,7 +652,7 @@ const Contact = () => {
                       textTransform: 'uppercase',
                       letterSpacing: '1.2px'
                     }}>Career Opportunities</span>
-                  </div>
+                </div>
                   
                   <h4 style={{ 
                     color: '#ffffff', 
@@ -696,7 +696,7 @@ const Contact = () => {
                     >
                       {t('joinUsPage.cta.applyNow') || 'Apply Now'}
                       <i className="fas fa-arrow-right" style={{ marginLeft: '10px', fontSize: '12px' }}></i>
-                    </Link>
+                  </Link>
                   </div>
                 </div>
               </div>

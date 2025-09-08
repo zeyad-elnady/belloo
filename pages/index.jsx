@@ -582,12 +582,12 @@ const Index = () => {
               {/*====== Skills Image Box ======*/}
               <div className="skill-two_image-box mb-20 p-r z-1 wow fadeInRight">
                 <img
-                  src="/assets/images/skill/skill-4.jpg"
+                  src="/assets/images/skill/skill-4.png"
                   className="skill-img-one"
                   alt="Skill Image"
                 />
                 <img
-                  src="/assets/images/skill/skill-5.jpg"
+                  src="/assets/images/skill/skill-5.png"
                   className="skill-img-two"
                   alt="Skill Image"
                 />
@@ -620,37 +620,6 @@ const Index = () => {
         <div className="container-fluid">
           {/*====== Testimonial Wrapper ======*/}
           <div className="testimonial-wrapper main-bg wow fadeInDown">
-            <div className="shape shape-one">
-              <span>
-                <img src="/assets/images/testimonial/img-1.jpg" alt="image" />
-              </span>
-            </div>
-            <div className="shape shape-two">
-              <span>
-                <img src="/assets/images/testimonial/img-2.jpg" alt="image" />
-              </span>
-                      </div>
-            <div className="shape shape-three">
-              <span>
-                <img src="/assets/images/testimonial/img-3.jpg" alt="image" />
-              </span>
-                      </div>
-            <div className="shape shape-four">
-              <span>
-                <img
-                  src="/assets/images/testimonial/003-01.png"
-                  alt="Tree image"
-                />
-              </span>
-                    </div>
-            <div className="shape shape-five">
-              <span>
-                <img
-                  src="/assets/images/testimonial/003-03.png"
-                  alt="Tree image"
-                />
-              </span>
-                  </div>
               <div className="container">
               <div className="row justify-content-center">
                 <div className="col-lg-7">
