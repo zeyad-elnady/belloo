@@ -199,11 +199,11 @@
     "whyWorkWithUs": {
       "title": "Why Work With Us?",
       "benefits": {
-        "competitive": "Competitive salary and benefits package",
-        "development": "Professional development and growth opportunities",
-        "technology": "Work with cutting-edge food processing technology",
-        "environment": "Positive and collaborative work environment",
-        "flexibility": "Work-life balance and flexible schedule options"
+        "competitive": "Competitive salary and comprehensive benefits package",
+        "development": "Professional development and career advancement opportunities", 
+        "technology": "Work with cutting-edge technology and modern facilities",
+        "environment": "Collaborative and supportive work environment",
+        "flexibility": "Flexible work arrangements and work-life balance"
       }
     },
     "currentOpenings": {
@@ -214,7 +214,7 @@
           "details": "Lead our quality assurance team to ensure all products meet international food safety standards and certifications."
         },
         "exportSpecialist": {
-          "title": "Export Sales Specialist",
+          "title": "Export Sales Specialist", 
           "details": "Develop and manage export relationships across global markets including Europe, Russia, and the Middle East."
         },
         "productionSupervisor": {
@@ -239,13 +239,17 @@
         "phonePlaceholder": "+20 1XX XXX XXXX",
         "email": "Email",
         "emailPlaceholder": "your.email@example.com",
-        "cvUpload": "Upload CV"
+        "cvLink": "CV Google Drive Link",
+        "cvLinkPlaceholder": "https://drive.google.com/file/d/your-file-id/view"
       },
       "positions": {
         "qualityManager": "Quality Control Manager",
         "exportSpecialist": "Export Sales Specialist", 
         "productionSupervisor": "Production Supervisor",
         "other": "Other"
+      },
+      "helpTexts": {
+        "cvLink": "Please share a Google Drive link to your CV/Resume (make sure it's accessible to viewers)"
       },
       "submitButton": "Submit Application",
       "submittingButton": "Submitting...",

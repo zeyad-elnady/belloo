@@ -679,6 +679,37 @@
   50% { transform: translateY(-10px); }
 }
 
+/* ==================== 
+   HOMEPAGE PRODUCTS VISIBILITY FIX
+   ==================== */
+/* Fix product names visibility in Popular Products section */
+.single-service-item .service-info {
+  z-index: 5 !important;
+  position: relative !important;
+}
+
+.single-service-item .service-info .title {
+  z-index: 5 !important;
+  position: relative !important;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.single-service-item .service-info .title a {
+  display: block;
+  font-weight: 600;
+  color: #4d602c !important;
+  text-decoration: none;
+}
+
+.single-service-item .service-img .icon-btn {
+  z-index: 3 !important;
+}
+
 .video-map-box .video-container:hover .click-indicator {
   background: #4d602c;
   color: white;
