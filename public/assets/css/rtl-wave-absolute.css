@@ -1,0 +1,112 @@
+/* RTL Wave Absolute Bottom Fix - Force waves to bottom of hero section */
+
+/* CRITICAL: Override all RTL wave positioning to match English exactly */
+html[dir="rtl"] .hero-wrapper-three {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 100vh !important;
+}
+
+/* Force waves to absolute bottom of entire hero section */
+html[dir="rtl"] .hero-wrapper-three .hero-waves {
+  position: absolute !important;
+  bottom: -1px !important;
+  left: -100px !important;
+  right: auto !important;
+  width: calc(100% + 100px) !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  height: auto !important;
+  background: transparent !important;
+  /* Ensure it spans full container */
+  min-height: 150px !important;
+}
+
+/* Ensure wave images are positioned at bottom */
+html[dir="rtl"] .hero-wrapper-three .hero-waves .waves {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 150px !important;
+  object-fit: cover !important;
+  object-position: bottom center !important;
+  /* RESTORE ANIMATION */
+  -webkit-animation: wave 6s ease-in-out infinite !important;
+  animation: wave 6s ease-in-out infinite !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+html[dir="rtl"] .hero-wrapper-three .hero-waves .waves.two {
+  -webkit-animation-delay: 3s !important;
+  animation-delay: 3s !important;
+}
+
+/* Ensure slider content doesn't interfere with waves */
+html[dir="rtl"] .hero-wrapper-three .single-slider {
+  position: relative !important;
+  z-index: 2 !important;
+  padding: 193px 0 290px !important;
+}
+
+/* Keep hero content above waves */
+html[dir="rtl"] .hero-wrapper-three .hero-content {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Force animation to work */
+@-webkit-keyframes wave {
+  0%, 100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -webkit-transform: translateX(100px);
+    transform: translateX(100px);
+  }
+}
+
+@keyframes wave {
+  0%, 100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -webkit-transform: translateX(100px);
+    transform: translateX(100px);
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 991px) {
+  html[dir="rtl"] .hero-wrapper-three .single-slider {
+    padding: 193px 0 230px !important;
+  }
+  
+  html[dir="rtl"] .hero-wrapper-three .hero-waves {
+    left: -50px !important;
+    width: calc(100% + 50px) !important;
+    min-height: 120px !important;
+  }
+  
+  html[dir="rtl"] .hero-wrapper-three .hero-waves .waves {
+    min-height: 120px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  html[dir="rtl"] .hero-wrapper-three .hero-waves {
+    left: -25px !important;
+    width: calc(100% + 25px) !important;
+    min-height: 100px !important;
+  }
+  
+  html[dir="rtl"] .hero-wrapper-three .hero-waves .waves {
+    min-height: 100px !important;
+  }
+}

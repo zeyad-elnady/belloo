@@ -108,9 +108,15 @@
       "title": "Global Reach, Local Trust",
       "description": "Export Markets: Africa, Middle East, Russia, Europe\nLogistics Excellence: customs clearance, timely delivery, documentation support\nReady to Ship: on-demand dispatch, flexible packaging for retail, foodservice, bulk"
     },
+    "mission": {
+      "title": "Our Mission",
+      "description": "To deliver 'Authentic Taste of Nature' - bringing premium Egyptian olives and pickles to markets worldwide.",
+      "readMore": "Read More"
+    },
     "whyBello": {
       "title": "Why Bello Food?",
-      "description": "Unmatched Variety: 30+ olives & pickles\nCertified Quality: BRC, FDA, ISO, Halal, Kosher\nSustainability & HSE: protecting environment & people\nPrivate Label Ready: your brand, our excellence"
+      "description": "Unmatched Variety: 30+ olives & pickles Certified Quality: BRC, FDA, ISO, Halal, Kosher Sustainability & HSE: protecting environment & people Private Label Ready: your brand, our excellence",
+      "readMore": "Read More"
     },
     "promise": {
       "title": "Our Promise",

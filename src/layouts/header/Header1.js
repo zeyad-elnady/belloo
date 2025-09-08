@@ -106,9 +106,7 @@ const Header1 = () => {
               {/*====== Nav Right Item ======*/}
               <div className="nav-right-item">
                 <div className="menu-button d-xl-block d-none">
-                  <Link legacyBehavior href="/contact">
-                    <a className="main-btn primary-btn">Get a Quote</a>
-                  </Link>
+                  <Link href="/contact" className="main-btn primary-btn">Get a Quote</Link>
                 </div>
                 <div
                   className="bar-button d-none d-xl-block"

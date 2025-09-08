@@ -72,6 +72,12 @@ export default function Document(props) {
         <link rel="stylesheet" href="/assets/css/whatsapp-button.css" />
         {/*====== Tree Positioning Fix css ======*/}
         <link rel="stylesheet" href="/assets/css/tree-positioning-fix.css" />
+        {/*====== Hero Button Fix css ======*/}
+        <link rel="stylesheet" href="/assets/css/hero-button-fix.css" />
+        {/*====== RTL Wave Absolute Fix css - FINAL SOLUTION ======*/}
+        <link rel="stylesheet" href="/assets/css/rtl-wave-absolute.css" />
+        {/*====== Text Contrast Fix css ======*/}
+        <link rel="stylesheet" href="/assets/css/text-contrast-fix.css" />
       </Head>
       <body>
         <Main />

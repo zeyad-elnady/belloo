@@ -40,9 +40,7 @@ const About = () => {
                   ))}
                 </ul>
                 <div className="about-button">
-                  <Link legacyBehavior href="/about">
-                    <a className="main-btn secondary-btn">{t('aboutPage.learnMore')}</a>
-                  </Link>
+                  <Link href="/about" className="main-btn secondary-btn">{t('aboutPage.learnMore')}</Link>
                 </div>
               </div>
             </div>
@@ -90,12 +88,6 @@ const About = () => {
                         <p>
                           {t('aboutPage.mission.description')}
                         </p>
-                        <Link legacyBehavior href="/about">
-                          <a className="btn-link">
-                            {t('aboutPage.mission.readMore')}
-                            <i className="fas fa-arrow-right" />
-                          </a>
-                        </Link>
                       </div>
                     </div>
                   </div>
@@ -117,12 +109,6 @@ const About = () => {
                         <p>
                           {t('aboutPage.whyBello.description')}
                         </p>
-                        <Link legacyBehavior href="/about">
-                          <a className="btn-link">
-                            {t('aboutPage.whyBello.readMore')}
-                            <i className="fas fa-arrow-right" />
-                          </a>
-                        </Link>
                       </div>
                     </div>
                   </div>
@@ -144,12 +130,6 @@ const About = () => {
                         <p>
                           {t('aboutPage.promise.description')}
                         </p>
-                        <Link legacyBehavior href="/about">
-                          <a className="btn-link">
-                            {t('aboutPage.promise.readMore')}
-                            <i className="fas fa-arrow-right" />
-                          </a>
-                        </Link>
                       </div>
                     </div>
                   </div>

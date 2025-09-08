@@ -50,26 +50,22 @@ const MobileMenu = ({ handleShow, logo, extraClass, barIcon }) => {
           <div className="primary-menu">
             {/*====== Site Branding ======*/}
             <div className="site-branding">
-              <Link legacyBehavior href="/">
-                <a className="brand-logo">
+              <Link href="/" className="brand-logo">
                   <img
                     src={logo ? logo : "/assets/images/logo/logo-black.png"}
                     alt="Site Logo"
                   />
-                </a>
               </Link>
             </div>
             {/*====== Nav Menu ======*/}
             <div className={`nav-menu ${toggle ? "menu-on" : ""}`}>
               {/*====== Site Branding ======*/}
               <div className="mobile-logo mb-30 d-block d-xl-none">
-                <Link legacyBehavior href="/">
-                  <a className="brand-logo">
+                <Link href="/" className="brand-logo">
                     <img
                       src={"/assets/images/logo/logo-black.png"}
                       alt="Site Logo"
                     />
-                  </a>
                 </Link>
               </div>
 
@@ -77,55 +73,37 @@ const MobileMenu = ({ handleShow, logo, extraClass, barIcon }) => {
               <nav className="main-menu">
                 <ul>
                   <li className="menu-item">
-                    <Link legacyBehavior href="/">
-                      <a onClick={handleMenuItemClick}>Home</a>
-                    </Link>
+                    <Link href="/" onClick={handleMenuItemClick}>Home</Link>
                   </li>
                   <li className="menu-item">
-                    <Link legacyBehavior href="/about">
-                      <a onClick={handleMenuItemClick}>About</a>
-                    </Link>
+                    <Link href="/about" onClick={handleMenuItemClick}>About</Link>
                   </li>
                   <li className="menu-item">
-                    <Link legacyBehavior href="/sustainability">
-                      <a onClick={handleMenuItemClick}>Sustainability</a>
-                    </Link>
+                    <Link href="/sustainability" onClick={handleMenuItemClick}>Sustainability</Link>
                   </li>
                   <li className="menu-item">
-                    <Link legacyBehavior href="/products">
-                      <a onClick={handleMenuItemClick}>Products</a>
-                    </Link>
+                    <Link href="/products" onClick={handleMenuItemClick}>Products</Link>
                   </li>
                   <li className="menu-item">
-                    <Link legacyBehavior href="/highlights">
-                      <a onClick={handleMenuItemClick}>Highlights</a>
-                    </Link>
+                    <Link href="/highlights" onClick={handleMenuItemClick}>Highlights</Link>
                   </li>
                   <li className="menu-item">
-                    <Link legacyBehavior href="/join-us">
-                      <a onClick={handleMenuItemClick}>Join Us</a>
-                    </Link>
+                    <Link href="/join-us" onClick={handleMenuItemClick}>Join Us</Link>
                   </li>
                   <li className="menu-item">
-                    <Link legacyBehavior href="/contact">
-                      <a onClick={handleMenuItemClick}>Contact</a>
-                    </Link>
+                    <Link href="/contact" onClick={handleMenuItemClick}>Contact</Link>
                   </li>
                 </ul>
               </nav>
               {/*====== Menu Button ======*/}
               <div className="menu-button mt-40 d-xl-none">
-                <Link legacyBehavior href="/contact">
-                  <a className="main-btn secondary-btn">Get a Quote</a>
-                </Link>
+                <Link href="/contact" className="main-btn secondary-btn">Get a Quote</Link>
               </div>
             </div>
             {/*====== Nav Right Item ======*/}
             <div className="nav-right-item d-flex align-items-center">
               <div className="menu-button d-xl-block d-none">
-                <Link legacyBehavior href="/contact">
-                  <a className="main-btn primary-btn">Get a Quote</a>
-                </Link>
+                <Link href="/contact" className="main-btn primary-btn">Get a Quote</Link>
               </div>
 
               <div

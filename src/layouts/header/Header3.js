@@ -126,13 +126,11 @@ const Header3 = () => {
         <div className="header-container">
           {/* Logo */}
           <div className="header-logo">
-            <Link legacyBehavior href="/">
-              <a className="brand-logo">
+            <Link href="/" className="brand-logo">
                 <img
                   src="/assets/images/logo/logo.svg"
                   alt="Site Logo"
                 />
-              </a>
             </Link>
           </div>
 
@@ -141,9 +139,7 @@ const Header3 = () => {
             <ul className="nav-menu">
               {navigationItems.map((item, index) => (
                 <li key={index} className="nav-item">
-                  <Link legacyBehavior href={item.href}>
-                    <a className="nav-link">{item.name}</a>
-                  </Link>
+                  <Link href={item.href} className="nav-link">{item.name}</Link>
                 </li>
               ))}
             </ul>
@@ -263,13 +259,12 @@ const Header3 = () => {
               <ul className="mobile-nav-menu">
                 {navigationItems.map((item, index) => (
                   <li key={index} className="mobile-nav-item">
-                    <Link legacyBehavior href={item.href}>
-                      <a 
-                        className="mobile-nav-link"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
+                    <Link 
+                      href={item.href}
+                      className="mobile-nav-link"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
                         {item.name}
-                      </a>
                     </Link>
                   </li>
                 ))}

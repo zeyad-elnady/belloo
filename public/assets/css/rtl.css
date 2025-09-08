@@ -191,6 +191,10 @@ html[dir="rtl"] .hero-slider-two .slick-next {
   left: 25px;
 }
 
+/* Hero Waves RTL Fix - MOVED to rtl-wave-fix.css to avoid conflicts */
+
+/* Hero wrapper and content positioning - MOVED to rtl-wave-fix.css */
+
 /* About Section RTL */
 html[dir="rtl"] .about-bg-section .about-bg {
   /* Move background image to the right in RTL */

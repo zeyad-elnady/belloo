@@ -60,16 +60,13 @@ const Index = () => {
                         className="hero-button mb-30"
                         data-animation="fadeInDown"
                         data-delay=".7s"
+                        style={{ position: 'relative', zIndex: 10 }}
                   >
-                    <Link legacyBehavior href="/contact">
-                          <a className="main-btn golden-btn mb-10">
+                    <Link href="/contact" className="main-btn golden-btn mb-10" style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}>
                             {t('hero.getQuote') || 'Get A Quote'}
-                          </a>
                     </Link>
-                    <Link legacyBehavior href="/products">
-                          <a className="main-btn filled-btn filled-white mb-10">
+                    <Link href="/products" className="main-btn filled-btn filled-white mb-10" style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}>
                             {t('hero.exploreProducts') || 'Explore Products'}
-                          </a>
                     </Link>
                   </div>
                 </div>
@@ -108,16 +105,13 @@ const Index = () => {
                         className="hero-button mb-30"
                         data-animation="fadeInDown"
                         data-delay=".7s"
+                        style={{ position: 'relative', zIndex: 10 }}
                       >
-                        <Link legacyBehavior href="/contact">
-                          <a className="main-btn golden-btn mb-10">
+                        <Link href="/contact" className="main-btn golden-btn mb-10" style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}>
                             {t('hero.getQuote') || 'احصل على عرض سعر'}
-                          </a>
                         </Link>
-                        <Link legacyBehavior href="/products">
-                          <a className="main-btn filled-btn filled-white mb-10">
+                        <Link href="/products" className="main-btn filled-btn filled-white mb-10" style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}>
                             {t('hero.exploreProducts') || 'استكشف المنتجات'}
-                          </a>
                         </Link>
                   </div>
                 </div>
@@ -156,16 +150,13 @@ const Index = () => {
                         className="hero-button mb-30"
                         data-animation="fadeInDown"
                         data-delay=".7s"
+                        style={{ position: 'relative', zIndex: 10 }}
                       >
-                        <Link legacyBehavior href="/contact">
-                          <a className="main-btn golden-btn mb-10">
+                        <Link href="/contact" className="main-btn golden-btn mb-10" style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}>
                             {t('hero.getQuote') || 'احصل على عرض سعر'}
-                          </a>
                         </Link>
-                        <Link legacyBehavior href="/products">
-                          <a className="main-btn filled-btn filled-white mb-10">
+                        <Link href="/products" className="main-btn filled-btn filled-white mb-10" style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}>
                             {t('hero.exploreProducts') || 'استكشف المنتجات'}
-                          </a>
                         </Link>
                     </div>
                   </div>

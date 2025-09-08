@@ -209,9 +209,7 @@ const Default = () => {
                   </select>
                 </div>
                 <div className="menu-button d-xl-block d-none">
-                  <Link legacyBehavior href="/contact">
-                    <a className="main-btn primary-btn">Get a Quote</a>
-                  </Link>
+                  <Link href="/contact" className="main-btn primary-btn">Get a Quote</Link>
                 </div>
               </div>
             </div>

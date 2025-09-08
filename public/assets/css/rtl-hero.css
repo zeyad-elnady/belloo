@@ -46,13 +46,15 @@ html[dir="rtl"] .image-layer {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: -1;
 }
 
 html[dir="rtl"] .hero-content {
   position: relative;
   z-index: 10;
 }
+
+/* Hero waves positioning - MOVED to rtl-wave-fix.css to avoid conflicts */
 
 /* Responsive adjustments for mobile */
 @media (max-width: 991px) {
