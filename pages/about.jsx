@@ -39,9 +39,6 @@ const About = () => {
                     </li>
                   ))}
                 </ul>
-                <div className="about-button">
-                  <Link href="/about" className="main-btn secondary-btn">{t('aboutPage.learnMore')}</Link>
-                </div>
               </div>
             </div>
           </div>
@@ -285,9 +282,6 @@ const About = () => {
                 <p className="mb-30">
                   {t('aboutPage.cta.description')}
                 </p>
-                <Link legacyBehavior href="/team">
-                  <a className="main-btn golden-btn">{t('aboutPage.cta.findSpecialist')}</a>
-                </Link>
               </div>
             </div>
             <div className="col-lg-7">

@@ -37,7 +37,7 @@ html[dir="rtl"] .slick-slide {
 html[dir="rtl"] .single-slider {
   min-height: 100vh;
   position: relative;
-  padding: 193px 0 290px;
+  /* Use default English padding */
 }
 
 html[dir="rtl"] .image-layer {
@@ -54,17 +54,6 @@ html[dir="rtl"] .hero-content {
   z-index: 10;
 }
 
-/* Hero waves positioning - MOVED to rtl-wave-fix.css to avoid conflicts */
+/* Use default English wave styles - no RTL overrides */
 
-/* Responsive adjustments for mobile */
-@media (max-width: 991px) {
-  html[dir="rtl"] .single-slider {
-    padding: 150px 0 200px;
-  }
-}
-
-@media (max-width: 767px) {
-  html[dir="rtl"] .single-slider {
-    padding: 120px 0 150px;
-  }
-}
+/* Use default English responsive padding - no overrides */

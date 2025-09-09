@@ -76,6 +76,10 @@ export default function Document(props) {
         <link rel="stylesheet" href="/assets/css/hero-button-fix.css" />
         {/*====== RTL Wave Absolute Fix css - FINAL SOLUTION ======*/}
         <link rel="stylesheet" href="/assets/css/rtl-wave-absolute.css" />
+        {/*====== Arabic Mobile Fix css ======*/}
+        <link rel="stylesheet" href="/assets/css/arabic-mobile-fix.css" />
+        {/*====== Join Us Mobile Fix css ======*/}
+        <link rel="stylesheet" href="/assets/css/join-us-mobile-fix.css" />
         {/*====== Text Contrast Fix css ======*/}
         <link rel="stylesheet" href="/assets/css/text-contrast-fix.css" />
       </Head>

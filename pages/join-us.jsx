@@ -43,7 +43,7 @@ const JoinUs = () => {
                   borderRadius: '2px',
                   margin: '0 auto 40px auto'
                 }}></div>
-                <ul className="check-style-one mt-30" style={{
+                <ul className="check-style-one mt-30 why-work-list" style={{
                   display: 'flex',
                   flexWrap: 'wrap',
                   justifyContent: 'center',
@@ -53,7 +53,7 @@ const JoinUs = () => {
                   maxWidth: '800px',
                   margin: '0 auto'
                 }}>
-                  <li style={{
+                  <li className="why-work-item" style={{
                     display: 'flex',
                     alignItems: 'center',
                     fontSize: '16px',
@@ -65,7 +65,7 @@ const JoinUs = () => {
                     marginRight: '12px',
                     fontSize: '18px'
                   }} />{t('joinUsPage.whyWorkWithUs.benefits.competitive')}</li>
-                  <li style={{
+                  <li className="why-work-item" style={{
                     display: 'flex',
                     alignItems: 'center',
                     fontSize: '16px',
@@ -77,7 +77,7 @@ const JoinUs = () => {
                     marginRight: '12px',
                     fontSize: '18px'
                   }} />{t('joinUsPage.whyWorkWithUs.benefits.development')}</li>
-                  <li style={{
+                  <li className="why-work-item" style={{
                     display: 'flex',
                     alignItems: 'center',
                     fontSize: '16px',
@@ -89,7 +89,7 @@ const JoinUs = () => {
                     marginRight: '12px',
                     fontSize: '18px'
                   }} />{t('joinUsPage.whyWorkWithUs.benefits.technology')}</li>
-                  <li style={{
+                  <li className="why-work-item" style={{
                     display: 'flex',
                     alignItems: 'center',
                     fontSize: '16px',
@@ -101,7 +101,7 @@ const JoinUs = () => {
                     marginRight: '12px',
                     fontSize: '18px'
                   }} />{t('joinUsPage.whyWorkWithUs.benefits.environment')}</li>
-                  <li style={{
+                  <li className="why-work-item" style={{
                     display: 'flex',
                     alignItems: 'center',
                     fontSize: '16px',
@@ -922,9 +922,9 @@ onClick={(e) => {
                   `
                 }} />
               </div>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </section>
     </Layout>

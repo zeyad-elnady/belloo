@@ -186,12 +186,6 @@ const Index = () => {
                 <p>
                   {t('features.description')}
                 </p>
-                <Link legacyBehavior href="/about">
-                  <a className="btn-link">
-                    {t('features.learnMore')}
-                    <i className="far fa-angle-double-right" />
-                  </a>
-                </Link>
           </div>
                     </div>
                   </div>
@@ -305,20 +299,12 @@ const Index = () => {
                           {t('about.checkItems.1')}
                         </li>
                       </ul>
-                      <Link legacyBehavior href="/about">
-                        <a className="main-btn primary-btn">{t('about.learnMore')}</a>
-                      </Link>
                           </div>
                     <div className="experience-box-two">
                       <h2 className="number">
                         <Counter end={30} />+
                       </h2>
                       <h6>{t('about.productVarieties')}</h6>
-                      <Link legacyBehavior href="/about">
-                        <a className="icon-btn">
-                          <i className="far fa-arrow-right" />
-                        </a>
-                      </Link>
                         </div>
                       </div>
                           </div>
