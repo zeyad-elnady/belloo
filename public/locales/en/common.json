@@ -105,8 +105,12 @@
     "title": "Who We Are",
     "description": "BELLO is a dynamic brand of IEFI, a diversified leader with deep roots in Egypt's FMCG sector. We specialize in premium table olives and pickled products, bringing together expertise and passion to deliver healthy, delicious, and globally trusted food solutions.",
     "globalReach": {
-      "title": "Global Reach, Local Trust",
-      "description": "Export Markets: Africa, Middle East, Russia, Europe\nLogistics Excellence: customs clearance, timely delivery, documentation support\nReady to Ship: on-demand dispatch, flexible packaging for retail, foodservice, bulk"
+      "subtitle": "Our Global Reach", 
+      "title": "From Egypt to the World",
+      "description": "Discover our worldwide presence and export network that brings premium Egyptian products to international markets",
+      "overlayTitle": "Exporting Excellence Worldwide",
+      "overlayDescription": "From our facilities in Egypt, we serve markets across continents with premium quality products",
+      "exportInfo": "Export Markets: Africa, Middle East, Russia, Europe\nLogistics Excellence: customs clearance, timely delivery, documentation support\nReady to Ship: on-demand dispatch, flexible packaging for retail, foodservice, bulk"
     },
     "mission": {
       "title": "Our Mission",
@@ -183,7 +187,7 @@
       },
       "export": {
         "title": "Global Market Leadership",
-        "description": "Successfully expanded to over 20 countries across Europe, Russia, and MEA"
+        "description": "Successfully expanded to over 10 countries across Europe, Russia, and MEA"
       },
       "quality": {
         "title": "Premium Quality Recognition",
@@ -318,6 +322,7 @@
       "slicedRedJalapenoPepper": "Sliced Red en Jalapeno Pepper",
       "habibaPepper": "Habiba Pepper",
       "mexicanPepper": "Mexican Pepper",
+      "macedonianPepper": "Macedonian Pepper",
       "artichokeHearts": "Artichoke Hearts",
       "artichokeQuarter": "Artichoke Quarter",
       "artichokeBottom": "Artichoke Bottom"
@@ -326,7 +331,34 @@
       "availableMultiplePackaging": "Available in multiple packaging",
       "glassJar370ml": "Glass jar 370ml",
       "cansVacuumPackaging": "Available in Cans & Vacuum packaging",
-      "a10Tins": "A10 tins"
+      "a10Tins": "A10 tins",
+      "wholeGreenOlives": "Preparing whole green olives is important for their quality and flavor.",
+      "pittedGreenOlives": "Discover perfectly pitted olives with uniform texture and size, thanks to our advanced processing machines.",
+      "slicedGreenOlives": "Delicious Sliced Green Olives - Carefully Sorted and Packed for Quality Assurance",
+      "wholeBlackOlives": "Discover the process of creating whole black olives from tree to table",
+      "pittedBlackOlives": "Pitted black olives, packed for quality",
+      "slicedBlackOlives": "Experience the journey of sliced black olives from tree to table",
+      "wholeBlackNaturalKalamataOlives": "Whole Black Natural Kalamata Olives – premium, handpicked olives known for their rich flavor and authentic Mediterranean taste.",
+      "pittedBlackNaturalKalamataOlives": "Pitted Black Natural Kalamata Olives – smooth, flavorful, and ready to enjoy with the authentic taste of Greece.",
+      "slicedBlackNaturalKalamataOlives": "Sliced Black Natural Kalamata Olives – conveniently pre-sliced, offering bold Mediterranean flavor for salads, pizzas, and everyday dishes.",
+      "wholeBlackNaturalPicualOlives": "From tree to table: uncover the steps of harvesting, washing, brining, and packaging whole natural black olives",
+      "pittedBlackNaturalPicualOlives": "Explore the journey of pitted natural black olives from tree to table",
+      "slicedBlackNaturalPicualOlives": "We proudly offer sliced natural black olives, ideal for culinary use in both home kitchens and food service industries",
+      "oliveBlackNaturalDolce": "Whole Black Natural Dolce Olives – mild, smooth, and delicately sweet, perfect for everyday Mediterranean enjoyment.",
+      "pittedBlackNaturalDolce": "Pitted Black Natural Dolce Olives – soft, subtly sweet, and conveniently ready to serve in any dish.",
+      "pepperonciniPepper": "Mild, tangy, and crunchy – perfect for salads, sandwiches, and antipasti. A classic Mediterranean favorite in both whole and sliced forms.",
+      "cherryPepper": "Our cherry peppers bring a natural burst of color and flavor to every meal",
+      "kardoulaPepper": "Kardoula Peppers – vibrant, naturally sweet peppers with a bold Mediterranean flavor, ideal for stuffing, grilling, or antipasti.",
+      "wholeLombardiPepper": "If you're looking to add a unique touch to your dishes or seeking a high-quality product to satisfy gourmet tastes, Lombardi Pepper Whole is an ideal choice",
+      "slicedLombardiPepper": "Enjoy the bold flavor and mild heat of sliced Lombardi green pepper pickles, perfect for adding a touch of zest to sandwiches, salads, and main dishes.",
+      "slicedGreenJalapenoPepper": "Our high-quality sliced jalapeño peppers are ready to add a bold, spicy flavor to any dish. Perfect for restaurants, food manufacturers",
+      "slicedRedJalapenoPepper": "Our sliced red jalapeño peppers bring a vibrant color and a balanced, sweet-spicy flavor that enhances a variety of dishes.",
+      "habibaPepper": "Habiba Peppers – tender and flavorful with a natural sweetness, perfect for Mediterranean dishes and gourmet appetizers.",
+      "mexicanPepper": "Mexican Peppers – bold and zesty with a distinctive heat, adding authentic spice to a wide range of dishes.",
+      "macedonianPepper": "Macedonian Peppers – rich and flavorful with a balanced sweetness and mild spice, perfect for traditional Mediterranean recipes.",
+      "artichokeHearts": "tender and delicate, offering a mild, nutty flavor perfect for salads, pasta, and antipasti.",
+      "artichokeQuarter": "conveniently cut, flavorful pieces ideal for pizzas, casseroles, and Mediterranean dishes.",
+      "artichokeBottom": "firm and versatile, with a smooth texture suited for stuffing, baking, or gourmet recipes."
     },
     "buttons": {
       "viewSpecs": "View Specs",
@@ -355,6 +387,11 @@
       "message": "Additional Details",
       "submit": "Send Message",
       "uploadFile": "Upload File"
+    },
+    "map": {
+      "title": "Visit Our Location",
+      "description": "10th of Ramadan City, Egypt",
+      "viewOnMaps": "View on Google Maps"
     },
     "closingMessage": "Every partnership is a step toward sharing premium Egyptian olives with the world."
   },

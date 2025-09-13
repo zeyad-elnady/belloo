@@ -353,20 +353,20 @@ const Index = () => {
               >
                 <div className="service-info">
                   <h4 className="title">
-                    <Link legacyBehavior href="/products">
-                      <a>{t('products.manzanillaOlives')}</a>
+                    <Link legacyBehavior href="/products?category=greenOlives">
+                      <a>{t('productsPage.products.wholeGreenOlives')}</a>
                     </Link>
                   </h4>
                 </div>
                 <div className="service-img">
-                  <Link legacyBehavior href="/products">
+                  <Link legacyBehavior href="/products?category=greenOlives">
                     <a className="icon-btn">
                       <i className="far fa-plus" />
                     </a>
                   </Link>
                   <img
-                    src="/assets/images/products/green olive.jpg"
-                    alt="Manzanilla Olives"
+                    src="/assets/images/products/GLASS JARS/Whole Green Olives .jpg"
+                    alt="Whole Green Olives"
                   />
                 </div>
               </div>
@@ -379,20 +379,20 @@ const Index = () => {
               >
                 <div className="service-info">
                   <h4 className="title">
-                    <Link legacyBehavior href="/products">
-                      <a>{t('products.kalamataOlives')}</a>
+                    <Link legacyBehavior href="/products?category=blackOlives">
+                      <a>{t('productsPage.products.slicedBlackOlives')}</a>
                     </Link>
                   </h4>
                 </div>
                 <div className="service-img">
-                  <Link legacyBehavior href="/products">
+                  <Link legacyBehavior href="/products?category=blackOlives">
                     <a className="icon-btn">
                       <i className="far fa-plus" />
                     </a>
                   </Link>
                   <img
-                    src="/assets/images/products/black olive.jpg"
-                    alt="Kalamata Olives"
+                    src="/assets/images/products/GLASS JARS/Sliced Black Olives .jpg"
+                    alt="Sliced Black Olives"
                   />
                 </div>
               </div>
@@ -405,20 +405,20 @@ const Index = () => {
               >
                 <div className="service-info">
                   <h4 className="title">
-                    <Link legacyBehavior href="/products">
-                      <a>{t('products.greenOlives')}</a>
+                    <Link legacyBehavior href="/products?category=peppers">
+                      <a>{t('productsPage.products.pepperonciniPepper')}</a>
                     </Link>
                   </h4>
                 </div>
                 <div className="service-img">
-                  <Link legacyBehavior href="/products">
+                  <Link legacyBehavior href="/products?category=peppers">
                     <a className="icon-btn">
                       <i className="far fa-plus" />
                     </a>
                   </Link>
                   <img
-                    src="/assets/images/products/green olive.jpg"
-                    alt="Green Olives"
+                    src="/assets/images/products/GLASS JARS/Pepperoncini Pepper.jpg"
+                    alt="Pepperoncini Pepper"
                   />
                 </div>
               </div>
@@ -431,20 +431,20 @@ const Index = () => {
               >
                 <div className="service-info">
                   <h4 className="title">
-                    <Link legacyBehavior href="/products">
-                      <a>{t('products.stuffedOlives')}</a>
+                    <Link legacyBehavior href="/products?category=greenOlives">
+                      <a>{t('productsPage.products.pittedGreenOlives')}</a>
                     </Link>
                   </h4>
                 </div>
                 <div className="service-img">
-                  <Link legacyBehavior href="/products">
+                  <Link legacyBehavior href="/products?category=greenOlives">
                     <a className="icon-btn">
                       <i className="far fa-plus" />
                     </a>
                   </Link>
                   <img
-                    src="/assets/images/products/green olive.jpg"
-                    alt="Stuffed Olives"
+                    src="/assets/images/products/GLASS JARS/Pitted Green Olives .jpg"
+                    alt="Pitted Green Olives"
                   />
                 </div>
               </div>
@@ -457,20 +457,20 @@ const Index = () => {
               >
                 <div className="service-info">
                   <h4 className="title">
-                    <Link legacyBehavior href="/products">
-                      <a>{t('products.blackOlives')}</a>
+                    <Link legacyBehavior href="/products?category=peppers">
+                      <a>{t('productsPage.products.cherryPepper')}</a>
                     </Link>
                   </h4>
                 </div>
                 <div className="service-img">
-                  <Link legacyBehavior href="/products">
+                  <Link legacyBehavior href="/products?category=peppers">
                     <a className="icon-btn">
                       <i className="far fa-plus" />
                     </a>
                   </Link>
                   <img
-                    src="/assets/images/products/black olive.jpg"
-                    alt="Black Olives"
+                    src="/assets/images/products/GLASS JARS/Cherry Pepper.jpg"
+                    alt="Cherry Pepper"
                   />
                 </div>
               </div>
@@ -483,26 +483,26 @@ const Index = () => {
               >
                 <div className="service-info">
                   <h4 className="title">
-                    <Link legacyBehavior href="/products">
-                      <a>{t('products.pickledVegetables')}</a>
-                      </Link>
+                    <Link legacyBehavior href="/products?category=picklesVegetables">
+                      <a>{t('productsPage.products.artichokeHearts')}</a>
+                    </Link>
                   </h4>
                 </div>
                 <div className="service-img">
-                  <Link legacyBehavior href="/products">
-                      <a className="icon-btn">
+                  <Link legacyBehavior href="/products?category=picklesVegetables">
+                    <a className="icon-btn">
                       <i className="far fa-plus" />
-                      </a>
-                    </Link>
+                    </a>
+                  </Link>
                   <img
-                    src="/assets/images/products/chili.jpg"
-                    alt="Pickled Vegetables"
+                    src="/assets/images/products/GLASS JARS/Artichoke Hearts .jpg"
+                    alt="Artichoke Hearts"
                   />
-                  </div>
-                </div>
-                  </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
       </section>
       {/*====== End Service Section ======*/}
       {/*====== Start Skills Section  ======*/}
@@ -647,18 +647,6 @@ const Index = () => {
                       <p>
                         {t('testimonials.testimonialText')}
                       </p>
-                      <div className="author-thumb-title">
-                        <div className="author-thumb">
-                          <img
-                            src="/assets/images/author-thumb-1.png"
-                            alt="Author Image"
-                              />
-                            </div>
-                        <div className="author-title">
-                          <h6 className="title">{t('testimonials.authorName')}</h6>
-                          <p className="position">{t('testimonials.authorPosition')}</p>
-                            </div>
-                          </div>
                         </div>
                     {/*====== Single Testimonial Item  ======*/}
                     <div className="single-testimonial-item-two mb-60">
@@ -693,18 +681,6 @@ const Index = () => {
                       <p>
                         {t('testimonials.testimonialText')}
                       </p>
-                      <div className="author-thumb-title">
-                        <div className="author-thumb">
-                          <img
-                            src="/assets/images/author-thumb-1.png"
-                            alt="Author Image"
-                              />
-                            </div>
-                        <div className="author-title">
-                          <h6 className="title">Douglas D. Hall</h6>
-                              <p className="position">CEO &amp; Founder</p>
-                            </div>
-                          </div>
                         </div>
                     {/*====== Single Testimonial Item  ======*/}
                     <div className="single-testimonial-item-two mb-60">
@@ -739,18 +715,6 @@ const Index = () => {
                       <p>
                         {t('testimonials.testimonialText')}
                       </p>
-                      <div className="author-thumb-title">
-                        <div className="author-thumb">
-                          <img
-                            src="/assets/images/author-thumb-1.png"
-                            alt="Author Image"
-                              />
-                            </div>
-                        <div className="author-title">
-                          <h6 className="title">{t('testimonials.authorName')}</h6>
-                          <p className="position">{t('testimonials.authorPosition')}</p>
-                            </div>
-                        </div>
                       </div>
                     </Slider>
                 </div>

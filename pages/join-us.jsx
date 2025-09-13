@@ -43,77 +43,125 @@ const JoinUs = () => {
                   borderRadius: '2px',
                   margin: '0 auto 40px auto'
                 }}></div>
-                <ul className="check-style-one mt-30 why-work-list" style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'center',
-                  gap: '15px 40px',
-                  listStyle: 'none',
-                  padding: 0,
-                  maxWidth: '800px',
-                  margin: '0 auto'
+                <div className="why-work-list" style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                  gap: '20px',
+                  maxWidth: '900px',
+                  margin: '0 auto',
+                  alignItems: 'start'
                 }}>
-                  <li className="why-work-item" style={{
+                  <div className="why-work-item" style={{
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     fontSize: '16px',
                     fontWeight: '500',
                     color: '#666',
-                    minWidth: '300px'
+                    padding: '15px',
+                    borderRadius: '12px',
+                    background: 'rgba(77, 96, 44, 0.05)',
+                    border: '1px solid rgba(77, 96, 44, 0.1)',
+                    transition: 'all 0.3s ease'
                   }}><i className="far fa-check" style={{
                     color: '#4d602c',
-                    marginRight: '12px',
-                    fontSize: '18px'
-                  }} />{t('joinUsPage.whyWorkWithUs.benefits.competitive')}</li>
-                  <li className="why-work-item" style={{
+                    marginRight: '15px',
+                    fontSize: '20px',
+                    marginTop: '2px',
+                    flexShrink: 0
+                  }} /><span>{t('joinUsPage.whyWorkWithUs.benefits.competitive')}</span></div>
+                  
+                  <div className="why-work-item" style={{
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     fontSize: '16px',
                     fontWeight: '500',
                     color: '#666',
-                    minWidth: '300px'
+                    padding: '15px',
+                    borderRadius: '12px',
+                    background: 'rgba(77, 96, 44, 0.05)',
+                    border: '1px solid rgba(77, 96, 44, 0.1)',
+                    transition: 'all 0.3s ease'
                   }}><i className="far fa-check" style={{
                     color: '#4d602c',
-                    marginRight: '12px',
-                    fontSize: '18px'
-                  }} />{t('joinUsPage.whyWorkWithUs.benefits.development')}</li>
-                  <li className="why-work-item" style={{
+                    marginRight: '15px',
+                    fontSize: '20px',
+                    marginTop: '2px',
+                    flexShrink: 0
+                  }} /><span>{t('joinUsPage.whyWorkWithUs.benefits.development')}</span></div>
+                  
+                  <div className="why-work-item" style={{
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     fontSize: '16px',
                     fontWeight: '500',
                     color: '#666',
-                    minWidth: '300px'
+                    padding: '15px',
+                    borderRadius: '12px',
+                    background: 'rgba(77, 96, 44, 0.05)',
+                    border: '1px solid rgba(77, 96, 44, 0.1)',
+                    transition: 'all 0.3s ease'
                   }}><i className="far fa-check" style={{
                     color: '#4d602c',
-                    marginRight: '12px',
-                    fontSize: '18px'
-                  }} />{t('joinUsPage.whyWorkWithUs.benefits.technology')}</li>
-                  <li className="why-work-item" style={{
+                    marginRight: '15px',
+                    fontSize: '20px',
+                    marginTop: '2px',
+                    flexShrink: 0
+                  }} /><span>{t('joinUsPage.whyWorkWithUs.benefits.technology')}</span></div>
+                  
+                  <div className="why-work-item" style={{
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     fontSize: '16px',
                     fontWeight: '500',
                     color: '#666',
-                    minWidth: '300px'
+                    padding: '15px',
+                    borderRadius: '12px',
+                    background: 'rgba(77, 96, 44, 0.05)',
+                    border: '1px solid rgba(77, 96, 44, 0.1)',
+                    transition: 'all 0.3s ease'
                   }}><i className="far fa-check" style={{
                     color: '#4d602c',
-                    marginRight: '12px',
-                    fontSize: '18px'
-                  }} />{t('joinUsPage.whyWorkWithUs.benefits.environment')}</li>
-                  <li className="why-work-item" style={{
+                    marginRight: '15px',
+                    fontSize: '20px',
+                    marginTop: '2px',
+                    flexShrink: 0
+                  }} /><span>{t('joinUsPage.whyWorkWithUs.benefits.environment')}</span></div>
+                  
+                  <div className="why-work-item" style={{
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     fontSize: '16px',
                     fontWeight: '500',
                     color: '#666',
-                    minWidth: '300px'
+                    padding: '15px',
+                    borderRadius: '12px',
+                    background: 'rgba(77, 96, 44, 0.05)',
+                    border: '1px solid rgba(77, 96, 44, 0.1)',
+                    transition: 'all 0.3s ease'
                   }}><i className="far fa-check" style={{
                     color: '#4d602c',
-                    marginRight: '12px',
-                    fontSize: '18px'
-                  }} />{t('joinUsPage.whyWorkWithUs.benefits.flexibility')}</li>
-                </ul>
+                    marginRight: '15px',
+                    fontSize: '20px',
+                    marginTop: '2px',
+                    flexShrink: 0
+                  }} /><span>{t('joinUsPage.whyWorkWithUs.benefits.flexibility')}</span></div>
+                </div>
+                
+                <style jsx>{`
+                  .why-work-item:hover {
+                    background: rgba(77, 96, 44, 0.08) !important;
+                    border-color: rgba(77, 96, 44, 0.2) !important;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 15px rgba(77, 96, 44, 0.1);
+                  }
+                  
+                  @media (max-width: 768px) {
+                    .why-work-list {
+                      grid-template-columns: 1fr !important;
+                      gap: 15px !important;
+                    }
+                  }
+                `}</style>
               </div>
             </div>
           </div>

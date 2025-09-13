@@ -138,16 +138,36 @@ const About = () => {
       </section>
       {/*====== End About Section ======*/}
       {/*====== Start Features Section ======*/}
-      <section className="features-section p-r z-1 pb-100">
-        <div className="features-wrapper">
+      <section className="features-section p-r z-1" style={{ marginBottom: 0, paddingBottom: 0 }}>
+        <div className="features-wrapper" style={{ minHeight: '700px', display: 'flex', alignItems: 'stretch' }}>
           <div
             className="features-bg bg_cover"
             style={{
               backgroundImage: "url(/assets/images/bg/features-bg-1.jpg)",
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '60%',
+              height: '100%',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
             }}
           />
-          <div className="features-bgc-content-box main-bg text-white wow fadeInRight">
-            <div className="features-content-box">
+          <div 
+            className="features-bgc-content-box main-bg text-white wow fadeInRight" 
+            style={{
+              marginLeft: 'auto',
+              width: '55%',
+              minHeight: '700px',
+              display: 'flex',
+              alignItems: 'center',
+              position: 'relative',
+              zIndex: 2,
+              padding: '80px 60px'
+            }}
+          >
+            <div className="features-content-box" style={{ width: '100%' }}>
               {/*====== Section-title ======*/}
               <div className="section-title mb-50 wow fadeInUp">
                 <span className="sub-title">
@@ -186,82 +206,60 @@ const About = () => {
             </div>
           </div>
         </div>
+        
+        <style jsx>{`
+          @media (max-width: 1200px) {
+            .features-bgc-content-box {
+              padding: 60px 40px !important;
+            }
+          }
+          
+          @media (max-width: 991px) {
+            .features-wrapper {
+              flex-direction: column !important;
+              min-height: auto !important;
+            }
+            
+            .features-bg {
+              position: relative !important;
+              width: 100% !important;
+              height: 350px !important;
+            }
+            
+            .features-bgc-content-box {
+              width: 100% !important;
+              margin-left: 0 !important;
+              min-height: auto !important;
+              padding: 60px 40px !important;
+            }
+          }
+          
+          @media (max-width: 768px) {
+            .features-bg {
+              height: 300px !important;
+            }
+            
+            .features-bgc-content-box {
+              padding: 40px 30px !important;
+            }
+            
+            .section-title h2 {
+              font-size: 28px !important;
+            }
+            
+            .single-features-item {
+              margin-bottom: 25px !important;
+            }
+          }
+          
+          @media (max-width: 480px) {
+            .features-bgc-content-box {
+              padding: 30px 20px !important;
+            }
+          }
+        `}</style>
       </section>
       {/*====== End Features Section ======*/}
-      {/*====== Start Team Section ======*/}
-      <section className="team-section pt-95">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-xl-8 col-lg-12">
-              {/*====== Section-title ======*/}
-              <div className="section-title text-center mb-50 wow fadeInDown">
-                <span className="sub-title">
-                  <i className="flaticon-plant" />
-                  {t('aboutPage.team.subtitle')}
-                </span>
-                <h2>{t('aboutPage.team.title')}</h2>
-              </div>
-            </div>
-          </div>
-          <div className="row justify-content-center">
-            <div className="col-lg-4 col-md-6 col-sm-12">
-              <div className="single-team-item mb-50 wow fadeInLeft">
-                <div className="member-img">
-                  <img src="/assets/images/single-team.png" alt="Team Image" />
-                  <div className="icon-btn">
-                    <i className="far fa-plus" />
-                  </div>
-                </div>
-                <div className="member-info text-center">
-                  <h3 className="title">
-                    <Link legacyBehavior href="/single-team">
-                      Ahmed Hassan
-                    </Link>
-                  </h3>
-                  <p>{t('aboutPage.team.qualityManager')}</p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6 col-sm-12">
-              <div className="single-team-item mb-50 wow fadeInDown">
-                <div className="member-img">
-                  <img src="/assets/images/single-team.png" alt="Team Image" />
-                  <div className="icon-btn">
-                    <i className="far fa-plus" />
-                  </div>
-                </div>
-                <div className="member-info text-center">
-                  <h3 className="title">
-                    <Link legacyBehavior href="/single-team">
-                      Mohamed El-Sayed
-                    </Link>
-                  </h3>
-                  <p>{t('aboutPage.team.productionManager')}</p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6 col-sm-12">
-              <div className="single-team-item mb-50 wow fadeInRight">
-                <div className="member-img">
-                  <img src="/assets/images/single-team.png" alt="Team Image" />
-                  <div className="icon-btn">
-                    <i className="far fa-plus" />
-                  </div>
-                </div>
-                <div className="member-info text-center">
-                  <h3 className="title">
-                    <Link legacyBehavior href="/single-team">
-                      Omar Abdallah
-                    </Link>
-                  </h3>
-                  <p>{t('aboutPage.team.exportCoordinator')}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/*====== End Team Section ======*/}
       {/*====== Start CTA Section  ======*/}
       <section
         className="cta-bg-section bg_cover pt-100 p-r z-1"
@@ -347,18 +345,6 @@ const About = () => {
                 <p>
                   {t('aboutPage.testimonialSection.testimonialText')}
                 </p>
-                <div className="author-thumb-title">
-                  <div className="author-thumb">
-                    <img
-                      src="/assets/images/author-thumb-1.png"
-                      alt="Author Image"
-                    />
-                  </div>
-                  <div className="author-title">
-                    <h6 className="title">{t('aboutPage.testimonialSection.authorName')}</h6>
-                    <p className="position">{t('aboutPage.testimonialSection.authorPosition')}</p>
-                  </div>
-                </div>
               </div>
             </div>
             {/*====== Testimonial Item  ======*/}
@@ -395,18 +381,6 @@ const About = () => {
                 <p>
                   {t('aboutPage.testimonialSection.testimonialText')}
                 </p>
-                <div className="author-thumb-title">
-                  <div className="author-thumb">
-                    <img
-                      src="/assets/images/author-thumb-1.png"
-                      alt="Author Image"
-                    />
-                  </div>
-                  <div className="author-title">
-                    <h6 className="title">{t('aboutPage.testimonialSection.authorName')}</h6>
-                    <p className="position">{t('aboutPage.testimonialSection.authorPosition')}</p>
-                  </div>
-                </div>
               </div>
             </div>
             {/*====== Testimonial Item  ======*/}
@@ -443,18 +417,6 @@ const About = () => {
                 <p>
                   {t('aboutPage.testimonialSection.testimonialText')}
                 </p>
-                <div className="author-thumb-title">
-                  <div className="author-thumb">
-                    <img
-                      src="/assets/images/author-thumb-1.png"
-                      alt="Author Image"
-                    />
-                  </div>
-                  <div className="author-title">
-                    <h6 className="title">Brian L. Swinton</h6>
-                    <p className="position">Web Designer</p>
-                  </div>
-                </div>
               </div>
             </div>
             {/*====== Testimonial Item  ======*/}
@@ -491,24 +453,97 @@ const About = () => {
                 <p>
                   {t('aboutPage.testimonialSection.testimonialText')}
                 </p>
-                <div className="author-thumb-title">
-                  <div className="author-thumb">
-                    <img
-                      src="/assets/images/author-thumb-1.png"
-                      alt="Author Image"
-                    />
-                  </div>
-                  <div className="author-title">
-                    <h6 className="title">Timothy V. Kim</h6>
-                    <p className="position">SR Manager</p>
-                  </div>
-                </div>
               </div>
             </div>
           </Slider>
         </div>
       </section>
       {/*====== End Testimonial Section  ======*/}
+      
+      {/*====== Start Global Reach Video Section  ======*/}
+      <section className="global-reach-section pt-100 pb-50">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-xl-8 col-lg-10">
+              <div className="section-title text-center mb-50 wow fadeInDown">
+                <span className="sub-title">
+                  <i className="flaticon-plant" />
+                  {t('aboutPage.globalReach.subtitle') || 'Our Global Reach'}
+                </span>
+                <h2>{t('aboutPage.globalReach.title') || 'From Egypt to the World'}</h2>
+                <p className="section-description">
+                  {t('aboutPage.globalReach.description') || 'Discover our worldwide presence and export network that brings premium Egyptian products to international markets'}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="row justify-content-center">
+            <div className="col-lg-10">
+              <div className="global-reach-video-box wow fadeInUp" data-wow-delay="0.2s">
+                <div 
+                  className="video-container"
+                  style={{
+                    position: 'relative',
+                    borderRadius: '20px',
+                    overflow: 'hidden',
+                    boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
+                    transition: 'all 0.3s ease',
+                    background: '#f8f9fa'
+                  }}
+                >
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{
+                      width: '100%',
+                      height: '400px',
+                      objectFit: 'cover',
+                      display: 'block'
+                    }}
+                  >
+                    <source src="/assets/video/world map.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  
+                  {/* Overlay with company info */}
+                  <div 
+                    style={{
+                      position: 'absolute',
+                      bottom: '0',
+                      left: '0',
+                      right: '0',
+                      background: 'linear-gradient(transparent, rgba(77, 96, 44, 0.9))',
+                      color: 'white',
+                      padding: '40px 30px',
+                      textAlign: 'center'
+                    }}
+                  >
+                    <h4 style={{ 
+                      margin: '0 0 10px 0', 
+                      fontSize: '24px', 
+                      fontWeight: '700',
+                      color: '#ffffff'
+                    }}>
+                      {t('aboutPage.globalReach.overlayTitle') || 'Exporting Excellence Worldwide'}
+                    </h4>
+                    <p style={{ 
+                      margin: 0, 
+                      fontSize: '16px', 
+                      opacity: 0.95,
+                      lineHeight: '1.5'
+                    }}>
+                      {t('aboutPage.globalReach.overlayDescription') || 'From our facilities in Egypt, we serve markets across continents with premium quality products'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*====== End Global Reach Video Section  ======*/}
       
       {/*====== Start Catalog Download Section  ======*/}
       <section className="catalog-section pt-100 pb-100">

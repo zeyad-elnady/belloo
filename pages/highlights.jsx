@@ -30,7 +30,7 @@ const Highlights = () => {
                     <i className="fas fa-check" />
                   </div>
                   <h2 className="number">
-                    <Counter end={20} />+
+                    <Counter end={10} />+
                   </h2>
                   <p>{t('highlightsPage.stats.countries')}</p>
                 </div>
@@ -69,7 +69,7 @@ const Highlights = () => {
                     <i className="fas fa-award" />
                   </div>
                   <h2 className="number">
-                    <Counter end={25} />+
+                    <Counter end={10} />+
                   </h2>
                   <p>{t('highlightsPage.stats.experience')}</p>
                 </div>
@@ -83,18 +83,27 @@ const Highlights = () => {
                 <div className="row">
                   <div className="col-md-4 mb-30">
                     <div className="highlight-item">
+                      <div className="milestone-icon mb-20">
+                        <i className="fas fa-certificate" style={{fontSize: '2.5rem', color: '#8FBC8F'}}></i>
+                      </div>
                       <h5>{t('highlightsPage.achievements.certification.title')}</h5>
                       <p>{t('highlightsPage.achievements.certification.description')}</p>
                     </div>
                   </div>
                   <div className="col-md-4 mb-30">
                     <div className="highlight-item">
+                      <div className="milestone-icon mb-20">
+                        <i className="fas fa-globe" style={{fontSize: '2.5rem', color: '#8FBC8F'}}></i>
+                      </div>
                       <h5>{t('highlightsPage.achievements.export.title')}</h5>
                       <p>{t('highlightsPage.achievements.export.description')}</p>
                     </div>
                   </div>
                   <div className="col-md-4 mb-30">
                     <div className="highlight-item">
+                      <div className="milestone-icon mb-20">
+                        <i className="fas fa-trophy" style={{fontSize: '2.5rem', color: '#8FBC8F'}}></i>
+                      </div>
                       <h5>{t('highlightsPage.achievements.quality.title')}</h5>
                       <p>{t('highlightsPage.achievements.quality.description')}</p>
                     </div>

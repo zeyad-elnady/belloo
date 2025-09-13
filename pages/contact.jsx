@@ -102,86 +102,130 @@ const Contact = () => {
           <div className="contact-wrapper">
             <div className="row">
               <div className="col-lg-6">
-                {/*=== Video Map Box ===*/}
-                <div className="video-map-box wow fadeInLeft mb-50">
+                {/*=== Interactive Map Box ===*/}
+                <div className="interactive-map-box wow fadeInLeft mb-50">
                   <div 
-                    className="video-container"
+                    className="map-container"
                     onClick={() => {
-                      // Open Google Maps in new tab
-                      window.open('https://maps.google.com/maps?q=10th+of+Ramadan+City,+Egypt&t=&z=13', '_blank', 'noopener,noreferrer');
+                      // Open Google Maps in new tab with specific location
+                      window.open('https://maps.app.goo.gl/j7Qa6LR51jspaizn8?g_st=com.google.maps.preview.copy', '_blank', 'noopener,noreferrer');
                     }}
                     style={{
                       position: 'relative',
                       cursor: 'pointer',
-                      borderRadius: '10px',
+                      borderRadius: '15px',
                       overflow: 'hidden',
-                      boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+                      boxShadow: '0 15px 40px rgba(0,0,0,0.12)',
                       transition: 'all 0.3s ease',
-                      background: '#f8f9fa'
+                      background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
+                      height: '400px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexDirection: 'column',
+                      color: 'white',
+                      textAlign: 'center'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.02)';
-                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(0,0,0,0.15)';
+                      e.currentTarget.style.transform = 'translateY(-5px) scale(1.02)';
+                      e.currentTarget.style.boxShadow = '0 25px 50px rgba(0,0,0,0.2)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                      e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(0,0,0,0.12)';
                     }}
                   >
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      style={{
-                        width: '100%',
-                        height: '400px',
-                        objectFit: 'cover',
-                        display: 'block'
-                      }}
-                    >
-                      <source src="/assets/video/world map.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                    
-                    {/* Overlay with click instruction */}
-                    <div 
-                      style={{
-                        position: 'absolute',
-                        bottom: '0',
-                        left: '0',
-                        right: '0',
-                        background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
-                        color: 'white',
-                        padding: '20px',
-                        textAlign: 'center'
-                      }}
-                    >
-                      <p style={{ margin: 0, fontSize: '14px', opacity: 0.9 }}>
-                        Click to view on Google Maps
-                      </p>
-                    </div>
-                    
-                    {/* Click indicator icon */}
-                    <div 
-                      style={{
-                        position: 'absolute',
-                        top: '20px',
-                        right: '20px',
-                        background: 'rgba(255,255,255,0.9)',
+                    {/* Background Pattern */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'url("/assets/images/bg/about-bg-1.jpg") center/cover',
+                      opacity: 0.1,
+                      zIndex: 1
+                    }}></div>
+
+                    {/* Content */}
+                    <div style={{ position: 'relative', zIndex: 2 }}>
+                      <div style={{
+                        width: '100px',
+                        height: '100px',
+                        background: 'rgba(255,255,255,0.15)',
                         borderRadius: '50%',
-                        width: '40px',
-                        height: '40px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '16px',
-                        color: '#4d602c',
-                        boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-                      }}
-                    >
-                      <i className="fas fa-external-link-alt"></i>
+                        marginBottom: '30px',
+                        backdropFilter: 'blur(10px)',
+                        border: '2px solid rgba(255,255,255,0.2)',
+                        margin: '0 auto 30px'
+                      }}>
+                        <i className="fas fa-map-marker-alt" style={{ fontSize: '40px', color: '#ffffff' }}></i>
+                      </div>
+                      
+                      <h3 style={{ 
+                        fontSize: '28px', 
+                        fontWeight: '700',
+                        marginBottom: '15px',
+                        color: '#ffffff'
+                      }}>
+                        {t('contactPage.map.title') || 'Visit Our Location'}
+                      </h3>
+                      
+                      <p style={{ 
+                        fontSize: '16px', 
+                        opacity: 0.95,
+                        lineHeight: '1.5',
+                        marginBottom: '25px',
+                        maxWidth: '300px',
+                        margin: '0 auto 25px'
+                      }}>
+                        {t('contactPage.map.description') || '10th of Ramadan City, Egypt'}
+                      </p>
+                      
+                      <div style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        background: 'rgba(255,255,255,0.2)',
+                        padding: '12px 24px',
+                        borderRadius: '50px',
+                        backdropFilter: 'blur(10px)',
+                        border: '1px solid rgba(255,255,255,0.3)',
+                        transition: 'all 0.3s ease'
+                      }}>
+                        <i className="fas fa-external-link-alt" style={{ marginRight: '10px', fontSize: '14px' }}></i>
+                        <span style={{ fontSize: '14px', fontWeight: '600' }}>
+                          {t('contactPage.map.viewOnMaps') || 'View on Google Maps'}
+                        </span>
+                      </div>
                     </div>
+
+                    {/* Floating Elements */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '20px',
+                      left: '20px',
+                      width: '60px',
+                      height: '60px',
+                      background: 'rgba(255,255,255,0.1)',
+                      borderRadius: '50%',
+                      zIndex: 1,
+                      animation: 'float 3s ease-in-out infinite'
+                    }}></div>
+                    
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '30px',
+                      right: '30px',
+                      width: '40px',
+                      height: '40px',
+                      background: 'rgba(255,255,255,0.1)',
+                      borderRadius: '50%',
+                      zIndex: 1,
+                      animation: 'float 4s ease-in-out infinite reverse'
+                    }}></div>
                   </div>
                 </div>
               </div>

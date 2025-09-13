@@ -67,33 +67,34 @@ const Products = () => {
       'Sliced Green Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       
       // Black Olives - specific availability based on actual image files
-      'Whole Black Olives': ['cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'], // Not in glass jars
+      'Whole Black Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       'Pitted Black Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       'Sliced Black Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Whole Black Natural Kalamata Olives': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Pitted Black Natural Kalamata Olives': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Sliced Black Natural Kalamata Olives': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Whole Black Natural Picual Olives': ['glass-jars', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Pitted Black Natural Picual Olives': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Sliced Black Natural Picual Olives': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Olive Black Natural Dolce': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Pitted Black Natural Dolce': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Whole Black Natural Kalamata Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Pitted Black Natural Kalamata Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Sliced Black Natural Kalamata Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Whole Black Natural Picual Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Pitted Black Natural Picual Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Sliced Black Natural Picual Olives': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Olive Black Natural Dolce': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Pitted Black Natural Dolce': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       
       // Peppers - based on actual image availability
-      'Pepperoncini Pepper': ['glass-jars', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Pepperoncini Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       'Cherry Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       'Kardoula Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       'Whole Lombardi Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Sliced Lombardi Pepper': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Sliced Lombardi Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       'Sliced Green Jalapeno Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Sliced Red en Jalapeno Pepper': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Sliced Red en Jalapeno Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       'Habiba Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Mexican Pepper': ['vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Mexican Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
+      'Macedonian Pepper': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       
       // Artichokes
       'Artichoke Hearts': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
       'Artichoke Quarter': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
-      'Artichoke Bottom': ['plastic-buckets', 'barrels', 'pet-packs'], // Only generic types
+      'Artichoke Bottom': ['glass-jars', 'cans', 'vacuum-bags', 'plastic-buckets', 'barrels', 'pet-packs'],
     };
     
     return packagingMap[productName] || ['plastic-buckets']; // Default to plastic buckets if no specific mapping
@@ -119,17 +120,30 @@ const Products = () => {
         'Whole Green Olives': 'Whole Green Olives .jpg',
         'Pitted Green Olives': 'Pitted Green Olives .jpg',
         'Sliced Green Olives': 'Sliced Green Olives .jpg',
+        'Whole Black Olives': 'Whole Black Olives.png',
         'Pitted Black Olives': 'Pitted Black Olives .jpg',
         'Sliced Black Olives': 'Sliced Black Olives .jpg',
         'Whole Black Natural Picual Olives': 'Whole Black Natural Picual Olives .jpg',
+        'Pitted Black Natural Picual Olives': 'Pitted Black Natural Picual Olives.png',
+        'Sliced Black Natural Picual Olives': 'Sliced  Black Natural Picual Olives.png',
+        'Sliced Lombardi Pepper': 'Sliced Lombardi Pepper.png',
         'Pepperoncini Pepper': 'pepperoncini Pepper.jpg',
         'Cherry Pepper': 'Cherry Pepper.jpg',
         'Kardoula Pepper': 'Kardoula Pepper.jpg',
         'Whole Lombardi Pepper': 'Whole Lombardi Pepper.jpg',
         'Sliced Green Jalapeno Pepper': 'Sliced Green Jalapeno Pepper.jpg',
+        'Sliced Red en Jalapeno Pepper': 'Sliced Red en Jalapeno Pepper.png',
         'Habiba Pepper': 'Habiba Peppper.jpg',
+        'Mexican Pepper': 'Mexican Pepper.png',
+        'Macedonian Pepper': 'Macedonian pepper jar.png',
+        'Olive Black Natural Dolce': 'Olive Black Natural Dolce.png',
+        'Pitted Black Natural Dolce': 'Pitted Black Natural Dolce.png',
+        'Pitted Black Natural Kalamata Olives': 'Pitted Black Natural Kalamata Olives.png',
+        'Sliced Black Natural Kalamata Olives': 'Sliced Black Natural Kalamata Olives.png',
+        'Whole Black Natural Kalamata Olives': 'Whole Black Natural Kalamata Olives.png',
         'Artichoke Hearts': 'Artichoke Hearts .jpg',
         'Artichoke Quarter': 'Artichoke Quarter .jpg',
+        'Artichoke Bottom': 'Artichoke Bottom jar.png',
       },
       'cans': {
         'Whole Green Olives': 'Whole Green Olives .jpg',
@@ -142,9 +156,22 @@ const Products = () => {
         'Habiba Pepper': 'Habiba Peppper.jpg',
         'Kardoula Pepper': 'Kardoula Pepper.jpg',
         'Sliced Green Jalapeno Pepper': 'Sliced Green Jalapeno Pepper.jpg',
+        'Sliced Red en Jalapeno Pepper': 'Sliced Red en Jalapeno Pepper.png',
         'Whole Lombardi Pepper': 'Whole Lombardi Pepper.jpg',
+        'Mexican Pepper': 'Mexican Pepper.png',
+        'Olive Black Natural Dolce': 'Olive Black Natural Dolce can.png',
+        'Pitted Black Natural Dolce': 'Pitted Black Natural Dolce can.png',
+        'Pitted Black Natural Kalamata Olives': 'Pitted Black Natural Kalamata Olives can.png',
+        'Whole Black Natural Kalamata Olives': 'Whole Black Natural Kalamata Olives can.png',
+        'Sliced Black Natural Kalamata Olives': 'Sliced Black Natural Kalamata Olives (2).png',
+        'Whole Black Natural Picual Olives': 'Whole Black Natural Picual Olives.png',
+        'Sliced Black Natural Picual Olives': 'Sliced  Black Natural Picual Olives.png',
+        'Sliced Lombardi Pepper': 'Sliced Lombardi Pepper can.png',
+        'Pepperoncini Pepper': 'pepperoncini Pepper.png',
+        'Macedonian Pepper': 'Macedonian pepper can.png',
         'Artichoke Hearts': 'Artichoke Hearts .jpg',
         'Artichoke Quarter': 'Artichoke Quarter .jpg',
+        'Artichoke Bottom': 'Artichoke Bottom can.png',
       },
       'vacuum-bags': {
         'Whole Green Olives': 'Whole Green Olives .jpg',
@@ -170,8 +197,10 @@ const Products = () => {
         'Sliced Red en Jalapeno Pepper': 'Sliced Red en Jalapeno Pepper.jpg',
         'Habiba Pepper': 'Habiba Peppper.jpg',
         'Mexican Pepper': 'Mexican pepper.jpg',
+        'Macedonian Pepper': 'Macedonian pepper.jpg',
         'Artichoke Hearts': 'Artichoke Hearts .jpg',
         'Artichoke Quarter': 'Artichoke Quarter .jpg',
+        'Artichoke Bottom': 'Artichoke Bottom.jpg',
       }
     };
     
@@ -269,7 +298,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.wholeGreenOlives')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.availableMultiplePackaging')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.wholeGreenOlives')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Whole Green Olives')}
@@ -292,7 +321,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.pittedGreenOlives')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.availableMultiplePackaging')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.pittedGreenOlives')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Pitted Green Olives')}
@@ -315,7 +344,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.slicedGreenOlives')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.availableMultiplePackaging')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.slicedGreenOlives')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Green Olives')}
@@ -344,7 +373,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.wholeBlackOlives')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.cansVacuumPackaging')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.wholeBlackOlives')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Whole Black Olives')}
@@ -367,7 +396,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.pittedBlackOlives')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.pittedBlackOlives')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Pitted Black Olives')}
@@ -390,7 +419,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.slicedBlackOlives')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.slicedBlackOlives')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Black Olives')}
@@ -413,7 +442,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.wholeBlackNaturalKalamataOlives')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.wholeBlackNaturalKalamataOlives')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Whole Black Natural Kalamata Olives')}
@@ -436,7 +465,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.pittedBlackNaturalKalamataOlives')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.pittedBlackNaturalKalamataOlives')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Pitted Black Natural Kalamata Olives')}
@@ -459,7 +488,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.slicedBlackNaturalKalamataOlives')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.slicedBlackNaturalKalamataOlives')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Black Natural Kalamata Olives')}
@@ -482,7 +511,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.wholeBlackNaturalPicualOlives')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.wholeBlackNaturalPicualOlives')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Whole Black Natural Picual Olives')}
@@ -505,7 +534,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.pittedBlackNaturalPicualOlives')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.pittedBlackNaturalPicualOlives')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Pitted Black Natural Picual Olives')}
@@ -528,7 +557,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.slicedBlackNaturalPicualOlives')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.slicedBlackNaturalPicualOlives')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Black Natural Picual Olives')}
@@ -551,7 +580,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.oliveBlackNaturalDolce')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.oliveBlackNaturalDolce')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Olive Black Natural Dolce')}
@@ -574,7 +603,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.pittedBlackNaturalDolce')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.pittedBlackNaturalDolce')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Pitted Black Natural Dolce')}
@@ -603,7 +632,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.pepperonciniPepper')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.pepperonciniPepper')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Pepperoncini Pepper')}
@@ -626,7 +655,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.cherryPepper')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.cherryPepper')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Cherry Pepper')}
@@ -649,7 +678,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.kardoulaPepper')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.kardoulaPepper')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Kardoula Pepper')}
@@ -672,7 +701,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.wholeLombardiPepper')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.wholeLombardiPepper')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Whole Lombardi Pepper')}
@@ -695,7 +724,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.slicedLombardiPepper')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.slicedLombardiPepper')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Lombardi Pepper')}
@@ -718,7 +747,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.slicedGreenJalapenoPepper')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.a10Tins')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.slicedGreenJalapenoPepper')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Green Jalapeno Pepper')}
@@ -741,7 +770,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.slicedRedJalapenoPepper')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.a10Tins')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.slicedRedJalapenoPepper')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Sliced Red en Jalapeno Pepper')}
@@ -765,7 +794,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.habibaPepper')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.habibaPepper')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Habiba Pepper')}
@@ -788,10 +817,33 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.mexicanPepper')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.mexicanPepper')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Mexican Pepper')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Macedonian Pepper - Vacuum Bag */}
+                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                  <div className="product-card mb-40 wow fadeInDown" data-wow-delay=".45s">
+                    <div className="product-image">
+                      <img src={getProductImage('Macedonian Pepper')} alt="Macedonian Pepper" />
+                      <div className="product-overlay">
+                        <Link legacyBehavior href={`/specifications?package=${getProductView('Macedonian Pepper')}`}>
+                          <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="product-info">
+                      <h5 className="product-name">{t('productsPage.products.macedonianPepper')}</h5>
+                      <p className="product-package">{t('productsPage.descriptions.macedonianPepper')}</p>
+                      <div className="product-details">
+                        <div className="view-toggle-buttons">
+                          {renderPackagingButtons('Macedonian Pepper')}
                         </div>
                       </div>
                     </div>
@@ -817,7 +869,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.artichokeHearts')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.artichokeHearts')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Artichoke Hearts')}
@@ -840,7 +892,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.artichokeQuarter')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.artichokeQuarter')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Artichoke Quarter')}
@@ -863,7 +915,7 @@ const Products = () => {
                     </div>
                     <div className="product-info">
                       <h5 className="product-name">{t('productsPage.products.artichokeBottom')}</h5>
-                      <p className="product-package">{t('productsPage.descriptions.glassJar370ml')}</p>
+                      <p className="product-package">{t('productsPage.descriptions.artichokeBottom')}</p>
                       <div className="product-details">
                         <div className="view-toggle-buttons">
                           {renderPackagingButtons('Artichoke Bottom')}
