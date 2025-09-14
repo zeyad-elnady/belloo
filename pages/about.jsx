@@ -508,32 +508,11 @@ const About = () => {
                   </video>
                   
                   {/* Overlay with company info */}
-                  <div 
-                    style={{
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      right: '0',
-                      background: 'linear-gradient(transparent, rgba(77, 96, 44, 0.9))',
-                      color: 'white',
-                      padding: '40px 30px',
-                      textAlign: 'center'
-                    }}
-                  >
-                    <h4 style={{ 
-                      margin: '0 0 10px 0', 
-                      fontSize: '24px', 
-                      fontWeight: '700',
-                      color: '#ffffff'
-                    }}>
+                  <div className="video-overlay map-text-overlay">
+                    <h4 className="map-overlay-title">
                       {t('aboutPage.globalReach.overlayTitle') || 'Exporting Excellence Worldwide'}
                     </h4>
-                    <p style={{ 
-                      margin: 0, 
-                      fontSize: '16px', 
-                      opacity: 0.95,
-                      lineHeight: '1.5'
-                    }}>
+                    <p className="map-overlay-description">
                       {t('aboutPage.globalReach.overlayDescription') || 'From our facilities in Egypt, we serve markets across continents with premium quality products'}
                     </p>
                   </div>
