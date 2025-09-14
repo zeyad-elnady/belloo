@@ -417,7 +417,7 @@ const Index = () => {
                     </a>
                   </Link>
                   <img
-                    src="/assets/images/products/GLASS JARS/Pepperoncini Pepper.jpg"
+                    src="/assets/images/products/GLASS JARS/pepperoncini Pepper.jpg"
                     alt="Pepperoncini Pepper"
                   />
                 </div>
