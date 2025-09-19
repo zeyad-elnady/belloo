@@ -128,10 +128,15 @@ export default async function handler(req, res) {
 
       // Send email notification
       try {
-        await sendJobApplicationNotification(application, cvFileInfo);
-        console.log('Email notification sent successfully');
+        console.log('📧 Attempting to send email notification...');
+        console.log('Application data:', application);
+        console.log('CV file info:', cvFileInfo);
+        
+        const emailResult = await sendJobApplicationNotification(application, cvFileInfo);
+        console.log('✅ Email notification sent successfully:', emailResult);
       } catch (emailError) {
-        console.error('Email notification failed:', emailError);
+        console.error('❌ Email notification failed:', emailError);
+        console.error('❌ Email error stack:', emailError.stack);
         // Continue anyway - don't fail the whole request
       }
 
