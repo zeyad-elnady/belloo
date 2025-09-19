@@ -56,8 +56,9 @@ export default function Login() {
          window.location.hostname === 'smartbookingcrm.live' ||
          window.location.protocol === 'https:');
       
+      // Use direct login endpoint for Vercel compatibility
       const loginEndpoint = isProduction
-        ? '/api/auth/login-vercel'
+        ? '/api/login-direct'  // Use direct endpoint that should definitely work
         : '/api/auth/login';
       
       console.log('Using login endpoint:', loginEndpoint);

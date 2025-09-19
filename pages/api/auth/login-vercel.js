@@ -18,22 +18,38 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-this-in-pro
 
 export default async function handler(req, res) {
   console.log(`Login API: Received ${req.method} request`);
+  console.log('Request URL:', req.url);
+  console.log('Request headers:', req.headers);
   
-  // Set CORS headers
+  // Set comprehensive CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
 
+  // Handle preflight requests
   if (req.method === 'OPTIONS') {
-    console.log('Handling OPTIONS request');
+    console.log('Handling OPTIONS preflight request');
     return res.status(200).end();
+  }
+
+  // Add GET method for testing
+  if (req.method === 'GET') {
+    console.log('Handling GET request for testing');
+    return res.status(200).json({ 
+      success: true,
+      message: 'Login endpoint is accessible',
+      method: req.method,
+      timestamp: new Date().toISOString()
+    });
   }
 
   if (req.method !== 'POST') {
     console.log(`Method ${req.method} not allowed`);
     return res.status(405).json({ 
       success: false,
-      error: 'Method not allowed. Use POST.' 
+      error: `Method ${req.method} not allowed`,
+      allowedMethods: ['GET', 'POST', 'OPTIONS']
     });
   }
 
