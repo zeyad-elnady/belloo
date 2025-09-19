@@ -252,15 +252,13 @@ const Contact = () => {
                           return;
                         }
                         
-                        // Prepare data for Google Sheets
+                        // Prepare data for database
                         const submissionData = {
                           name: name.trim(),
                           email: email.trim(),
                           phone: phone.trim(),
                           subject: subject.trim(),
-                          message: message.trim(),
-                          submissionDate: new Date().toLocaleString(),
-                          timestamp: new Date().toISOString()
+                          message: message.trim()
                         };
                         
                         // Show loading state
@@ -273,22 +271,28 @@ const Contact = () => {
                           try {
                             console.log('Submitting contact message...');
                             
-                            const response = await fetch('https://script.google.com/macros/s/AKfycbzU0_lALt_WwPx7QH8nRlE7OI84rxuvBfFtLzlyjwjV5uTWKw0cBfR3nkrzdAYYuOjQDw/exec', {
+                            const response = await fetch('/api/contact', {
                               method: 'POST',
-                              mode: 'no-cors',
                               headers: {
                                 'Content-Type': 'application/json',
                               },
                               body: JSON.stringify(submissionData)
                             });
                             
-                            console.log('Contact message sent successfully');
-                            alert('✅ Thank you! Your message has been sent successfully. We will get back to you soon.');
-                            e.target.reset();
+                            const result = await response.json();
+                            
+                            if (result.success) {
+                              console.log('Contact message sent successfully');
+                              alert('✅ Thank you! Your message has been sent successfully. We will get back to you soon.');
+                              e.target.reset();
+                            } else {
+                              console.error('Contact submission failed:', result.error);
+                              alert(`❌ Error: ${result.error}`);
+                            }
                             
                           } catch (error) {
                             console.error('Contact submission error:', error);
-                            alert('Your message may have been sent. If you don\'t receive a confirmation, please contact us directly.');
+                            alert('❌ There was an error sending your message. Please try again or contact us directly.');
                           } finally {
                             // Restore button state
                             submitButton.innerHTML = originalText;

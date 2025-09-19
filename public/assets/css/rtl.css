@@ -666,6 +666,11 @@ html[dir="rtl"] .unified-floating-header .mobile-menu-toggle.active span:nth-chi
   transform: rotate(45deg) translate(-5px, -5px);
 }
 
+/* Hide hero buttons in Arabic view */
+html[dir="rtl"] .hero-button {
+  display: none !important;
+}
+
 /* Mobile Menu Overlay RTL */
 html[dir="rtl"] .unified-floating-header .mobile-menu-overlay {
   direction: ltr; /* Keep overlay direction LTR for proper coverage */

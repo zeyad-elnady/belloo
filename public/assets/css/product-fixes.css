@@ -822,6 +822,333 @@
   }
 }
 
+/* Enhanced Feature Boxes - Responsive & Aligned */
+.enhanced-feature-box {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(77, 96, 44, 0.05);
+  overflow: hidden;
+  position: relative;
+  min-height: 320px; /* Increased for better alignment */
+}
+
+.enhanced-feature-box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(77, 96, 44, 0.15);
+  border-color: rgba(77, 96, 44, 0.1);
+}
+
+.enhanced-feature-box .text {
+  padding: 35px 25px 30px;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.enhanced-feature-box .text .icon {
+  position: relative;
+  margin: 0 auto 25px;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #4d602c, #6b8240);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(77, 96, 44, 0.2);
+  transition: all 0.3s ease;
+  flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.enhanced-feature-box:hover .text .icon {
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(77, 96, 44, 0.3);
+}
+
+.enhanced-feature-box .text .icon img {
+  width: 45px;
+  height: 45px;
+  filter: brightness(0) invert(1);
+  transition: all 0.3s ease;
+}
+
+.enhanced-feature-box .text h5.title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #2c3e50;
+  line-height: 1.4;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+.enhanced-feature-box .text p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #6c757d;
+  margin: 0;
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-start;
+  text-align: center;
+  justify-content: center;
+}
+
+/* Add subtle gradient background */
+.enhanced-feature-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4d602c, #6b8240);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.enhanced-feature-box:hover::before {
+  opacity: 1;
+}
+
+/* Features Grid Wrapper for better spacing */
+.features-grid-wrapper {
+  margin: 0 -15px;
+}
+
+.features-grid-wrapper > [class*="col-"] {
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .enhanced-feature-box {
+    min-height: 300px;
+  }
+  
+  .enhanced-feature-box .text {
+    padding: 30px 20px 25px;
+  }
+  
+  .enhanced-feature-box .text .icon {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 20px;
+  }
+  
+  .enhanced-feature-box .text .icon img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .enhanced-feature-box .text h5.title {
+    font-size: 16px;
+    min-height: 45px;
+  }
+}
+
+@media (max-width: 768px) {
+  .enhanced-feature-box {
+    min-height: 280px;
+    margin-bottom: 20px;
+  }
+  
+  .enhanced-feature-box .text {
+    padding: 25px 15px 20px;
+  }
+  
+  .enhanced-feature-box .text .icon {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 18px;
+  }
+  
+  .enhanced-feature-box .text .icon img {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .enhanced-feature-box .text h5.title {
+    font-size: 15px;
+    margin-bottom: 12px;
+    min-height: 40px;
+  }
+  
+  .enhanced-feature-box .text p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 576px) {
+  .features-grid-wrapper {
+    margin: 0 -10px;
+  }
+  
+  .features-grid-wrapper > [class*="col-"] {
+    padding: 0 10px;
+  }
+  
+  .enhanced-feature-box {
+    min-height: 260px;
+    margin-bottom: 15px;
+  }
+  
+  .enhanced-feature-box .text {
+    padding: 20px 15px 18px;
+  }
+  
+  .enhanced-feature-box .text .icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+  }
+  
+  .enhanced-feature-box .text .icon img {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .enhanced-feature-box .text h5.title {
+    font-size: 14px;
+    margin-bottom: 10px;
+    min-height: 35px;
+  }
+  
+  .enhanced-feature-box .text p {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+}
+
+/* Equal height grid layout fix */
+.features-grid-wrapper .row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.features-grid-wrapper [class*="col-"] {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure perfect alignment and centering */
+@media (min-width: 992px) {
+  .features-grid-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .features-grid-wrapper > [class*="col-"]:nth-child(5):last-child {
+    margin-left: auto;
+    margin-right: auto;
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
+
+/* Extra spacing and alignment improvements */
+.features-section .features-grid-wrapper {
+  margin-top: 20px;
+}
+
+/* Flexbox improvements for equal heights */
+.features-grid-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.features-grid-wrapper > [class*="col-"] {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.features-grid-wrapper .enhanced-feature-box {
+  width: 100%;
+  flex-grow: 1;
+}
+
+/* Improved spacing and alignment for all screen sizes */
+@media (min-width: 1200px) {
+  .features-grid-wrapper > [class*="col-"] {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .features-grid-wrapper > [class*="col-"] {
+    margin-bottom: 20px;
+  }
+  
+  .features-grid-wrapper > [class*="col-"]:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Perfect grid alignment */
+.features-grid-wrapper.row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+/* Ensure consistent heights across rows */
+@media (min-width: 768px) {
+  .features-grid-wrapper {
+    align-items: stretch;
+  }
+  
+  .features-grid-wrapper > [class*="col-"] {
+    display: flex;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 768px) {
+  .enhanced-feature-box .text {
+    min-height: 240px;
+    padding: 25px 15px 20px;
+  }
+  
+  .enhanced-feature-box .text .icon {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 15px;
+  }
+  
+  .enhanced-feature-box .text .icon img {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .enhanced-feature-box .text h5.title {
+    font-size: 15px;
+    min-height: 40px;
+    margin-bottom: 10px;
+  }
+  
+  .enhanced-feature-box .text p {
+    font-size: 13px;
+  }
+}
+
 /* Modern Job Offer Cards */
 .job-offer-card {
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);

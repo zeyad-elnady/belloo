@@ -1,6 +1,7 @@
 import PageBanner from "@/src/components/PageBanner";
 import Layout from "@/src/layouts/Layout";
 import Link from "next/link";
+import Head from "next/head";
 import { useTranslation } from 'next-i18next';
 
 const JoinUs = () => {
@@ -8,6 +9,9 @@ const JoinUs = () => {
   
   return (
     <Layout header={3} footer={3}>
+      <Head>
+        <link rel="stylesheet" href="/assets/css/professional-form.css" />
+      </Head>
       <PageBanner pageName={t('joinUsPage.pageTitle')} />
       <section className="team-section pt-95 pb-100">
         <div className="container">
@@ -685,18 +689,26 @@ const JoinUs = () => {
           </div>
           {/* Application Form Section */}
           <div className="row justify-content-center mt-60" id="application-form">
-            <div className="col-lg-10 col-xl-8">
-              <div className="application-form-wrapper">
-                <div className="section-title text-center mb-50 wow fadeInDown">
+            <div className="col-12">
+              <div className="professional-application-form">
+                <div className="professional-form-header wow fadeInDown">
                   <h3>{t('joinUsPage.applicationForm.title')}</h3>
-                  <p className="mt-20">
+                  <p>
                     {t('joinUsPage.applicationForm.description')}
                   </p>
                 </div>
                 
-                  <form className="application-form" onSubmit={async (e) => {
+                  <form className="professional-application-form-content" onSubmit={async (e) => {
                     console.log('Form submission started');
                   e.preventDefault();
+                    
+                    // Show loading overlay
+                    const form = e.target;
+                    const loadingOverlay = document.createElement('div');
+                    loadingOverlay.className = 'loading-overlay';
+                    loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
+                    form.style.position = 'relative';
+                    form.appendChild(loadingOverlay);
                   
                   try {
                     const formData = new FormData(e.target);
@@ -704,207 +716,333 @@ const JoinUs = () => {
                     // Validate required fields
                     const name = formData.get('name');
                     const title = formData.get('title');
-                    let position = formData.get('position');
-                    
-                    // Fix for nice-select plugin - if position is empty, try to get it from the nice-select
-                    if (!position) {
-                      const niceSelectCurrent = document.querySelector('.nice-select .current');
-                      
-                      if (niceSelectCurrent && niceSelectCurrent.textContent !== 'Select a position') {
-                        const positionMap = {
-                          'Quality Manager': 'quality-manager',
-                          'Export Specialist': 'export-specialist',
-                          'Production Supervisor': 'production-supervisor',
-                          'Other': 'other'
-                        };
-                        position = positionMap[niceSelectCurrent.textContent] || niceSelectCurrent.textContent.toLowerCase().replace(/\s+/g, '-');
-                      }
-                    }
-                    
+                      const position = formData.get('position');
                     const phone = formData.get('phone');
                     const email = formData.get('email');
+                      const cvFile = formData.get('cv_file');
                     
                     if (!name || !title || !position || !phone || !email) {
                       alert('Please fill in all required fields.');
                       return;
                     }
                     
-                    // Prepare data for Google Sheets - EXACT SAME FORMAT AS WORKING TEST
-                    const submissionData = {
-                      name: (name || '').trim(),
-                      title: (title || '').trim(),
-                      position: position || '',
-                      company: (formData.get('company')?.trim() || 'N/A'),
-                      phone: (phone || '').trim(),
-                      email: (email || '').trim(),
-                      cvLink: (formData.get('cv')?.trim() || 'N/A'),
-                      submissionDate: new Date().toLocaleString(),
-                      timestamp: new Date().toISOString()
-                    };
-                    
-                    // Show loading state
-                    const submitButton = e.target.querySelector('button[type="submit"]');
-                    
-                    if (submitButton) {
-                      const originalText = submitButton.innerHTML;
-                      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting...';
-                      submitButton.disabled = true;
+                      // Validate file if provided
+                      if (cvFile && cvFile.size > 0) {
+                        const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+                        if (!allowedTypes.includes(cvFile.type)) {
+                          alert('Please upload a valid CV file (PDF, DOC, or DOCX).');
+                          return;
+                        }
+                        if (cvFile.size > 5 * 1024 * 1024) { // 5MB limit
+                          alert('CV file size must be less than 5MB.');
+                          return;
+                        }
+                      }
                       
-                      try {
                         console.log('Submitting application...');
                         
-                        const response = await fetch('https://script.google.com/macros/s/AKfycbxXFUF4Mw8-ytVXKCEBg-aF1E4OY5Zwe5HSBAwTKKfP4woyvdsZXn6AEJI5T3osNQJWGw/exec', {
+                      const response = await fetch('/api/job-application', {
                           method: 'POST',
-                          mode: 'no-cors',
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                          body: JSON.stringify(submissionData)
-                        });
-                        
+                        body: formData // Send FormData directly for file upload
+                      });
+                      
+                      const result = await response.json();
+                      
+                      if (result.success) {
                         console.log('Application submitted successfully');
-                        alert('✅ Application submitted successfully! We will review your application and get back to you soon.');
+                        
+                        // Show success message
+                        const successDiv = document.createElement('div');
+                        successDiv.className = 'form-success';
+                        successDiv.innerHTML = '<i class="fas fa-check-circle"></i> Application submitted successfully! We will review your application and get back to you soon.';
+                        form.insertBefore(successDiv, form.firstChild);
+                        
+                        // Reset form
                   e.target.reset();
                         
-                      } catch (error) {
-                        console.error('Submission error:', error);
-                        alert('Your application may have been submitted. Please check your Google Sheet to confirm, or contact us directly if you don\'t see your entry.');
-                      } finally {
-                        // Restore button state
-                        submitButton.innerHTML = originalText;
-                        submitButton.disabled = false;
-                      }
+                        // Clear file display
+                        const fileDisplay = document.querySelector('.file-name-display');
+                        if (fileDisplay) fileDisplay.remove();
+                        
+                        // Reset file upload wrapper
+                        const fileWrapper = document.querySelector('.file-upload-wrapper');
+                        if (fileWrapper) {
+                          fileWrapper.classList.remove('has-file');
+                          fileWrapper.querySelector('.file-upload-text').textContent = 'Click to upload your CV';
+                          fileWrapper.querySelector('.file-upload-subtext').textContent = 'PDF, DOC, DOCX up to 5MB';
+                        }
+                        
+                        // Remove success message after 5 seconds
+                        setTimeout(() => {
+                          if (successDiv && successDiv.parentNode) {
+                            successDiv.remove();
+                          }
+                        }, 5000);
+                        
                     } else {
-                      alert('There was an error finding the submit button. Please try again.');
-                    }
+                        console.error('Application submission failed:', result.error);
+                        
+                        // Show error message
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'form-error';
+                        errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${result.error}`;
+                        form.insertBefore(errorDiv, form.firstChild);
+                        
+                        // Remove error message after 5 seconds
+                        setTimeout(() => {
+                          if (errorDiv && errorDiv.parentNode) {
+                            errorDiv.remove();
+                          }
+                        }, 5000);
+                      }
+                      
                   } catch (error) {
-                    console.error('Form submission error:', error);
-                    alert('There was an error processing your application. Please try again.');
-                  }
-                }}>
+                      console.error('Submission error:', error);
+                      
+                      // Show error message
+                      const errorDiv = document.createElement('div');
+                      errorDiv.className = 'form-error';
+                      errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> There was an error submitting your application. Please try again or contact us directly.';
+                      form.insertBefore(errorDiv, form.firstChild);
+                      
+                      // Remove error message after 5 seconds
+                      setTimeout(() => {
+                        if (errorDiv && errorDiv.parentNode) {
+                          errorDiv.remove();
+                        }
+                      }, 5000);
+                      
+                    } finally {
+                      // Remove loading overlay
+                      if (loadingOverlay && loadingOverlay.parentNode) {
+                        loadingOverlay.remove();
+                      }
+                    }
+                  }}>
+                  <div className="professional-form-row">
                   <div className="row">
                     <div className="col-lg-6">
-                      <div className="form-group mb-30">
-                        <label htmlFor="name" className="form-label">{t('joinUsPage.applicationForm.fields.name')} *</label>
+                        <div className="professional-form-group">
+                          <label htmlFor="name" className="professional-form-label">
+                            {t('joinUsPage.applicationForm.fields.name')} 
+                            <span className="required">*</span>
+                          </label>
+                          <div className="professional-input-wrapper">
                         <input
                           type="text"
                           id="name"
                           name="name"
-                          className="form-control"
+                              className="professional-form-control"
                           placeholder={t('joinUsPage.applicationForm.fields.namePlaceholder')}
                           required
                         />
+                            <i className="fas fa-user input-icon"></i>
+                          </div>
                       </div>
                     </div>
                     <div className="col-lg-6">
-                      <div className="form-group mb-30">
-                        <label htmlFor="title" className="form-label">{t('joinUsPage.applicationForm.fields.title')} *</label>
+                        <div className="professional-form-group">
+                          <label htmlFor="title" className="professional-form-label">
+                            {t('joinUsPage.applicationForm.fields.title')} 
+                            <span className="required">*</span>
+                          </label>
+                          <div className="professional-input-wrapper">
                         <input
                           type="text"
                           id="title"
                           name="title"
-                          className="form-control"
+                              className="professional-form-control"
                           placeholder={t('joinUsPage.applicationForm.fields.titlePlaceholder')}
                           required
                         />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="row">
-                    <div className="col-lg-6">
-                      <div className="form-group mb-30">
-                        <label htmlFor="position" className="form-label">{t('joinUsPage.applicationForm.fields.position')} *</label>
-                        <select
-                          id="position"
-                          name="position"
-                          className="form-control position-select"
-                        >
-                          <option value="">{t('joinUsPage.applicationForm.fields.positionPlaceholder')}</option>
-                          <option value="quality-manager">{t('joinUsPage.applicationForm.positions.qualityManager')}</option>
-                          <option value="export-specialist">{t('joinUsPage.applicationForm.positions.exportSpecialist')}</option>
-                          <option value="production-supervisor">{t('joinUsPage.applicationForm.positions.productionSupervisor')}</option>
-                          <option value="other">{t('joinUsPage.applicationForm.positions.other')}</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="col-lg-6">
-                      <div className="form-group mb-30">
-                        <label htmlFor="company" className="form-label">{t('joinUsPage.applicationForm.fields.company')}</label>
-                        <input
-                          type="text"
-                          id="company"
-                          name="company"
-                          className="form-control"
-                          placeholder={t('joinUsPage.applicationForm.fields.companyPlaceholder')}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="row">
-                    <div className="col-lg-6">
-                      <div className="form-group mb-30">
-                        <label htmlFor="phone" className="form-label">{t('joinUsPage.applicationForm.fields.phone')} *</label>
-                        <input
-                          type="tel"
-                          id="phone"
-                          name="phone"
-                          className="form-control"
-                          placeholder={t('joinUsPage.applicationForm.fields.phonePlaceholder')}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="col-lg-6">
-                      <div className="form-group mb-30">
-                        <label htmlFor="email" className="form-label">{t('joinUsPage.applicationForm.fields.email')} *</label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          className="form-control"
-                          placeholder={t('joinUsPage.applicationForm.fields.emailPlaceholder')}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <div className="form-group mb-40">
-                        <label htmlFor="cv" className="form-label">{t('joinUsPage.applicationForm.fields.cvLink')}</label>
-                          <input
-                          type="url"
-                            id="cv"
-                            name="cv"
-                          className="form-control"
-                          placeholder={t('joinUsPage.applicationForm.fields.cvLinkPlaceholder')}
-                          pattern="https://drive\.google\.com/.*"
-                          title="Please enter a valid Google Drive link"
-                          />
-                          <div className="file-upload-info">
-                            <small className="text-muted">
-                            {t('joinUsPage.applicationForm.helpTexts.cvLink')}
-                            </small>
+                            <i className="fas fa-briefcase input-icon"></i>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   
+                  <div className="professional-form-row">
+                    <div className="row">
+                      <div className="col-lg-6">
+                        <div className="professional-form-group">
+                          <label htmlFor="position" className="professional-form-label">
+                            {t('joinUsPage.applicationForm.fields.position')} 
+                            <span className="required">*</span>
+                          </label>
+                          <div className="professional-form-select">
+                            <i className="fas fa-users input-icon"></i>
+                            <select
+                              id="position"
+                              name="position"
+                              className="professional-form-control"
+                              required
+                            >
+                              <option value="">{t('joinUsPage.applicationForm.fields.positionPlaceholder')}</option>
+                              <option value="quality-manager">{t('joinUsPage.applicationForm.positions.qualityManager')}</option>
+                              <option value="export-specialist">{t('joinUsPage.applicationForm.positions.exportSpecialist')}</option>
+                              <option value="production-supervisor">{t('joinUsPage.applicationForm.positions.productionSupervisor')}</option>
+                              <option value="other">{t('joinUsPage.applicationForm.positions.other')}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-6">
+                        <div className="professional-form-group">
+                          <label htmlFor="company" className="professional-form-label">
+                            {t('joinUsPage.applicationForm.fields.company')}
+                          </label>
+                          <div className="professional-input-wrapper">
+                        <input
+                          type="text"
+                          id="company"
+                          name="company"
+                              className="professional-form-control"
+                          placeholder={t('joinUsPage.applicationForm.fields.companyPlaceholder')}
+                        />
+                            <i className="fas fa-building input-icon"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="professional-form-row">
+                  <div className="row">
+                    <div className="col-lg-6">
+                        <div className="professional-form-group">
+                          <label htmlFor="phone" className="professional-form-label">
+                            {t('joinUsPage.applicationForm.fields.phone')} 
+                            <span className="required">*</span>
+                          </label>
+                          <div className="professional-input-wrapper">
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                              className="professional-form-control"
+                          placeholder={t('joinUsPage.applicationForm.fields.phonePlaceholder')}
+                          required
+                        />
+                            <i className="fas fa-phone input-icon"></i>
+                          </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                        <div className="professional-form-group">
+                          <label htmlFor="email" className="professional-form-label">
+                            {t('joinUsPage.applicationForm.fields.email')} 
+                            <span className="required">*</span>
+                          </label>
+                          <div className="professional-input-wrapper">
+                            <input
+                              type="email"
+                              id="email"
+                              name="email"
+                              className="professional-form-control"
+                              placeholder={t('joinUsPage.applicationForm.fields.emailPlaceholder')}
+                              required
+                            />
+                            <i className="fas fa-envelope input-icon"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="professional-form-row">
+                    <div className="row">
+                      <div className="col-lg-12">
+                        <div className="professional-form-group">
+                          <label className="professional-form-label">
+                            Upload Your CV/Resume
+                          </label>
+                          <div className="professional-file-upload">
+                            <div 
+                              className="file-upload-wrapper"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                const fileInput = document.getElementById('cv_file');
+                                if (fileInput) {
+                                  fileInput.click();
+                                }
+                              }}
+                            >
+                          <input
+                                type="file"
+                                id="cv_file"
+                                name="cv_file"
+                                className="file-upload-input"
+                                accept=".pdf,.doc,.docx"
+                                onChange={(e) => {
+                                  const file = e.target.files[0];
+                                  const wrapper = e.target.closest('.file-upload-wrapper');
+                                  const existingDisplay = wrapper.parentNode.querySelector('.file-name-display');
+                                  
+                                  if (existingDisplay) {
+                                    existingDisplay.remove();
+                                  }
+                                  
+                                  if (file) {
+                                    wrapper.classList.add('has-file');
+                                    wrapper.querySelector('.file-upload-text').textContent = 'CV Selected';
+                                    wrapper.querySelector('.file-upload-subtext').textContent = 'Click to change file';
+                                    
+                                    // Create file display
+                                    const fileDisplay = document.createElement('div');
+                                    fileDisplay.className = 'file-name-display';
+                                    fileDisplay.innerHTML = `
+                                      <div class="file-icon">
+                                        <i class="fas fa-file-${file.type.includes('pdf') ? 'pdf' : 'word'}"></i>
+                                      </div>
+                                      <div class="file-details">
+                                        <div class="file-name">${file.name}</div>
+                                        <div class="file-size">${(file.size / 1024 / 1024).toFixed(2)} MB</div>
+                                      </div>
+                                      <button type="button" class="file-remove-btn" onclick="
+                                        this.parentNode.remove();
+                                        document.getElementById('cv_file').value = '';
+                                        const wrapper = document.querySelector('.file-upload-wrapper');
+                                        wrapper.classList.remove('has-file');
+                                        wrapper.querySelector('.file-upload-text').textContent = 'Click to upload your CV';
+                                        wrapper.querySelector('.file-upload-subtext').textContent = 'PDF, DOC, DOCX up to 5MB';
+                                      ">
+                                        <i class="fas fa-times"></i>
+                                      </button>
+                                    `;
+                                    wrapper.parentNode.appendChild(fileDisplay);
+                                  } else {
+                                    wrapper.classList.remove('has-file');
+                                    wrapper.querySelector('.file-upload-text').textContent = 'Click to upload your CV';
+                                    wrapper.querySelector('.file-upload-subtext').textContent = 'PDF, DOC, DOCX up to 5MB';
+                                  }
+                                }}
+                              />
+                              <div className="file-upload-content">
+                                <div className="file-upload-icon">
+                                  <i className="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div className="file-upload-text">Click to upload your CV</div>
+                                <div className="file-upload-subtext">PDF, DOC, DOCX up to 5MB</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="professional-form-row">
                   <div className="row">
                     <div className="col-lg-12 text-center">
                       <button 
                         type="submit" 
-                        className="main-btn primary-btn"
-onClick={(e) => {
-                          console.log('Submit button clicked');
-                        }}
+                          className="professional-submit-btn"
                       >
-                        <i className="far fa-paper-plane mr-2" />
+                          <i className="fas fa-paper-plane"></i>
                         {t('joinUsPage.applicationForm.submitButton')}
                       </button>
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -962,11 +1100,26 @@ onClick={(e) => {
                           characterData: true
                         });
                         
-                        // Initial sync in case there's already a value
-                        setTimeout(syncSelectValue, 500);
-                        
+                        console.log('Professional form detected - disabling nice-select interference');
                       }
-                    }, 1500);
+                    }, 100);
+                    
+                    // Disable nice-select for professional form to prevent duplication
+                    document.addEventListener('DOMContentLoaded', function() {
+                      const professionalForm = document.querySelector('.professional-application-form');
+                      if (professionalForm) {
+                        // Add a class to prevent nice-select initialization
+                        professionalForm.classList.add('no-nice-select');
+                        
+                        // Remove any existing nice-select elements
+                        setTimeout(function() {
+                          const niceSelects = professionalForm.querySelectorAll('.nice-select');
+                          niceSelects.forEach(function(niceSelect) {
+                            niceSelect.style.display = 'none';
+                          });
+                        }, 500);
+                      }
+                    });
                   `
                 }} />
               </div>
