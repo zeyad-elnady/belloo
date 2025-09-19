@@ -45,6 +45,16 @@ export default async function handler(req, res) {
         keepExtensions: true,
         maxFileSize: 5 * 1024 * 1024, // 5MB
         multiples: false,
+        allowEmptyFiles: true, // Allow optional file uploads
+        filter: ({ name, originalFilename, mimetype }) => {
+          // Allow no file or valid file types
+          if (!originalFilename) return true;
+          return (
+            mimetype === 'application/pdf' ||
+            mimetype === 'application/msword' ||
+            mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+          );
+        }
       });
 
       // Parse the form
@@ -80,7 +90,7 @@ export default async function handler(req, res) {
       let cvFileInfo = null;
       if (files.cv_file) {
         const file = Array.isArray(files.cv_file) ? files.cv_file[0] : files.cv_file;
-        if (file && file.filepath) {
+        if (file && file.filepath && file.size > 0) {
           cvFileInfo = {
             path: file.filepath,
             name: file.originalFilename,
@@ -88,7 +98,11 @@ export default async function handler(req, res) {
             mimetype: file.mimetype
           };
           console.log('CV file processed:', cvFileInfo);
+        } else {
+          console.log('No CV file or empty file uploaded');
         }
+      } else {
+        console.log('No CV file field found in form');
       }
 
       // Validate required fields
