@@ -22,14 +22,14 @@ export default function Admin() {
 
   const checkAuthentication = async () => {
     try {
-      // Use Vercel-optimized endpoint (detect production environment)
+      // Use direct verify endpoint for production
       const isProduction = typeof window !== 'undefined' && 
         (window.location.hostname.includes('vercel.app') || 
          window.location.hostname === 'smartbookingcrm.live' ||
          window.location.protocol === 'https:');
       
       const authEndpoint = isProduction
-        ? '/api/auth/verify-vercel'
+        ? '/api/verify-direct'  // Use matching direct verify endpoint
         : '/api/auth/verify';
       
       const response = await fetch(authEndpoint);
@@ -90,14 +90,14 @@ export default function Admin() {
 
   const handleLogout = async () => {
     try {
-      // Use Vercel-optimized endpoint (detect production environment)
+      // Use direct logout endpoint for production
       const isProduction = typeof window !== 'undefined' && 
         (window.location.hostname.includes('vercel.app') || 
          window.location.hostname === 'smartbookingcrm.live' ||
          window.location.protocol === 'https:');
       
       const logoutEndpoint = isProduction
-        ? '/api/auth/logout-vercel'
+        ? '/api/logout-direct'  // Use matching direct logout endpoint
         : '/api/auth/logout';
       
       await fetch(logoutEndpoint, { method: 'POST' });
@@ -298,14 +298,14 @@ export default function Admin() {
           updateData.new_password = profileData.new_password;
         }
 
-        // Use Vercel-optimized endpoint (detect production environment)
+        // Use direct profile endpoint for production
         const isProduction = typeof window !== 'undefined' && 
           (window.location.hostname.includes('vercel.app') || 
            window.location.hostname === 'smartbookingcrm.live' ||
            window.location.protocol === 'https:');
         
         const profileEndpoint = isProduction
-          ? '/api/auth/profile-vercel'
+          ? '/api/profile-direct'  // Use matching direct profile endpoint
           : '/api/auth/profile';
         
         const response = await fetch(profileEndpoint, {

@@ -15,14 +15,14 @@ export default function Login() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // Use Vercel-optimized endpoint (detect production environment)
+        // Use direct verify endpoint for production
         const isProduction = typeof window !== 'undefined' && 
           (window.location.hostname.includes('vercel.app') || 
            window.location.hostname === 'smartbookingcrm.live' ||
            window.location.protocol === 'https:');
         
         const authEndpoint = isProduction
-          ? '/api/auth/verify-vercel'
+          ? '/api/verify-direct'  // Use matching direct verify endpoint
           : '/api/auth/verify';
         
         const response = await fetch(authEndpoint);
