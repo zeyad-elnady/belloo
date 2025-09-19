@@ -15,8 +15,13 @@ export default function Login() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // Use Vercel-optimized endpoint
-        const authEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+        // Use Vercel-optimized endpoint (detect production environment)
+        const isProduction = typeof window !== 'undefined' && 
+          (window.location.hostname.includes('vercel.app') || 
+           window.location.hostname === 'smartbookingcrm.live' ||
+           window.location.protocol === 'https:');
+        
+        const authEndpoint = isProduction
           ? '/api/auth/verify-vercel'
           : '/api/auth/verify';
         
@@ -45,8 +50,13 @@ export default function Login() {
     setError('');
 
     try {
-      // Use Vercel-optimized endpoint
-      const loginEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+      // Use Vercel-optimized endpoint (detect production environment)
+      const isProduction = typeof window !== 'undefined' && 
+        (window.location.hostname.includes('vercel.app') || 
+         window.location.hostname === 'smartbookingcrm.live' ||
+         window.location.protocol === 'https:');
+      
+      const loginEndpoint = isProduction
         ? '/api/auth/login-vercel'
         : '/api/auth/login';
       

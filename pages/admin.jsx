@@ -22,8 +22,13 @@ export default function Admin() {
 
   const checkAuthentication = async () => {
     try {
-      // Use Vercel-optimized endpoint
-      const authEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+      // Use Vercel-optimized endpoint (detect production environment)
+      const isProduction = typeof window !== 'undefined' && 
+        (window.location.hostname.includes('vercel.app') || 
+         window.location.hostname === 'smartbookingcrm.live' ||
+         window.location.protocol === 'https:');
+      
+      const authEndpoint = isProduction
         ? '/api/auth/verify-vercel'
         : '/api/auth/verify';
       
@@ -55,7 +60,12 @@ export default function Admin() {
       }
 
       // Fetch job applications (use appropriate endpoint)
-      const jobApiEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+      const isProduction = typeof window !== 'undefined' && 
+        (window.location.hostname.includes('vercel.app') || 
+         window.location.hostname === 'smartbookingcrm.live' ||
+         window.location.protocol === 'https:');
+      
+      const jobApiEndpoint = isProduction
         ? '/api/job-application-vercel'  // Use Vercel-optimized endpoint
         : '/api/job-application';        // Use original endpoint for local dev
       
@@ -80,8 +90,13 @@ export default function Admin() {
 
   const handleLogout = async () => {
     try {
-      // Use Vercel-optimized endpoint
-      const logoutEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+      // Use Vercel-optimized endpoint (detect production environment)
+      const isProduction = typeof window !== 'undefined' && 
+        (window.location.hostname.includes('vercel.app') || 
+         window.location.hostname === 'smartbookingcrm.live' ||
+         window.location.protocol === 'https:');
+      
+      const logoutEndpoint = isProduction
         ? '/api/auth/logout-vercel'
         : '/api/auth/logout';
       
@@ -283,8 +298,13 @@ export default function Admin() {
           updateData.new_password = profileData.new_password;
         }
 
-        // Use Vercel-optimized endpoint
-        const profileEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+        // Use Vercel-optimized endpoint (detect production environment)
+        const isProduction = typeof window !== 'undefined' && 
+          (window.location.hostname.includes('vercel.app') || 
+           window.location.hostname === 'smartbookingcrm.live' ||
+           window.location.protocol === 'https:');
+        
+        const profileEndpoint = isProduction
           ? '/api/auth/profile-vercel'
           : '/api/auth/profile';
         
