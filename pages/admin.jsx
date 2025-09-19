@@ -49,8 +49,12 @@ export default function Admin() {
         setContactSubmissions(contactData.data);
       }
 
-      // Fetch job applications
-      const jobResponse = await fetch('/api/job-application');
+      // Fetch job applications (use appropriate endpoint)
+      const jobApiEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+        ? '/api/job-application-vercel'  // Use Vercel-optimized endpoint
+        : '/api/job-application';        // Use original endpoint for local dev
+      
+      const jobResponse = await fetch(jobApiEndpoint);
       const jobData = await jobResponse.json();
       
       if (jobData.success) {

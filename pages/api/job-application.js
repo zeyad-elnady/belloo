@@ -1,12 +1,25 @@
 // Temporary fix: inline the database functions to avoid module issues
 import Database from 'better-sqlite3';
 import path from 'path';
+import fs from 'fs';
+import os from 'os';
 import { IncomingForm } from 'formidable';
 import { sendJobApplicationNotification, verifyEmailConnection } from '../../lib/email.js';
 
-// Initialize database inline
-const dbPath = path.join(process.cwd(), 'belloo.db');
-const db = new Database(dbPath);
+// Initialize database inline - use /tmp for Vercel
+const isVercel = process.env.VERCEL === '1';
+const dbPath = isVercel 
+  ? path.join('/tmp', 'belloo.db')
+  : path.join(process.cwd(), 'belloo.db');
+
+let db;
+try {
+  db = new Database(dbPath);
+} catch (error) {
+  console.error('Database connection error:', error);
+  // Fallback to memory database for Vercel if file database fails
+  db = new Database(':memory:');
+}
 
 // Enable WAL mode for better concurrent access
 db.pragma('journal_mode = WAL');
@@ -126,11 +139,25 @@ export default async function handler(req, res) {
 
   if (req.method === 'POST') {
     try {
+      // Create upload directory for Vercel's /tmp directory
+      const uploadDir = isVercel ? '/tmp/uploads' : path.join(process.cwd(), 'public', 'uploads', 'cvs');
+      
+      // Ensure upload directory exists
+      try {
+        if (!fs.existsSync(uploadDir)) {
+          fs.mkdirSync(uploadDir, { recursive: true });
+          console.log(`Created upload directory: ${uploadDir}`);
+        }
+      } catch (dirError) {
+        console.error('Error creating upload directory:', dirError);
+      }
+
       // Parse form data using formidable
       const form = new IncomingForm({
-        uploadDir: './public/uploads/cvs',
+        uploadDir: uploadDir,
         keepExtensions: true,
         maxFileSize: 5 * 1024 * 1024, // 5MB
+        multiples: false,
         filter: ({ name, originalFilename, mimetype }) => {
           // Allow CV file uploads
           return name === 'cv_file' && mimetype && [
@@ -167,14 +194,14 @@ export default async function handler(req, res) {
       let cvFileInfo = null;
       if (files.cv_file) {
         const file = Array.isArray(files.cv_file) ? files.cv_file[0] : files.cv_file;
-        if (file) {
-          // Get just the filename from the uploaded file path
+        if (file && file.filepath && file.originalFilename) {
+          // For Vercel, we'll store file info but won't persist the actual file
+          // since the filesystem is read-only except for /tmp
           const uploadedFileName = path.basename(file.filepath);
-          const relativePath = `public/uploads/cvs/${uploadedFileName}`;
           
           cvFileInfo = {
-            path: file.filepath, // Full system path for debugging
-            relativePath: relativePath, // Relative path for storage
+            path: file.filepath, // Full system path for email attachment
+            relativePath: isVercel ? `/tmp/uploads/${uploadedFileName}` : `public/uploads/cvs/${uploadedFileName}`,
             name: file.originalFilename,
             size: file.size,
             mimetype: file.mimetype
@@ -220,7 +247,7 @@ export default async function handler(req, res) {
         // Send email notification
         try {
           const emailResult = await sendJobApplicationNotification(sanitizedData, cvFileInfo ? {
-            name: cvFileInfo.originalName,
+            name: cvFileInfo.name,
             path: cvFileInfo.path,
             size: cvFileInfo.size,
             mimetype: cvFileInfo.mimetype
