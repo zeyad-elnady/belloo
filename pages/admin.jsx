@@ -22,7 +22,12 @@ export default function Admin() {
 
   const checkAuthentication = async () => {
     try {
-      const response = await fetch('/api/auth/verify');
+      // Use Vercel-optimized endpoint
+      const authEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+        ? '/api/auth/verify-vercel'
+        : '/api/auth/verify';
+      
+      const response = await fetch(authEndpoint);
       if (!response.ok) {
         router.push('/login');
         return;
@@ -75,7 +80,12 @@ export default function Admin() {
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
+      // Use Vercel-optimized endpoint
+      const logoutEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+        ? '/api/auth/logout-vercel'
+        : '/api/auth/logout';
+      
+      await fetch(logoutEndpoint, { method: 'POST' });
       router.push('/login');
     } catch (error) {
       console.error('Logout error:', error);
@@ -273,7 +283,12 @@ export default function Admin() {
           updateData.new_password = profileData.new_password;
         }
 
-        const response = await fetch('/api/auth/profile', {
+        // Use Vercel-optimized endpoint
+        const profileEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+          ? '/api/auth/profile-vercel'
+          : '/api/auth/profile';
+        
+        const response = await fetch(profileEndpoint, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

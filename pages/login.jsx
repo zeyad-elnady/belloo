@@ -15,7 +15,12 @@ export default function Login() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('/api/auth/verify');
+        // Use Vercel-optimized endpoint
+        const authEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+          ? '/api/auth/verify-vercel'
+          : '/api/auth/verify';
+        
+        const response = await fetch(authEndpoint);
         if (response.ok) {
           router.push('/admin');
         }
@@ -40,7 +45,14 @@ export default function Login() {
     setError('');
 
     try {
-      const response = await fetch('/api/auth/login', {
+      // Use Vercel-optimized endpoint
+      const loginEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+        ? '/api/auth/login-vercel'
+        : '/api/auth/login';
+      
+      console.log('Using login endpoint:', loginEndpoint);
+      
+      const response = await fetch(loginEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
