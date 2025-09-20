@@ -5,9 +5,19 @@ import { sliderProps } from "@/src/sliderProps";
 import Link from "next/link";
 import Slider from "react-slick";
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
 const About = () => {
   const { t } = useTranslation('common');
+  const router = useRouter();
+  
+  // Get the appropriate video based on locale
+  const getVideoSource = () => {
+    if (router.locale === 'ar') {
+      return "/assets/video/world map arabic.mp4";
+    }
+    return "/assets/video/world map.mp4"; // Default for English and Russian
+  };
   
   return (
     <Layout header={3} footer={3}>
@@ -503,7 +513,7 @@ const About = () => {
                       display: 'block'
                     }}
                   >
-                    <source src="/assets/video/world map.mp4" type="video/mp4" />
+                    <source src={getVideoSource()} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                   

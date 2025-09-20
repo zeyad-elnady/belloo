@@ -742,12 +742,7 @@ const JoinUs = () => {
                         console.log('Submitting application...');
                         
                       // Use Vercel-optimized endpoint for better compatibility
-                      const isProduction = typeof window !== 'undefined' && 
-                        (window.location.hostname.includes('vercel.app') || 
-                         window.location.hostname === 'smartbookingcrm.live' ||
-                         window.location.protocol === 'https:');
-                      
-                      const apiEndpoint = isProduction
+                      const apiEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
                         ? '/api/job-application-vercel'  // Use Vercel-optimized endpoint
                         : '/api/job-application';        // Use original endpoint for local dev
                       

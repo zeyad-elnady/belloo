@@ -22,17 +22,7 @@ export default function Admin() {
 
   const checkAuthentication = async () => {
     try {
-      // Use direct verify endpoint for production
-      const isProduction = typeof window !== 'undefined' && 
-        (window.location.hostname.includes('vercel.app') || 
-         window.location.hostname === 'smartbookingcrm.live' ||
-         window.location.protocol === 'https:');
-      
-      const authEndpoint = isProduction
-        ? '/api/verify-direct'  // Use matching direct verify endpoint
-        : '/api/auth/verify';
-      
-      const response = await fetch(authEndpoint);
+      const response = await fetch('/api/auth/verify');
       if (!response.ok) {
         router.push('/login');
         return;
@@ -60,12 +50,7 @@ export default function Admin() {
       }
 
       // Fetch job applications (use appropriate endpoint)
-      const isProduction = typeof window !== 'undefined' && 
-        (window.location.hostname.includes('vercel.app') || 
-         window.location.hostname === 'smartbookingcrm.live' ||
-         window.location.protocol === 'https:');
-      
-      const jobApiEndpoint = isProduction
+      const jobApiEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
         ? '/api/job-application-vercel'  // Use Vercel-optimized endpoint
         : '/api/job-application';        // Use original endpoint for local dev
       
@@ -90,17 +75,7 @@ export default function Admin() {
 
   const handleLogout = async () => {
     try {
-      // Use direct logout endpoint for production
-      const isProduction = typeof window !== 'undefined' && 
-        (window.location.hostname.includes('vercel.app') || 
-         window.location.hostname === 'smartbookingcrm.live' ||
-         window.location.protocol === 'https:');
-      
-      const logoutEndpoint = isProduction
-        ? '/api/logout-direct'  // Use matching direct logout endpoint
-        : '/api/auth/logout';
-      
-      await fetch(logoutEndpoint, { method: 'POST' });
+      await fetch('/api/auth/logout', { method: 'POST' });
       router.push('/login');
     } catch (error) {
       console.error('Logout error:', error);
@@ -298,17 +273,7 @@ export default function Admin() {
           updateData.new_password = profileData.new_password;
         }
 
-        // Use direct profile endpoint for production
-        const isProduction = typeof window !== 'undefined' && 
-          (window.location.hostname.includes('vercel.app') || 
-           window.location.hostname === 'smartbookingcrm.live' ||
-           window.location.protocol === 'https:');
-        
-        const profileEndpoint = isProduction
-          ? '/api/profile-direct'  // Use matching direct profile endpoint
-          : '/api/auth/profile';
-        
-        const response = await fetch(profileEndpoint, {
+        const response = await fetch('/api/auth/profile', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
