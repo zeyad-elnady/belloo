@@ -66,7 +66,7 @@ const App = ({ Component, pageProps }) => {
       {/* WhatsApp Button */}
       <div 
         id="whatsapp-button" 
-        onClick={() => window.open('https://wa.me/1234567890', '_blank')}
+        onClick={() => window.open('https://wa.me/01101511185', '_blank')}
         style={{
           position: 'fixed',
           bottom: '30px',

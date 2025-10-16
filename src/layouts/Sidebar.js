@@ -87,7 +87,7 @@ const Sidebar = ({ show, handleClose }) => {
                       {t('common.contactUs')}
                     </h6>
                     <p>
-                      <a href="tel:+201101511185">{t('footer.phone')}</a>
+                      <a href="tel:+2+20 1101 5111 85">{t('footer.phone')}</a>
                     </p>
                   </div>
                 </div>

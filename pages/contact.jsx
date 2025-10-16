@@ -74,7 +74,7 @@ const Contact = () => {
                   <div className="info">
                     <h4 className="title">{t('contactPage.info.phone')}</h4>
                     <p className="phone">
-                      <a href="tel:+201101511185">{t('footer.phoneNumber')}</a>
+                      <a href="tel:+2+20 1101 5111 85">{t('footer.phoneNumber')}</a>
                     </p>
                   </div>
                 </div>
@@ -588,7 +588,7 @@ const Contact = () => {
                   
                   <div style={{ marginTop: '30px' }}>
                     <a
-                      href="https://wa.me/201101511185?text=Hello%20Bello%20Food%2C%20I%20would%20like%20to%20inquire%20about%20your%20products"
+                      href="https://wa.me/2+20 1101 5111 85?text=Hello%20Bello%20Food%2C%20I%20would%20like%20to%20inquire%20about%20your%20products"
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{

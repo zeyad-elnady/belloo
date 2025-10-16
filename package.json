@@ -5,13 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node server.js",
-    "production": "NODE_ENV=production node server.js",
+    "start": "node start-dev.js",
+    "start-dev": "node start-dev.js",
     "lint": "next lint"
   },
   "dependencies": {
-    "bcrypt": "^6.0.0",
-    "better-sqlite3": "^12.2.0",
+    "bcrypt": "^5.1.0",
+    "better-sqlite3": "^8.7.0",
     "cookie": "^1.0.2",
     "date-fns": "^4.1.0",
     "formidable": "^3.5.4",
