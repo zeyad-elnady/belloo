@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Fragment, useState, useEffect } from "react";
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import SearchModal from "../SearchModal";
 import Sidebar from "../Sidebar";
 
 const Header3 = () => {
@@ -28,7 +27,6 @@ const Header3 = () => {
       setSidebarOpen(true);
     }
   };
-  const [searchModal, setSearchModal] = useState(false);
 
   const languages = [
     { code: 'en', name: 'English', flag: '🇺🇸', nativeName: 'English', countryCode: 'EN' },
@@ -41,7 +39,6 @@ const Header3 = () => {
     { name: t('nav.about'), href: '/about' },
     { name: t('nav.sustainability'), href: '/sustainability' },
     { name: t('nav.products'), href: '/products' },
-    { name: t('nav.highlights'), href: '/highlights' },
     { name: t('nav.joinUs'), href: '/join-us' },
     { name: t('nav.contact'), href: '/contact' }
   ];
@@ -116,11 +113,6 @@ const Header3 = () => {
 
   return (
     <Fragment>
-      <SearchModal
-        show={searchModal}
-        handleClose={() => setSearchModal(false)}
-      />
-      
       {/* Unified Responsive Header */}
       <header className={`unified-floating-header ${isVisible && !sidebarOpen ? 'header-visible' : 'header-hidden'} ${isScrolled ? 'scrolled' : ''} ${sidebarOpen ? 'sidebar-active' : ''}`}>
         <div className="header-container">
@@ -194,15 +186,6 @@ const Header3 = () => {
               </div>
             </div>
 
-            {/* Search Button - Hidden on Mobile */}
-            <button
-              className="search-btn d-none d-md-block"
-              onClick={() => setSearchModal(true)}
-              aria-label="Search"
-            >
-              <i className="far fa-search" />
-            </button>
-
             {/* Sidebar Button - Desktop Only */}
             <button
               className="sidebar-btn d-none d-xl-block"
@@ -236,23 +219,6 @@ const Header3 = () => {
             >
               <i className="fas fa-times"></i>
             </button>
-
-            {/* Mobile Search */}
-            <div className="mobile-search">
-              <form onSubmit={(e) => e.preventDefault()}>
-                <div className="search-group">
-                  <input
-                    type="text"
-                    className="search-input"
-                    placeholder={t('nav.searchPlaceholder')}
-                    name="search"
-                  />
-                  <button type="submit" className="search-submit">
-                    <i className="fas fa-search" />
-                  </button>
-                </div>
-              </form>
-            </div>
 
             {/* Mobile Navigation */}
             <nav className="mobile-navigation">

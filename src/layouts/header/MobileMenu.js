@@ -85,9 +85,6 @@ const MobileMenu = ({ handleShow, logo, extraClass, barIcon }) => {
                     <Link href="/products" onClick={handleMenuItemClick}>Products</Link>
                   </li>
                   <li className="menu-item">
-                    <Link href="/highlights" onClick={handleMenuItemClick}>Highlights</Link>
-                  </li>
-                  <li className="menu-item">
                     <Link href="/join-us" onClick={handleMenuItemClick}>Join Us</Link>
                   </li>
                   <li className="menu-item">

@@ -2,6 +2,7 @@ import PageBanner from "@/src/components/PageBanner";
 
 import Layout from "@/src/layouts/Layout";
 import Link from "next/link";
+import Counter from "@/src/components/Counter";
 import { useTranslation } from 'next-i18next';
 
 const Contact = () => {
@@ -57,9 +58,6 @@ const Contact = () => {
                     <p className="email">
                       <a href="mailto:marketing@bello-food.com">{t('footer.email')}</a>
                     </p>
-                    <p className="email">
-                      <a href="mailto:info@bello-food.com">info@bello-food.com</a>
-                    </p>
                   </div>
                 </div>
               </div>
@@ -84,6 +82,114 @@ const Contact = () => {
         </div>
       </section>
       {/*====== End Contact Info section ======*/}
+
+      {/*====== Start Highlights Section ======*/}
+      <section className="features-section pt-95 pb-70">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-10">
+              <div className="section-title text-center mb-50 wow fadeInDown">
+                <span className="sub-title">
+                  <i className="flaticon-plant" />
+                  {t('highlightsPage.subtitle')}
+                </span>
+                <h2>{t('highlightsPage.title')}</h2>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-sm-6">
+              <div className="single-counter-item-two mb-40 wow fadeInDown" data-wow-delay=".2s">
+                <div className="inner-counter">
+                  <div className="icon">
+                    <i className="fas fa-check" />
+                  </div>
+                  <h2 className="number">
+                    <Counter end={10} />+
+                  </h2>
+                  <p>{t('highlightsPage.stats.countries')}</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-3 col-sm-6">
+              <div className="single-counter-item-two mb-40 wow fadeInUp" data-wow-delay=".25s">
+                <div className="inner-counter">
+                  <div className="icon">
+                    <i className="fas fa-star" />
+                  </div>
+                  <h2 className="number">
+                    <Counter end={30} />+
+                  </h2>
+                  <p>{t('highlightsPage.stats.products')}</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-3 col-sm-6">
+              <div className="single-counter-item-two mb-40 wow fadeInDown" data-wow-delay=".3s">
+                <div className="inner-counter">
+                  <div className="icon">
+                    <i className="fas fa-users" />
+                  </div>
+                  <h2 className="number">
+                    <Counter end={99} />%
+                  </h2>
+                  <p>{t('highlightsPage.stats.satisfaction')}</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-3 col-sm-6">
+              <div className="single-counter-item-two mb-40 wow fadeInUp" data-wow-delay=".35s">
+                <div className="inner-counter">
+                  <div className="icon">
+                    <i className="fas fa-award" />
+                  </div>
+                  <h2 className="number">
+                    <Counter end={10} />+
+                  </h2>
+                  <p>{t('highlightsPage.stats.experience')}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row mt-60">
+            <div className="col-lg-12">
+              <div className="content-box text-center wow fadeInUp">
+                <h3 className="mb-30">{t('highlightsPage.achievements.title')}</h3>
+                <div className="row">
+                  <div className="col-md-4 mb-30">
+                    <div className="highlight-item">
+                      <div className="milestone-icon mb-20">
+                        <i className="fas fa-certificate" style={{fontSize: '2.5rem', color: '#8FBC8F'}}></i>
+                      </div>
+                      <h5>{t('highlightsPage.achievements.certification.title')}</h5>
+                      <p>{t('highlightsPage.achievements.certification.description')}</p>
+                    </div>
+                  </div>
+                  <div className="col-md-4 mb-30">
+                    <div className="highlight-item">
+                      <div className="milestone-icon mb-20">
+                        <i className="fas fa-globe" style={{fontSize: '2.5rem', color: '#8FBC8F'}}></i>
+                      </div>
+                      <h5>{t('highlightsPage.achievements.export.title')}</h5>
+                      <p>{t('highlightsPage.achievements.export.description')}</p>
+                    </div>
+                  </div>
+                  <div className="col-md-4 mb-30">
+                    <div className="highlight-item">
+                      <div className="milestone-icon mb-20">
+                        <i className="fas fa-trophy" style={{fontSize: '2.5rem', color: '#8FBC8F'}}></i>
+                      </div>
+                      <h5>{t('highlightsPage.achievements.quality.title')}</h5>
+                      <p>{t('highlightsPage.achievements.quality.description')}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*====== End Highlights Section ======*/}
       {/*====== Start Contact section ======*/}
       <section className="contact-section pt-95 pb-50">
         <div className="container">
@@ -379,380 +485,122 @@ const Contact = () => {
         </div>
       </section>
       {/*====== End Contact section ======*/}
-      {/*====== Start Info Section ======*/}
-      <section className="info-section py-80" style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)' }}>
+      {/*====== Start WhatsApp Section ======*/}
+      <section className="whatsapp-section py-100" style={{ background: '#ffffff' }}>
         <div className="container">
-          <div className="row justify-content-center g-4">
-            <div className="col-xl-4 col-md-6">
-              {/*====== Modern Contact Card ======*/}
+          <div className="row justify-content-center">
+            <div className="col-lg-8 col-xl-7">
+              {/*====== Professional WhatsApp Card ======*/}
               <div 
-                className="modern-info-card contact-card wow fadeInUp" 
+                className="professional-whatsapp-card wow fadeInUp" 
                 data-wow-delay="0.1s"
                 style={{
-                  background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
-                  borderRadius: '24px',
-                  padding: '45px 35px',
-                  boxShadow: '0 20px 60px rgba(77, 96, 44, 0.15)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                  cursor: 'pointer',
-                  backdropFilter: 'blur(10px)',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column'
+                  background: '#ffffff',
+                  borderRadius: '20px',
+                  padding: '60px 50px',
+                  boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
+                  border: '1px solid #e8e8e8',
+                  transition: 'all 0.3s ease',
+                  textAlign: 'center'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-10px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 30px 80px rgba(77, 96, 44, 0.25)';
+                  e.currentTarget.style.boxShadow = '0 15px 50px rgba(0,0,0,0.12)';
+                  e.currentTarget.style.transform = 'translateY(-5px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 20px 60px rgba(77, 96, 44, 0.15)';
+                  e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)';
+                  e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
-                {/* Animated Background Elements */}
-                <div style={{
-                  position: 'absolute',
-                  top: '-100px',
-                  right: '-100px',
-                  width: '200px',
-                  height: '200px',
-                  background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
-                  borderRadius: '50%',
-                  animation: 'float 6s ease-in-out infinite',
-                  zIndex: 1
-                }}></div>
-                <div style={{
-                  position: 'absolute',
-                  bottom: '-50px',
-                  left: '-50px',
-                  width: '150px',
-                  height: '150px',
-                  background: 'rgba(255,255,255,0.05)',
-                  borderRadius: '50%',
-                  zIndex: 1
-                }}></div>
-                
-                <div style={{ position: 'relative', zIndex: 2, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ marginBottom: '25px' }}>
-                    <div style={{
-                      width: '70px',
-                      height: '70px',
-                      background: 'rgba(255,255,255,0.15)',
-                      borderRadius: '20px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginBottom: '20px',
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(255,255,255,0.1)'
-                    }}>
-                      <i className="fas fa-envelope" style={{ fontSize: '28px', color: '#ffffff' }}></i>
-                    </div>
-                    <span style={{ 
-                      color: 'rgba(255,255,255,0.9)', 
-                      fontSize: '13px', 
-                      fontWeight: '600',
-                      textTransform: 'uppercase',
-                      letterSpacing: '1.2px'
-                    }}>{t('common.contactUs')}</span>
-                </div>
-                  
-                  <h4 style={{ 
-                    color: '#ffffff', 
-                    fontSize: '22px', 
-                    fontWeight: '700',
-                    lineHeight: '1.3',
-                    marginBottom: 'auto',
-                    fontFamily: '"Montserrat", sans-serif'
+                {/* Icon */}
+                <div style={{ marginBottom: '30px' }}>
+                  <div style={{
+                    width: '90px',
+                    height: '90px',
+                    background: 'linear-gradient(135deg, #25d366 0%, #20c55a 100%)',
+                    borderRadius: '50%',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 10px 30px rgba(37, 211, 102, 0.25)'
                   }}>
-                    At Bello Food, we're always excited to connect with partners, clients, and customers worldwide. Whether you're interested in our products, private label solutions, or tailored packaging, our team is here to assist you.
-                  </h4>
-                  
-                  <div style={{ marginTop: '30px' }}>
-                    <Link href="/contact" style={{
+                    <i className="fab fa-whatsapp" style={{ fontSize: '45px', color: '#ffffff' }}></i>
+                  </div>
+                </div>
+                
+                {/* Title */}
+                <h3 style={{ 
+                  color: '#2c3e50', 
+                  fontSize: '28px', 
+                  fontWeight: '700',
+                  marginBottom: '20px',
+                  fontFamily: '"Montserrat", sans-serif'
+                }}>
+                  {t('contactPage.whatsapp.title')}
+                </h3>
+                
+                {/* Description */}
+                <p style={{ 
+                  color: '#6c757d', 
+                  fontSize: '16px', 
+                  lineHeight: '1.7',
+                  marginBottom: '35px',
+                  maxWidth: '500px',
+                  margin: '0 auto 35px'
+                }}>
+                  {t('contactPage.whatsapp.description')}
+                </p>
+                
+                {/* Button */}
+                <div>
+                  <a
+                    href="https://wa.me/201101511185?text=Hello%20Bello%20Food%2C%20I%20would%20like%20to%20inquire%20about%20your%20products"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
                       display: 'inline-flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      background: 'rgba(255,255,255,0.95)',
-                      color: '#4d602c',
-                      padding: '14px 28px',
+                      background: 'linear-gradient(135deg, #25d366 0%, #20c55a 100%)',
+                      color: '#ffffff',
+                      padding: '16px 40px',
                       borderRadius: '50px',
                       textDecoration: 'none',
                       fontWeight: '600',
-                      fontSize: '14px',
+                      fontSize: '16px',
                       transition: 'all 0.3s ease',
-                      boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      minWidth: '140px'
+                      boxShadow: '0 8px 25px rgba(37, 211, 102, 0.3)',
+                      border: 'none'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#ffffff';
-                      e.currentTarget.style.transform = 'scale(1.05)';
-                      e.currentTarget.style.boxShadow = '0 12px 35px rgba(0,0,0,0.2)';
+                      e.currentTarget.style.background = 'linear-gradient(135deg, #20c55a 0%, #1ea952 100%)';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 12px 35px rgba(37, 211, 102, 0.4)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(255,255,255,0.95)';
-                      e.currentTarget.style.transform = 'scale(1)';
-                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+                      e.currentTarget.style.background = 'linear-gradient(135deg, #25d366 0%, #20c55a 100%)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(37, 211, 102, 0.3)';
                     }}
-                    >
-                      {t('common.getQuote') || 'Get A Quote'}
-                      <i className="fas fa-arrow-right" style={{ marginLeft: '10px', fontSize: '12px' }}></i>
-                  </Link>
-                  </div>
+                  >
+                    <i className="fab fa-whatsapp" style={{ marginRight: '12px', fontSize: '20px' }}></i>
+                    {t('contactPage.whatsapp.buttonText')}
+                  </a>
                 </div>
-              </div>
-            </div>
-            
-            <div className="col-xl-4 col-md-6">
-              {/*====== Modern WhatsApp Card ======*/}
-              <div 
-                className="modern-info-card whatsapp-card wow fadeInDown" 
-                data-wow-delay="0.2s"
-                style={{
-                  background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
-                  borderRadius: '24px',
-                  padding: '45px 35px',
-                  boxShadow: '0 20px 60px rgba(77, 96, 44, 0.15)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                  cursor: 'pointer',
-                  backdropFilter: 'blur(10px)',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-10px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 30px 80px rgba(77, 96, 44, 0.25)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 20px 60px rgba(77, 96, 44, 0.15)';
-                }}
-              >
-                {/* Animated Background Elements */}
-                <div style={{
-                  position: 'absolute',
-                  top: '-80px',
-                  left: '-80px',
-                  width: '160px',
-                  height: '160px',
-                  background: 'radial-gradient(circle, rgba(37, 211, 102, 0.2) 0%, transparent 70%)',
-                  borderRadius: '50%',
-                  animation: 'float 4s ease-in-out infinite reverse',
-                  zIndex: 1
-                }}></div>
                 
-                <div style={{ position: 'relative', zIndex: 2, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ marginBottom: '25px' }}>
-                    <div style={{
-                      width: '70px',
-                      height: '70px',
-                      background: 'rgba(37, 211, 102, 0.2)',
-                      borderRadius: '20px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginBottom: '20px',
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(37, 211, 102, 0.3)'
-                    }}>
-                      <i className="fab fa-whatsapp" style={{ fontSize: '32px', color: '#25d366' }}></i>
-                    </div>
-                    <span style={{ 
-                      color: 'rgba(255,255,255,0.9)', 
-                      fontSize: '13px', 
-                      fontWeight: '600',
-                      textTransform: 'uppercase',
-                      letterSpacing: '1.2px'
-                    }}>{t('common.contactUs')}</span>
-                </div>
-                  
-                  <h4 style={{ 
-                    color: '#ffffff', 
-                    fontSize: '22px', 
-                    fontWeight: '700',
-                    lineHeight: '1.3',
-                    marginBottom: 'auto',
-                    fontFamily: '"Montserrat", sans-serif'
-                  }}>
-                    Connect with us directly on WhatsApp for quick support and inquiries.
-                  </h4>
-                  
-                  <div style={{ marginTop: '30px' }}>
-                    <a
-                      href="https://wa.me/2+20 1101 5111 85?text=Hello%20Bello%20Food%2C%20I%20would%20like%20to%20inquire%20about%20your%20products"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        background: 'linear-gradient(135deg, #25d366 0%, #20c55a 100%)',
-                        color: '#ffffff',
-                        padding: '14px 28px',
-                        borderRadius: '50px',
-                        textDecoration: 'none',
-                        fontWeight: '600',
-                        fontSize: '14px',
-                        transition: 'all 0.3s ease',
-                        boxShadow: '0 8px 25px rgba(37, 211, 102, 0.3)',
-                        minWidth: '140px'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'linear-gradient(135deg, #20c55a 0%, #1ea952 100%)';
-                        e.currentTarget.style.transform = 'scale(1.05)';
-                        e.currentTarget.style.boxShadow = '0 12px 35px rgba(37, 211, 102, 0.4)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'linear-gradient(135deg, #25d366 0%, #20c55a 100%)';
-                        e.currentTarget.style.transform = 'scale(1)';
-                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(37, 211, 102, 0.3)';
-                      }}
-                    >
-                      <i className="fab fa-whatsapp" style={{ marginRight: '10px', fontSize: '16px' }}></i>
-                      {t('footer.whatsappButton') || 'Chat On WhatsApp'}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="col-xl-4 col-md-6">
-              {/*====== Modern Career Card ======*/}
-              <div 
-                className="modern-info-card career-card wow fadeInUp" 
-                data-wow-delay="0.3s"
-                style={{
-                  background: 'linear-gradient(135deg, #4d602c 0%, #5a6f35 100%)',
-                  borderRadius: '24px',
-                  padding: '45px 35px',
-                  boxShadow: '0 20px 60px rgba(77, 96, 44, 0.15)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                  cursor: 'pointer',
-                  backdropFilter: 'blur(10px)',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-10px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 30px 80px rgba(77, 96, 44, 0.25)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 20px 60px rgba(77, 96, 44, 0.15)';
-                }}
-              >
-                {/* Animated Background Elements */}
-                <div style={{
-                  position: 'absolute',
-                  top: '-80px',
-                  right: '-80px',
-                  width: '160px',
-                  height: '160px',
-                  background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)',
-                  borderRadius: '50%',
-                  animation: 'float 5s ease-in-out infinite',
-                  zIndex: 1
-                }}></div>
-                <div style={{
-                  position: 'absolute',
-                  bottom: '-50px',
-                  left: '-50px',
-                  width: '150px',
-                  height: '150px',
-                  background: 'rgba(255,255,255,0.05)',
-                  borderRadius: '50%',
-                  zIndex: 1
-                }}></div>
-                
-                <div style={{ position: 'relative', zIndex: 2, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ marginBottom: '25px' }}>
-                    <div style={{
-                      width: '70px',
-                      height: '70px',
-                      background: 'rgba(255,255,255,0.15)',
-                      borderRadius: '20px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginBottom: '20px',
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(255,255,255,0.1)'
-                    }}>
-                      <i className="fas fa-users" style={{ fontSize: '28px', color: '#ffffff' }}></i>
-                    </div>
-                    <span style={{ 
-                      color: 'rgba(255,255,255,0.9)', 
-                      fontSize: '13px', 
-                      fontWeight: '600',
-                      textTransform: 'uppercase',
-                      letterSpacing: '1.2px'
-                    }}>Career Opportunities</span>
-                </div>
-                  
-                  <h4 style={{ 
-                    color: '#ffffff', 
-                    fontSize: '22px', 
-                    fontWeight: '700',
-                    lineHeight: '1.3',
-                    marginBottom: 'auto',
-                    fontFamily: '"Montserrat", sans-serif'
-                  }}>
-                    Join our team! We're looking for passionate individuals to grow with us.
-                  </h4>
-                  
-                  <div style={{ marginTop: '30px' }}>
-                    <Link href="/join-us" style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      background: 'rgba(255,255,255,0.95)',
-                      color: '#4d602c',
-                      padding: '14px 28px',
-                      borderRadius: '50px',
-                      textDecoration: 'none',
-                      fontWeight: '600',
-                      fontSize: '14px',
-                      transition: 'all 0.3s ease',
-                      boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      minWidth: '140px'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#ffffff';
-                      e.currentTarget.style.transform = 'scale(1.05)';
-                      e.currentTarget.style.boxShadow = '0 12px 35px rgba(0,0,0,0.2)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(255,255,255,0.95)';
-                      e.currentTarget.style.transform = 'scale(1)';
-                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
-                    }}
-                    >
-                      {t('joinUsPage.cta.applyNow') || 'Apply Now'}
-                      <i className="fas fa-arrow-right" style={{ marginLeft: '10px', fontSize: '12px' }}></i>
-                  </Link>
-                  </div>
+                {/* Additional Info */}
+                <div style={{ marginTop: '30px', paddingTop: '30px', borderTop: '1px solid #e8e8e8' }}>
+                  <p style={{ color: '#95a5a6', fontSize: '14px', margin: 0 }}>
+                    <i className="far fa-clock" style={{ marginRight: '8px' }}></i>
+                    {t('contactPage.whatsapp.availability')}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      {/*====== End Info Section ======*/}
+      {/*====== End WhatsApp Section ======*/}
 
     </Layout>
   );

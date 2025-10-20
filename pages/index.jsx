@@ -606,16 +606,16 @@ const Index = () => {
                     className="testimonial-slider-two"
                   >
                     {/*====== Single Testimonial Item  ======*/}
-                    <div className="single-testimonial-item-two">
+                    <div className="single-testimonial-item-two mb-60">
                       <div className="quote-rating-box">
-                            <div className="icon">
-                              <img
+                        <div className="icon">
+                          <img
                             src="/assets/images/testimonial/quote2.png"
                             alt="quote icon"
-                              />
-                            </div>
+                          />
+                        </div>
                         <div className="ratings-box">
-                          <h3>{t('testimonials.qualityServices')}</h3>
+                          <h3>{t('testimonials.testimonial1.title')}</h3>
                           <ul className="ratings">
                             <li>
                               <i className="fas fa-star" />
@@ -635,10 +635,12 @@ const Index = () => {
                           </ul>
                         </div>
                       </div>
-                      <p>
-                        {t('testimonials.testimonialText')}
-                      </p>
-                        </div>
+                      <p>{t('testimonials.testimonial1.text')}</p>
+                      <div className="author-info">
+                        <h6>{t('testimonials.testimonial1.author')}</h6>
+                        <p className="position">{t('testimonials.testimonial1.position')}</p>
+                      </div>
+                    </div>
                     {/*====== Single Testimonial Item  ======*/}
                     <div className="single-testimonial-item-two mb-60">
                       <div className="quote-rating-box">
@@ -649,7 +651,7 @@ const Index = () => {
                           />
                         </div>
                         <div className="ratings-box">
-                          <h3>{t('testimonials.qualityServices')}</h3>
+                          <h3>{t('testimonials.testimonial2.title')}</h3>
                           <ul className="ratings">
                             <li>
                               <i className="fas fa-star" />
@@ -669,10 +671,12 @@ const Index = () => {
                           </ul>
                         </div>
                       </div>
-                      <p>
-                        {t('testimonials.testimonialText')}
-                      </p>
-                        </div>
+                      <p>{t('testimonials.testimonial2.text')}</p>
+                      <div className="author-info">
+                        <h6>{t('testimonials.testimonial2.author')}</h6>
+                        <p className="position">{t('testimonials.testimonial2.position')}</p>
+                      </div>
+                    </div>
                     {/*====== Single Testimonial Item  ======*/}
                     <div className="single-testimonial-item-two mb-60">
                       <div className="quote-rating-box">
@@ -683,7 +687,7 @@ const Index = () => {
                           />
                         </div>
                         <div className="ratings-box">
-                          <h3>{t('testimonials.qualityServices')}</h3>
+                          <h3>{t('testimonials.testimonial3.title')}</h3>
                           <ul className="ratings">
                             <li>
                               <i className="fas fa-star" />
@@ -703,10 +707,12 @@ const Index = () => {
                           </ul>
                         </div>
                       </div>
-                      <p>
-                        {t('testimonials.testimonialText')}
-                      </p>
+                      <p>{t('testimonials.testimonial3.text')}</p>
+                      <div className="author-info">
+                        <h6>{t('testimonials.testimonial3.author')}</h6>
+                        <p className="position">{t('testimonials.testimonial3.position')}</p>
                       </div>
+                    </div>
                     </Slider>
                 </div>
               </div>
@@ -739,27 +745,19 @@ const Index = () => {
                 <div className="entry-content">
                   <div className="post-meta">
                     <span className="date">
-                      <Link legacyBehavior href="/blog-details">
-                        <a>{t('blog.date')}</a>
-                      </Link>
+                      <span>{t('blog.date')}</span>
                     </span>
                     <span className="comment">
-                      <Link legacyBehavior href="/blog-details">
-                        <a>{t('blog.comments')}</a>
-                      </Link>
+                      <span>{t('blog.comments')}</span>
                     </span>
                   </div>
-                                    <h4 className="entry-title">
-                    <Link legacyBehavior href="/blog-details">
-                      <a>{t('blog.posts.0')}</a>
-                    </Link>
+                  <h4 className="entry-title">
+                    <span>{t('blog.posts.0')}</span>
                   </h4>
                   <div className="author">
                     <h6>
                       <span>{t('blog.by')}</span>
-                      <Link legacyBehavior href="/blog-details">
-                        <a>{t('blog.author')}</a>
-                      </Link>
+                      <span>{t('blog.author')}</span>
                     </h6>
                   </div>
                 </div>
@@ -775,27 +773,19 @@ const Index = () => {
                 <div className="entry-content">
                   <div className="post-meta">
                     <span className="date">
-                      <Link legacyBehavior href="/blog-details">
-                        <a>{t('blog.date')}</a>
-                      </Link>
+                      <span>{t('blog.date')}</span>
                     </span>
                     <span className="comment">
-                      <Link legacyBehavior href="/blog-details">
-                        <a>{t('blog.comments')}</a>
-                      </Link>
+                      <span>{t('blog.comments')}</span>
                     </span>
                   </div>
-                                    <h4 className="entry-title">
-                    <Link legacyBehavior href="/blog-details">
-                      <a>{t('blog.posts.1')}</a>
-                    </Link>
+                  <h4 className="entry-title">
+                    <span>{t('blog.posts.1')}</span>
                   </h4>
                   <div className="author">
                     <h6>
                       <span>{t('blog.by')}</span>
-                      <Link legacyBehavior href="/blog-details">
-                        <a>{t('blog.author')}</a>
-                      </Link>
+                      <span>{t('blog.author')}</span>
                     </h6>
                   </div>
                 </div>
@@ -811,27 +801,19 @@ const Index = () => {
                 <div className="entry-content">
                   <div className="post-meta">
                     <span className="date">
-                      <Link legacyBehavior href="/blog-details">
-                        <a>{t('blog.date')}</a>
-                      </Link>
+                      <span>{t('blog.date')}</span>
                     </span>
                     <span className="comment">
-                      <Link legacyBehavior href="/blog-details">
-                        <a>{t('blog.comments')}</a>
-                      </Link>
+                      <span>{t('blog.comments')}</span>
                     </span>
                   </div>
                   <h4 className="entry-title">
-                    <Link legacyBehavior href="/blog-details">
-                      <a>{t('blog.posts.2')}</a>
-                    </Link>
+                    <span>{t('blog.posts.2')}</span>
                   </h4>
                   <div className="author">
                     <h6>
                       <span>{t('blog.by')}</span>
-                      <Link legacyBehavior href="/blog-details">
-                        <a>{t('blog.author')}</a>
-                      </Link>
+                      <span>{t('blog.author')}</span>
                     </h6>
                   </div>
                 </div>

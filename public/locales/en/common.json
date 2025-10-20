@@ -4,7 +4,6 @@
     "about": "About",
     "sustainability": "Sustainability",
     "products": "Products",
-    "highlights": "Highlights",
     "joinUs": "Join Us",
     "contact": "Contact",
     "searchPlaceholder": "Search Here"
@@ -81,10 +80,24 @@
     "waterPlants": "Water The Plants"
   },
   "testimonials": {
-    "qualityServices": "Outstanding Quality",
-    "testimonialText": "Bello Food delivers the finest olives and pickles we've ever sourced. Consistent quality and authentic taste that reflects Egypt's rich heritage. A reliable partnership with products that exceed our customers' expectations.",
-    "authorName": "Ahmed Mahmoud",
-    "authorPosition": "Procurement Manager"
+    "testimonial1": {
+      "title": "Exceptional Export Partner",
+      "text": "Working with Bello Food transformed our Mediterranean product line. Their Kalamata and green olives became instant bestsellers in our retail chain. The consistency in quality, competitive pricing, and reliable logistics make them invaluable. Every shipment arrives perfectly packed and on schedule.",
+      "author": "Marco Russo",
+      "position": "Supply Chain Director, Premium Foods Italy"
+    },
+    "testimonial2": {
+      "title": "Perfect for Foodservice",
+      "text": "As a restaurant group serving 2,000+ customers daily, we demand perfection. Bello Food's pickled peppers and stuffed olives exceed expectations every time. Their flexible bulk packaging and responsive customer support have streamlined our operations. Our chefs love the authentic Mediterranean flavors.",
+      "author": "Elena Volkov",
+      "position": "Head Chef & Operations Manager, Moscow Restaurant Group"
+    },
+    "testimonial3": {
+      "title": "Trusted Quality Standards",
+      "text": "Bello Food stands out for their certifications and food safety excellence. All documentation is flawless, product traceability is transparent, and quality never varies. They helped us expand our organic and halal product sections with confidence. A truly professional supplier that understands international markets.",
+      "author": "Hassan Al-Rashid",
+      "position": "Quality Assurance Manager, Gulf Distribution Co., UAE"
+    }
   },
   "blog": {
     "subtitle": "News & Blog",
@@ -393,7 +406,13 @@
       "description": "10th of Ramadan City, Egypt",
       "viewOnMaps": "View on Google Maps"
     },
-    "closingMessage": "Every partnership is a step toward sharing premium Egyptian olives with the world."
+    "closingMessage": "Every partnership is a step toward sharing premium Egyptian olives with the world.",
+    "whatsapp": {
+      "title": "Connect Via WhatsApp",
+      "description": "Get instant support and quick responses to your inquiries. Our team is ready to assist you with product information, quotes, and any questions you may have.",
+      "buttonText": "Start WhatsApp Chat",
+      "availability": "Available during business hours • Quick response guaranteed"
+    }
   },
   "sustainabilityPage": {
     "pageTitle": "Sustainability & Quality",
@@ -529,7 +548,7 @@
     "getInTouch": "Get In Touch",
     "location": "Headquarters",
     "emailUs": "Email",
-    "phone": "++20 1101 5111 85",
+    "phone": "+20 1101 5111 85",
     "address": "10th of Ramadan City, Industrial Area, Egypt",
     "email": "marketing@bello-food.com",
     "phoneNumber": "+20 11 0 15 111 85",

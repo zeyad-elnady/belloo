@@ -321,7 +321,7 @@ const About = () => {
             {...sliderProps.testimonialSliderOne}
             className="testimonial-slider-one wow fadeInUp"
           >
-            {/*====== Testimonial Item  ======*/}
+            {/*====== Testimonial Item 1 ======*/}
             <div className="single-testimonial-item">
               <div className="testimonial-inner-content">
                 <div className="quote-rating-box">
@@ -332,7 +332,7 @@ const About = () => {
                     />
                   </div>
                   <div className="ratings-box">
-                    <h6>{t('aboutPage.testimonialSection.qualityServices')}</h6>
+                    <h6>{t('testimonials.testimonial1.title')}</h6>
                     <ul className="ratings">
                       <li>
                         <i className="fas fa-star" />
@@ -352,12 +352,14 @@ const About = () => {
                     </ul>
                   </div>
                 </div>
-                <p>
-                  {t('aboutPage.testimonialSection.testimonialText')}
-                </p>
+                <p>{t('testimonials.testimonial1.text')}</p>
+                <div className="author-info">
+                  <h6>{t('testimonials.testimonial1.author')}</h6>
+                  <p className="position">{t('testimonials.testimonial1.position')}</p>
+                </div>
               </div>
             </div>
-            {/*====== Testimonial Item  ======*/}
+            {/*====== Testimonial Item 2 ======*/}
             <div className="single-testimonial-item">
               <div className="testimonial-inner-content">
                 <div className="quote-rating-box">
@@ -368,7 +370,7 @@ const About = () => {
                     />
                   </div>
                   <div className="ratings-box">
-                    <h6>{t('aboutPage.testimonialSection.qualityServices')}</h6>
+                    <h6>{t('testimonials.testimonial2.title')}</h6>
                     <ul className="ratings">
                       <li>
                         <i className="fas fa-star" />
@@ -388,12 +390,14 @@ const About = () => {
                     </ul>
                   </div>
                 </div>
-                <p>
-                  {t('aboutPage.testimonialSection.testimonialText')}
-                </p>
+                <p>{t('testimonials.testimonial2.text')}</p>
+                <div className="author-info">
+                  <h6>{t('testimonials.testimonial2.author')}</h6>
+                  <p className="position">{t('testimonials.testimonial2.position')}</p>
+                </div>
               </div>
             </div>
-            {/*====== Testimonial Item  ======*/}
+            {/*====== Testimonial Item 3 ======*/}
             <div className="single-testimonial-item">
               <div className="testimonial-inner-content">
                 <div className="quote-rating-box">
@@ -404,7 +408,7 @@ const About = () => {
                     />
                   </div>
                   <div className="ratings-box">
-                    <h6>{t('aboutPage.testimonialSection.qualityServices')}</h6>
+                    <h6>{t('testimonials.testimonial3.title')}</h6>
                     <ul className="ratings">
                       <li>
                         <i className="fas fa-star" />
@@ -424,45 +428,11 @@ const About = () => {
                     </ul>
                   </div>
                 </div>
-                <p>
-                  {t('aboutPage.testimonialSection.testimonialText')}
-                </p>
-              </div>
-            </div>
-            {/*====== Testimonial Item  ======*/}
-            <div className="single-testimonial-item">
-              <div className="testimonial-inner-content">
-                <div className="quote-rating-box">
-                  <div className="icon">
-                    <img
-                      src="/assets/images/testimonial/quote.png"
-                      alt="quote icon"
-                    />
-                  </div>
-                  <div className="ratings-box">
-                    <h6>{t('aboutPage.testimonialSection.qualityServices')}</h6>
-                    <ul className="ratings">
-                      <li>
-                        <i className="fas fa-star" />
-                      </li>
-                      <li>
-                        <i className="fas fa-star" />
-                      </li>
-                      <li>
-                        <i className="fas fa-star" />
-                      </li>
-                      <li>
-                        <i className="fas fa-star" />
-                      </li>
-                      <li>
-                        <i className="fas fa-star" />
-                      </li>
-                    </ul>
-                  </div>
+                <p>{t('testimonials.testimonial3.text')}</p>
+                <div className="author-info">
+                  <h6>{t('testimonials.testimonial3.author')}</h6>
+                  <p className="position">{t('testimonials.testimonial3.position')}</p>
                 </div>
-                <p>
-                  {t('aboutPage.testimonialSection.testimonialText')}
-                </p>
               </div>
             </div>
           </Slider>
