@@ -741,10 +741,8 @@ const JoinUs = () => {
                       
                         console.log('Submitting application...');
                         
-                      // Use Vercel-optimized endpoint for better compatibility
-                      const apiEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
-                        ? '/api/job-application-vercel'  // Use Vercel-optimized endpoint
-                        : '/api/job-application';        // Use original endpoint for local dev
+                      // Use the job-application endpoint
+                      const apiEndpoint = '/api/job-application';
                       
                       const response = await fetch(apiEndpoint, {
                           method: 'POST',

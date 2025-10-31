@@ -2,7 +2,7 @@ import PageBanner from "@/src/components/PageBanner";
 import Layout from "@/src/layouts/Layout";
 import Link from "next/link";
 import { useTranslation } from 'next-i18next';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Products = () => {
   const { t } = useTranslation('common');
@@ -15,14 +15,38 @@ const Products = () => {
   
   // State for search functionality
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // State for database products
+  const [dbProducts, setDbProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Category data
+  // Fetch products from database
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products?published_only=true');
+        const data = await response.json();
+        if (data.success) {
+          setDbProducts(data.data || []);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Category data - updated to match database categories
   const categories = [
     { id: 'all', name: 'All Products', icon: '' },
-    { id: 'greenOlives', name: t('productsPage.categories.greenOlives'), icon: '' },
-    { id: 'blackOlives', name: t('productsPage.categories.blackOlives'), icon: '' },
+    { id: 'green-olives', name: t('productsPage.categories.greenOlives'), icon: '' },
+    { id: 'black-olives', name: t('productsPage.categories.blackOlives'), icon: '' },
     { id: 'peppers', name: t('productsPage.categories.peppers'), icon: '' },
-    { id: 'picklesVegetables', name: t('productsPage.categories.picklesVegetables'), icon: '' }
+    { id: 'artichokes', name: t('productsPage.categories.picklesVegetables'), icon: '' },
+    { id: 'pickles', name: 'Pickles & Vegetables', icon: '' }
   ];
 
   // Helper function to get current view for a specific product
@@ -288,44 +312,131 @@ const Products = () => {
     );
   };
 
-  // Get filtered products for current category
-  const getFilteredProducts = () => {
+  // Get ONLY CMS products (database managed)
+  const getAllProducts = () => {
+    // Convert database products to display format
+    const dbConverted = dbProducts.map(p => {
+      const gallery = p.gallery_images 
+        ? (typeof p.gallery_images === 'string' ? JSON.parse(p.gallery_images) : p.gallery_images)
+        : [];
+      
+      return {
+        key: p.slug,
+        name: p.name_en,
+        description: p.description_en || p.short_description_en,
+        mainImage: p.main_image,  // Glass Jars (default)
+        galleryImages: gallery,   // Other packaging types
+        isFromDB: true,
+        category: p.category
+      };
+    });
+
+    // Filter by category if needed
     if (activeCategory === 'all') {
-      const allProductsList = [
-        ...allProducts.greenOlives,
-        ...allProducts.blackOlives,
-        ...allProducts.peppers,
-        ...allProducts.picklesVegetables
-      ];
-      return filterProducts(allProductsList);
+      return dbConverted;
+    } else {
+      return dbConverted.filter(p => p.category === activeCategory);
     }
-    return filterProducts(allProducts[activeCategory] || []);
   };
 
-  // Render a single product card
-  const renderProductCard = (product, index) => (
-    <div key={product.key} className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-      <div className="product-card mb-40 wow fadeInUp" data-wow-delay={`${0.1 + index * 0.05}s`}>
-        <div className="product-image">
-          <img src={getProductImage(product.key)} alt={product.name} />
-          <div className="product-overlay">
-            <Link legacyBehavior href={`/specifications?package=${getProductView(product.key)}`}>
-              <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
-            </Link>
+  // Get filtered products for current category
+  const getFilteredProducts = () => {
+    let products = getAllProducts();
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      products = products.filter(product =>
+        product.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.name_en?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.name_ar?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.name_ru?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.key?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    return products;
+  };
+
+  // Get current image for CMS product
+  const getCurrentProductImage = (product) => {
+    const productKey = product.key;
+    const currentView = productViews[productKey] || 'glass-jars';
+    
+    // If viewing Glass Jars (default), show main image
+    if (currentView === 'glass-jars') {
+      return product.mainImage;
+    }
+    
+    // Find the gallery image for the selected packaging type
+    const galleryImg = product.galleryImages?.find(img => img.type === currentView);
+    return galleryImg ? galleryImg.url : product.mainImage;
+  };
+
+  // Render packaging buttons for CMS products
+  const renderProductPackagingButtons = (product) => {
+    const productKey = product.key;
+    
+    // If no gallery images, don't show buttons
+    if (!product.galleryImages || product.galleryImages.length === 0) {
+      return null;
+    }
+    
+    const currentView = productViews[productKey] || 'glass-jars';
+    
+    return (
+      <>
+        <button
+          className={`view-toggle-btn ${currentView === 'glass-jars' ? 'active' : ''}`}
+          onClick={() => setProductViews(prev => ({ ...prev, [productKey]: 'glass-jars' }))}
+        >
+          Glass Jars
+        </button>
+        {product.galleryImages.map((img, idx) => (
+          <button
+            key={idx}
+            className={`view-toggle-btn ${currentView === img.type ? 'active' : ''}`}
+            onClick={() => setProductViews(prev => ({ ...prev, [productKey]: img.type }))}
+          >
+            {img.label}
+          </button>
+        ))}
+      </>
+    );
+  };
+
+  // Render a single product card (SAME STYLE for all products)
+  const renderProductCard = (product, index) => {
+    const productKey = product.key;
+    const productName = product.name;
+    const productDesc = product.description;
+    
+    return (
+      <div key={productKey} className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+        <div className="product-card mb-40 wow fadeInUp" data-wow-delay={`${0.1 + index * 0.05}s`}>
+          <div className="product-image">
+            <img 
+              src={getCurrentProductImage(product)} 
+              alt={productName} 
+            />
+            <div className="product-overlay">
+              <Link legacyBehavior href={`/specifications?package=${getProductView(productKey)}`}>
+                <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className="product-info">
-          <h5 className="product-name">{product.name}</h5>
-          <p className="product-package">{product.description}</p>
-          <div className="product-details">
-            <div className="view-toggle-buttons">
-              {renderPackagingButtons(product.key)}
+          <div className="product-info">
+            <h5 className="product-name">{productName}</h5>
+            <p className="product-package">{productDesc}</p>
+            <div className="product-details">
+              <div className="view-toggle-buttons">
+                {renderProductPackagingButtons(product)}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
   
   return (
     <Layout header={3} footer={3}>
@@ -396,18 +507,29 @@ const Products = () => {
           {/* Products Grid - Dynamic */}
           <div className="products-content">
             <div className="category-content active">
-              <div className="row">
-                {getFilteredProducts().map((product, index) => renderProductCard(product, index))}
-                {getFilteredProducts().length === 0 && (
-                  <div className="col-12">
-                    <div className="no-products-found text-center py-5">
-                      <i className="fas fa-search" style={{fontSize: '4rem', color: '#ccc', marginBottom: '20px'}}></i>
-                      <h4>No products found</h4>
-                      <p>Try adjusting your search or browse our categories</p>
+              {loading ? (
+                <div className="row">
+                  <div className="col-12 text-center py-5">
+                    <div className="spinner-border text-primary" role="status">
+                      <span className="sr-only">Loading...</span>
                     </div>
+                    <p className="mt-3">Loading products...</p>
                   </div>
-                )}
-              </div>
+                </div>
+              ) : (
+                <div className="row">
+                  {getFilteredProducts().map((product, index) => renderProductCard(product, index))}
+                  {getFilteredProducts().length === 0 && (
+                    <div className="col-12">
+                      <div className="no-products-found text-center py-5">
+                        <i className="fas fa-search" style={{fontSize: '4rem', color: '#ccc', marginBottom: '20px'}}></i>
+                        <h4>No products found</h4>
+                        <p>Try adjusting your search or browse our categories</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

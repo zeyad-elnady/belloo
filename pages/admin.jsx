@@ -49,12 +49,8 @@ export default function Admin() {
         setContactSubmissions(contactData.data);
       }
 
-      // Fetch job applications (use appropriate endpoint)
-      const jobApiEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
-        ? '/api/job-application-vercel'  // Use Vercel-optimized endpoint
-        : '/api/job-application';        // Use original endpoint for local dev
-      
-      const jobResponse = await fetch(jobApiEndpoint);
+      // Fetch job applications
+      const jobResponse = await fetch('/api/job-application');
       const jobData = await jobResponse.json();
       
       if (jobData.success) {
@@ -161,7 +157,7 @@ export default function Admin() {
     if (type === 'contact') {
       headers = ['ID', 'Name', 'Email', 'Phone', 'Subject', 'Message', 'Submitted'];
       rows = data.map(item => [
-        item.id,
+        item.display_id ? `#${item.display_id}` : item.id,
         item.name,
         item.email,
         item.phone,
@@ -172,7 +168,7 @@ export default function Admin() {
     } else {
       headers = ['ID', 'Name', 'Title', 'Position', 'Email', 'Phone', 'Company', 'CV File', 'Submitted'];
       rows = data.map(item => [
-        item.id,
+        item.display_id ? `#${item.display_id}` : item.id,
         item.name,
         item.title,
         item.position,
@@ -562,7 +558,7 @@ export default function Admin() {
                       onChange={() => handleSelectItem(submission.id, 'contact')}
                     />
                   </td>
-                  <td><span className="admin-badge">{submission.id}</span></td>
+                  <td><span className="admin-badge">#{submission.display_id || submission.id}</span></td>
                   <td className="admin-cell-name">{submission.name}</td>
                   <td className="admin-cell-contact">
                     <div className="admin-contact-info">
@@ -761,7 +757,7 @@ export default function Admin() {
                       onChange={() => handleSelectItem(application.id, 'jobs')}
                     />
                   </td>
-                  <td><span className="admin-badge">{application.id}</span></td>
+                  <td><span className="admin-badge">#{application.display_id || application.id}</span></td>
                   <td className="admin-cell-candidate">
                     <div className="admin-candidate-info">
                       <div className="admin-candidate-name">{application.name}</div>
@@ -980,6 +976,24 @@ export default function Admin() {
                   <i className="fas fa-briefcase"></i>
                   <span>Job Applications</span>
                   <span className="admin-tab-counter">{jobApplications.length}</span>
+                </button>
+              </li>
+              <li className="admin-tab-item">
+                <button 
+                  className={`admin-tab-button ${activeTab === 'website-editor' ? 'active' : ''}`}
+                  onClick={() => router.push('/website-editor')}
+                >
+                  <i className="fas fa-edit"></i>
+                  <span>Website Editor</span>
+                </button>
+              </li>
+              <li className="admin-tab-item">
+                <button 
+                  className={`admin-tab-button ${activeTab === 'image-replacer' ? 'active' : ''}`}
+                  onClick={() => router.push('/image-replacer')}
+                >
+                  <i className="fas fa-exchange-alt"></i>
+                  <span>Replace Images</span>
                 </button>
               </li>
               <li className="admin-tab-item">
