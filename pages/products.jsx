@@ -418,15 +418,17 @@ const Products = () => {
               src={getCurrentProductImage(product)} 
               alt={productName} 
             />
-          <div className="product-overlay">
-              <Link legacyBehavior href={`/specifications?package=${getProductView(productKey)}`}>
-              <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
-            </Link>
-          </div>
         </div>
         <div className="product-info">
+          <div className="product-header">
             <h5 className="product-name">{productName}</h5>
-            <p className="product-package">{productDesc}</p>
+            <Link legacyBehavior href={`/specifications?package=${getProductView(productKey)}`}>
+              <a className="specs-link">
+                <i className="fas fa-info-circle"></i> {t('productsPage.buttons.viewSpecs')}
+              </a>
+            </Link>
+          </div>
+          <p className="product-package">{productDesc}</p>
           <div className="product-details">
             <div className="view-toggle-buttons">
                 {renderProductPackagingButtons(product)}

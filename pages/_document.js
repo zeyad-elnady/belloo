@@ -62,6 +62,8 @@ export default function Document(props) {
         <link rel="stylesheet" href="/assets/css/style.css" />
         {/*====== Product Fixes css ======*/}
         <link rel="stylesheet" href="/assets/css/product-fixes.css" />
+        {/*====== Product Overlay Fix css ======*/}
+        <link rel="stylesheet" href="/assets/css/product-overlay-fix.css" />
         {/*====== Homepage Products Compact css ======*/}
         <link rel="stylesheet" href="/assets/css/homepage-products-compact.css" />
         {/*====== Mobile Menu Fix css ======*/}
