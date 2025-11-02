@@ -101,6 +101,23 @@
   align-items: center;
 }
 
+.admin-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.admin-logo {
+  height: 50px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  transition: transform 0.3s ease;
+}
+
+.admin-logo:hover {
+  transform: scale(1.05);
+}
+
 .admin-title {
   color: var(--white);
   font-size: 28px;
@@ -108,12 +125,6 @@
   margin: 0;
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-}
-
-.admin-title::before {
-  content: '🎯';
-  font-size: 24px;
 }
 
 .admin-user-info {
@@ -1276,6 +1287,10 @@
     text-align: center;
   }
   
+  .admin-logo {
+    height: 40px;
+  }
+  
   .admin-title {
     font-size: 24px;
   }
@@ -1337,6 +1352,10 @@
   
   .admin-header-content {
     padding: var(--spacing-md);
+  }
+  
+  .admin-logo {
+    height: 35px;
   }
   
   .admin-title {

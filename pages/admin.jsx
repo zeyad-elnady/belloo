@@ -900,7 +900,10 @@ export default function Admin() {
         <div className="admin-container">
           <div className="admin-header">
             <div className="admin-header-content">
-              <h1 className="admin-title">Admin Dashboard</h1>
+              <div className="admin-title-wrapper">
+                <img src="/assets/images/logo/logo.svg" alt="Belloo Logo" className="admin-logo" />
+                <h1 className="admin-title">Admin Dashboard</h1>
+              </div>
               <div className="admin-user-info">
                 <div className="admin-user-dropdown">
                   <button 
@@ -985,15 +988,6 @@ export default function Admin() {
                 >
                   <i className="fas fa-edit"></i>
                   <span>Website Editor</span>
-                </button>
-              </li>
-              <li className="admin-tab-item">
-                <button 
-                  className={`admin-tab-button ${activeTab === 'image-replacer' ? 'active' : ''}`}
-                  onClick={() => router.push('/image-replacer')}
-                >
-                  <i className="fas fa-exchange-alt"></i>
-                  <span>Replace Images</span>
                 </button>
               </li>
               <li className="admin-tab-item">
