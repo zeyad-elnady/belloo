@@ -226,6 +226,7 @@ export default function Admin() {
 
   const ProfileSettings = () => {
     const [profileData, setProfileData] = useState({
+      username: user?.username || '',
       full_name: user?.full_name || '',
       email: user?.email || '',
       current_password: '',
@@ -260,6 +261,7 @@ export default function Admin() {
 
       try {
         const updateData = {
+          username: profileData.username,
           full_name: profileData.full_name,
           email: profileData.email,
         };
@@ -282,7 +284,12 @@ export default function Admin() {
         if (response.ok && data.success) {
           setProfileMessage('Profile updated successfully');
           // Update local user data
-          setUser({ ...user, full_name: profileData.full_name, email: profileData.email });
+          setUser({ 
+            ...user, 
+            username: profileData.username,
+            full_name: profileData.full_name, 
+            email: profileData.email 
+          });
           // Clear password fields
           setProfileData({
             ...profileData,
@@ -327,6 +334,19 @@ export default function Admin() {
             <form onSubmit={handleProfileSubmit} className="admin-form">
               <div className="admin-form-row">
                 <div className="admin-form-group">
+                  <label htmlFor="username" className="admin-form-label">Login Username</label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    className="admin-form-input"
+                    value={profileData.username}
+                    onChange={handleProfileChange}
+                    required
+                    minLength="3"
+                  />
+                </div>
+                <div className="admin-form-group">
                   <label htmlFor="full_name" className="admin-form-label">Full Name</label>
                   <input
                     type="text"
@@ -338,18 +358,19 @@ export default function Admin() {
                     required
                   />
                 </div>
-                <div className="admin-form-group">
-                  <label htmlFor="email" className="admin-form-label">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="admin-form-input"
-                    value={profileData.email}
-                    onChange={handleProfileChange}
-                    required
-                  />
-                </div>
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="email" className="admin-form-label">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="admin-form-input"
+                  value={profileData.email}
+                  onChange={handleProfileChange}
+                  required
+                />
               </div>
 
               <hr className="admin-form-divider" />

@@ -17,16 +17,34 @@ export default async function handler(req, res) {
       });
     }
 
-    const { full_name, email, current_password, new_password } = req.body;
+    const { username, full_name, email, current_password, new_password } = req.body;
 
-    if (!full_name || !email) {
+    if (!username || !full_name || !email) {
       return res.status(400).json({ 
         success: false, 
-        error: 'Full name and email are required' 
+        error: 'Username, full name and email are required' 
       });
     }
 
+    // Check if username is being changed and if it's already taken
+    if (username !== user.username) {
+      const { data: existingUser } = await supabaseAdmin
+        .from('users')
+        .select('id')
+        .eq('username', username)
+        .neq('id', user.id)
+        .single();
+
+      if (existingUser) {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Username is already taken' 
+        });
+      }
+    }
+
     const updates = {
+      username,
       full_name,
       email,
     };
