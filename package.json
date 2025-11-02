@@ -18,7 +18,7 @@
     "cookie": "^1.0.2",
     "date-fns": "^4.1.0",
     "formidable": "^3.5.4",
-    "i18next": "^23.17.4",
+    "i18next": "^23.15.1",
     "isotope-layout": "^3.0.6",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
