@@ -81,7 +81,7 @@ export default function Login() {
               <div className="login-card">
                 <div className="login-header">
                   <div className="logo-container">
-                    <img src="/assets/images/logo/logo-dark.png" alt="Belloo" className="logo" />
+                    <img src="/assets/images/logo/logo.svg" alt="Belloo" className="logo" />
                   </div>
                   <h2>Admin Login</h2>
                   <p>Sign in to access the admin dashboard</p>
