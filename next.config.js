@@ -4,20 +4,23 @@ const { i18n } = require('./next-i18next.config')
 const nextConfig = {
   reactStrictMode: true,
   i18n,
-  // Optimize for shared hosting
-  swcMinify: false, // Disable SWC minification
+  // Enable optimizations for Vercel serverless
+  swcMinify: true, // Enable minification
+  output: 'standalone', // Optimize for serverless deployment
   experimental: {
-    workerThreads: false, // Disable worker threads
-    cpus: 1, // Limit CPU usage
+    // These settings help reduce bundle size
+    outputFileTracingExcludes: {
+      '*': [
+        'node_modules/@swc/core-linux-x64-gnu',
+        'node_modules/@swc/core-linux-x64-musl',
+        'node_modules/@esbuild/linux-x64',
+      ],
+    },
   },
   webpack: (config, { isServer }) => {
-    // Reduce memory usage
-    config.optimization.minimize = false
-    config.cache = false
-    
-    // Disable problematic optimizations
     if (isServer) {
-      config.optimization.splitChunks = false
+      // Externalize large dependencies that don't need to be bundled
+      config.externals = [...(config.externals || []), 'bcrypt', 'formidable', 'multer']
     }
     
     return config
