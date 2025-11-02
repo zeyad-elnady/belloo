@@ -18,6 +18,9 @@ export default function WebsiteEditor() {
   const [editingNews, setEditingNews] = useState(null);
   const [showNewsModal, setShowNewsModal] = useState(false);
 
+  // Homepage featured products state
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+
   // Media state
   const [media, setMedia] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState('all');
@@ -559,8 +562,460 @@ export default function WebsiteEditor() {
           <p>Start by adding your first news article or blog post</p>
         </div>
       )}
+
+      {/* News Modal */}
+      {showNewsModal && (
+        <div className="modal-overlay" onClick={() => setShowNewsModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>
+                <i className="fas fa-newspaper"></i>
+                {editingNews ? 'Edit Article' : 'Add New Article'}
+              </h2>
+              <button className="modal-close" onClick={() => setShowNewsModal(false)}>
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
+            
+            <form onSubmit={handleSaveNews} className="product-form" key={editingNews?.id || 'new'}>
+              
+              {/* Quick Settings Row */}
+              <div className="form-section" style={{ background: '#f8fafc', padding: '20px', marginBottom: '20px', borderRadius: '8px' }}>
+                <div className="form-row" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr auto', gap: '15px', alignItems: 'end' }}>
+                  <div className="form-group" style={{ margin: 0 }}>
+                    <label><strong>Category</strong></label>
+                    <select name="category" defaultValue={editingNews?.category || ''} style={{ width: '100%' }}>
+                      <option value="">Select category</option>
+                      <option value="News">News</option>
+                      <option value="Blog">Blog</option>
+                      <option value="Technology">Technology</option>
+                      <option value="Quality">Quality</option>
+                      <option value="Business">Business</option>
+                      <option value="Sustainability">Sustainability</option>
+                    </select>
+                  </div>
+                  
+                  <div className="form-group" style={{ margin: 0 }}>
+                    <label><strong>Author</strong></label>
+                    <input
+                      type="text"
+                      name="author_name"
+                      defaultValue={editingNews?.author_name || 'Expert Team'}
+                      placeholder="Expert Team"
+                    />
+                  </div>
+                  
+                  <div className="form-group" style={{ margin: 0 }}>
+                    <label><strong>Date</strong></label>
+                    <input
+                      type="date"
+                      name="published_at"
+                      defaultValue={editingNews?.published_at ? new Date(editingNews.published_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]}
+                    />
+                  </div>
+
+                  <div className="form-group" style={{ margin: 0, paddingBottom: '5px' }}>
+                    <label className="checkbox-label" style={{ marginBottom: 0 }}>
+                      <input
+                        type="checkbox"
+                        name="is_published"
+                        defaultChecked={editingNews?.is_published !== false}
+                      />
+                      <span><strong>Published</strong></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Hidden slug field - auto-generated from title */}
+              <input type="hidden" name="slug" defaultValue={editingNews?.slug || editingNews?.title_en?.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || 'new-article'} />
+
+              {/* Main Content - English */}
+              <div className="form-section">
+                <h3 style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '2px solid #e2e8f0' }}>
+                  <i className="fas fa-newspaper"></i> Article Content
+                </h3>
+                
+                <div className="form-group">
+                  <label style={{ fontSize: '15px', fontWeight: '600', color: '#1e293b' }}>Title (English) *</label>
+                  <input
+                    type="text"
+                    name="title_en"
+                    defaultValue={editingNews?.title_en}
+                    placeholder="Enter article title..."
+                    required
+                    style={{ fontSize: '16px', padding: '12px' }}
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label style={{ fontSize: '15px', fontWeight: '600', color: '#1e293b' }}>Summary (English)</label>
+                  <textarea
+                    name="excerpt_en"
+                    defaultValue={editingNews?.excerpt_en}
+                    placeholder="Brief summary of the article (1-2 sentences)..."
+                    rows="2"
+                    style={{ fontSize: '15px' }}
+                  ></textarea>
+                </div>
+                
+                <div className="form-group">
+                  <label style={{ fontSize: '15px', fontWeight: '600', color: '#1e293b' }}>
+                    Full Article (English)
+                  </label>
+                  <textarea
+                    name="content_en"
+                    defaultValue={editingNews?.content_en}
+                    placeholder="Write your full article content here. You can use HTML tags like <h2>, <p>, <ul>, <li>..."
+                    rows="12"
+                    style={{ fontSize: '15px', fontFamily: 'monospace' }}
+                  ></textarea>
+                  <small style={{ display: 'block', marginTop: '8px', padding: '8px', background: '#f1f5f9', borderRadius: '4px' }}>
+                    💡 <strong>Tip:</strong> Use HTML: <code>&lt;h2&gt;Heading&lt;/h2&gt;</code> <code>&lt;p&gt;Paragraph&lt;/p&gt;</code> <code>&lt;ul&gt;&lt;li&gt;List&lt;/li&gt;&lt;/ul&gt;</code>
+                  </small>
+                </div>
+              </div>
+
+              {/* Arabic Content - Collapsible */}
+              <details className="form-section" style={{ cursor: 'pointer', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '0' }}>
+                <summary style={{ padding: '15px 20px', background: '#f8fafc', fontWeight: '600', borderRadius: '8px' }}>
+                  <i className="fas fa-language"></i> Arabic Translation (Optional - Click to expand)
+                </summary>
+                <div style={{ padding: '20px' }}>
+                  <div className="form-group">
+                    <label>Title (Arabic)</label>
+                    <input
+                      type="text"
+                      name="title_ar"
+                      defaultValue={editingNews?.title_ar}
+                      placeholder="عنوان المقال بالعربية..."
+                      dir="rtl"
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Summary (Arabic)</label>
+                    <textarea
+                      name="excerpt_ar"
+                      defaultValue={editingNews?.excerpt_ar}
+                      placeholder="ملخص المقال..."
+                      rows="2"
+                      dir="rtl"
+                    ></textarea>
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Full Article (Arabic)</label>
+                    <textarea
+                      name="content_ar"
+                      defaultValue={editingNews?.content_ar}
+                      placeholder="المحتوى الكامل للمقال..."
+                      rows="8"
+                      dir="rtl"
+                    ></textarea>
+                  </div>
+                </div>
+              </details>
+
+              {/* Russian Content - Collapsible */}
+              <details className="form-section" style={{ cursor: 'pointer', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '0' }}>
+                <summary style={{ padding: '15px 20px', background: '#f8fafc', fontWeight: '600', borderRadius: '8px' }}>
+                  <i className="fas fa-language"></i> Russian Translation (Optional - Click to expand)
+                </summary>
+                <div style={{ padding: '20px' }}>
+                  <div className="form-group">
+                    <label>Title (Russian)</label>
+                    <input
+                      type="text"
+                      name="title_ru"
+                      defaultValue={editingNews?.title_ru}
+                      placeholder="Заголовок статьи..."
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Summary (Russian)</label>
+                    <textarea
+                      name="excerpt_ru"
+                      defaultValue={editingNews?.excerpt_ru}
+                      placeholder="Краткое изложение статьи..."
+                      rows="2"
+                    ></textarea>
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Full Article (Russian)</label>
+                    <textarea
+                      name="content_ru"
+                      defaultValue={editingNews?.content_ru}
+                      placeholder="Полное содержание статьи..."
+                      rows="8"
+                    ></textarea>
+                  </div>
+                </div>
+              </details>
+
+              {/* Featured Image - Collapsible */}
+              <details className="form-section" style={{ cursor: 'pointer', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '0' }}>
+                <summary style={{ padding: '15px 20px', background: '#f8fafc', fontWeight: '600', borderRadius: '8px' }}>
+                  <i className="fas fa-image"></i> Featured Image (Optional - Click to expand)
+                </summary>
+                <div style={{ padding: '20px' }}>
+                  {editingNews?.featured_image && (
+                    <div className="form-group">
+                      <label>Current Image</label>
+                      <div className="current-image-preview">
+                        <img src={editingNews.featured_image} alt="Current featured" />
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="form-group">
+                    <label>Upload New Image</label>
+                    <input
+                      type="file"
+                      name="featured_image_file"
+                      accept="image/*"
+                      className="file-input"
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          const preview = document.getElementById('news-image-preview');
+                          const reader = new FileReader();
+                          reader.onload = (e) => {
+                            preview.src = e.target.result;
+                            preview.style.display = 'block';
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </div>
+
+                  <div className="image-preview-container">
+                    <img id="news-image-preview" className="image-preview" style={{ display: 'none' }} alt="Preview" />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Or paste image URL</label>
+                    <input
+                      type="text"
+                      name="featured_image_url"
+                      defaultValue={editingNews?.featured_image}
+                      placeholder="/assets/images/blog/..."
+                    />
+                  </div>
+                </div>
+              </details>
+
+              <div className="modal-footer" style={{ marginTop: '30px', padding: '20px', background: '#f8fafc', borderTop: '2px solid #e2e8f0' }}>
+                <button type="button" className="btn btn-outline" onClick={() => setShowNewsModal(false)}>
+                  <i className="fas fa-times"></i> Cancel
+                </button>
+                <button type="submit" className="btn btn-primary" style={{ fontSize: '16px', padding: '12px 30px' }}>
+                  <i className="fas fa-save"></i>
+                  {editingNews ? 'Save Changes' : 'Create Article'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
+
+  // Homepage Section Component
+  const HomepageSection = () => {
+    const [selectedProducts, setSelectedProducts] = useState([null, null, null, null, null, null]);
+    const [saving, setSaving] = useState(false);
+
+    // Fetch current featured products on mount
+    useEffect(() => {
+      const fetchFeaturedProducts = async () => {
+        try {
+          const response = await fetch('/api/homepage/featured-products');
+          const result = await response.json();
+          if (result.success && result.data) {
+            setSelectedProducts(result.data);
+          }
+        } catch (error) {
+          console.error('Error fetching featured products:', error);
+        }
+      };
+      fetchFeaturedProducts();
+    }, []);
+
+    const handleProductSelect = (index, productId) => {
+      const newSelected = [...selectedProducts];
+      newSelected[index] = productId;
+      setSelectedProducts(newSelected);
+    };
+
+    const handleSaveFeaturedProducts = async () => {
+      setSaving(true);
+      try {
+        const response = await fetch('/api/homepage/featured-products', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productIds: selectedProducts })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          alert('Featured products updated successfully!');
+        } else {
+          alert('Failed to update featured products: ' + (result.error || 'Unknown error'));
+        }
+      } catch (error) {
+        console.error('Error saving featured products:', error);
+        alert('Failed to save featured products');
+      } finally {
+        setSaving(false);
+      }
+    };
+
+    const getProductById = (id) => {
+      return products.find(p => p.id === id);
+    };
+
+    return (
+      <div className="cms-section">
+        <div className="cms-header">
+          <h2>
+            <i className="fas fa-home"></i> Homepage Featured Products
+          </h2>
+          <button 
+            className="btn btn-primary" 
+            onClick={handleSaveFeaturedProducts}
+            disabled={saving}
+          >
+            <i className="fas fa-save"></i> {saving ? 'Saving...' : 'Save Changes'}
+          </button>
+        </div>
+
+        <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '8px', marginBottom: '20px' }}>
+          <p style={{ margin: 0, fontSize: '15px', color: '#475569' }}>
+            <i className="fas fa-info-circle" style={{ color: '#3b82f6', marginRight: '8px' }}></i>
+            Select 6 products to display in the "Popular Products" section on the homepage. 
+            These products will be shown to all visitors when they first visit your website.
+          </p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '20px' }}>
+          {[0, 1, 2, 3, 4, 5].map((index) => {
+            const selectedProduct = getProductById(selectedProducts[index]);
+            return (
+              <div key={index} style={{ 
+                background: 'white', 
+                border: '2px solid #e2e8f0', 
+                borderRadius: '8px', 
+                padding: '20px' 
+              }}>
+                <h4 style={{ marginBottom: '15px', color: '#1e293b' }}>
+                  <span style={{ 
+                    display: 'inline-block', 
+                    width: '32px', 
+                    height: '32px', 
+                    background: '#10b981', 
+                    color: 'white', 
+                    borderRadius: '50%', 
+                    textAlign: 'center', 
+                    lineHeight: '32px', 
+                    marginRight: '10px',
+                    fontWeight: 'bold'
+                  }}>
+                    {index + 1}
+                  </span>
+                  Position {index + 1}
+                </h4>
+
+                <select
+                  value={selectedProducts[index] || ''}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const productId = value === '' ? null : value; // Keep UUID as string
+                    handleProductSelect(index, productId);
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    border: '1px solid #cbd5e1',
+                    borderRadius: '6px',
+                    fontSize: '15px',
+                    marginBottom: '15px'
+                  }}
+                >
+                  <option value="">-- Select a product --</option>
+                  {products.length === 0 ? (
+                    <option value="" disabled>Loading products...</option>
+                  ) : (
+                    products
+                      .filter(p => p.is_published)
+                      .map(product => (
+                        <option key={product.id} value={product.id}>
+                          #{product.display_id} - {product.name_en}
+                        </option>
+                      ))
+                  )}
+                </select>
+
+                {selectedProduct && (
+                  <div style={{ 
+                    border: '1px solid #e2e8f0', 
+                    borderRadius: '6px', 
+                    padding: '15px',
+                    background: '#f8fafc'
+                  }}>
+                    <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                      {selectedProduct.main_image && (
+                        <img 
+                          src={selectedProduct.main_image} 
+                          alt={selectedProduct.name_en}
+                          style={{ 
+                            width: '80px', 
+                            height: '80px', 
+                            objectFit: 'cover', 
+                            borderRadius: '6px',
+                            border: '1px solid #e2e8f0'
+                          }}
+                        />
+                      )}
+                      <div>
+                        <div style={{ fontWeight: '600', marginBottom: '5px' }}>
+                          {selectedProduct.name_en}
+                        </div>
+                        <div style={{ fontSize: '13px', color: '#64748b' }}>
+                          {selectedProduct.category}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <div style={{ 
+          marginTop: '30px', 
+          padding: '20px', 
+          background: '#fff', 
+          borderRadius: '8px', 
+          border: '2px solid #e2e8f0',
+          textAlign: 'center'
+        }}>
+          <button 
+            className="btn btn-primary" 
+            onClick={handleSaveFeaturedProducts}
+            disabled={saving}
+            style={{ fontSize: '16px', padding: '12px 40px' }}
+          >
+            <i className="fas fa-save"></i> {saving ? 'Saving Changes...' : 'Save Featured Products'}
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   // Image Replacer Section Component
   const ImageReplacerSection = () => {
@@ -1167,6 +1622,73 @@ export default function WebsiteEditor() {
     }
   };
 
+  const handleSaveNews = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    let featuredImageUrl = formData.get('featured_image_url') || editingNews?.featured_image;
+    const imageFile = formData.get('featured_image_file');
+
+    if (imageFile && imageFile.size > 0) {
+      const uploadedUrl = await handleImageUpload(imageFile);
+      if (uploadedUrl) {
+        featuredImageUrl = uploadedUrl;
+      } else {
+        alert('Failed to upload featured image. Please try again.');
+        return;
+      }
+    }
+
+    const newsData = {
+      slug: formData.get('slug'),
+      title_en: formData.get('title_en'),
+      title_ar: formData.get('title_ar'),
+      title_ru: formData.get('title_ru'),
+      content_en: formData.get('content_en'),
+      content_ar: formData.get('content_ar'),
+      content_ru: formData.get('content_ru'),
+      excerpt_en: formData.get('excerpt_en'),
+      excerpt_ar: formData.get('excerpt_ar'),
+      excerpt_ru: formData.get('excerpt_ru'),
+      category: formData.get('category'),
+      featured_image: featuredImageUrl,
+      author_name: formData.get('author_name'),
+      is_published: formData.get('is_published') === 'on',
+      published_at: formData.get('published_at') || new Date().toISOString(),
+    };
+
+    console.log('📰 News data being sent:', newsData);
+
+    try {
+      const url = editingNews 
+        ? `/api/news/${editingNews.id}`
+        : '/api/news';
+      
+      const method = editingNews ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newsData)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        await fetchNews();
+        setShowNewsModal(false);
+        setEditingNews(null);
+        alert(editingNews ? 'Article updated successfully!' : 'Article created successfully!');
+      } else {
+        console.error('❌ News save failed:', result);
+        alert('Error: ' + (result.error || 'Failed to save article'));
+      }
+    } catch (error) {
+      console.error('Save error:', error);
+      alert('Failed to save article: ' + error.message);
+    }
+  };
+
   if (!user) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -1190,15 +1712,65 @@ export default function WebsiteEditor() {
           {/* Header */}
           <div className="admin-header">
             <div className="admin-header-content">
-              <h1 className="admin-title">
-                <i className="fas fa-edit"></i> Website Editor
-              </h1>
-              <div className="admin-user-info">
-                <span className="user-name">{user?.full_name || user?.username}</span>
-                <button className="btn btn-sm btn-outline" onClick={() => router.push('/admin')}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                <img 
+                  src="/assets/images/logo/logo.svg" 
+                  alt="Belloo Logo" 
+                  style={{ 
+                    height: '50px', 
+                    width: 'auto',
+                    filter: 'brightness(0) invert(1)',
+                    opacity: '0.95'
+                  }}
+                />
+                <h1 className="admin-title" style={{ margin: 0 }}>
+                  Website Editor
+                </h1>
+              </div>
+              <div className="admin-user-info" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '8px',
+                  padding: '8px 16px',
+                  background: 'rgba(255, 255, 255, 0.15)',
+                  borderRadius: '8px',
+                  color: 'white',
+                  fontWeight: '500'
+                }}>
+                  <i className="fas fa-user-circle" style={{ fontSize: '18px' }}></i>
+                  <span>{user?.full_name || user?.username}</span>
+                </div>
+                <button 
+                  className="btn btn-sm" 
+                  onClick={() => router.push('/admin')}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    color: 'white',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    padding: '8px 16px',
+                    fontWeight: '500',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseOver={(e) => {
+                    e.target.style.background = 'rgba(255, 255, 255, 0.3)';
+                    e.target.style.transform = 'translateY(-2px)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.background = 'rgba(255, 255, 255, 0.2)';
+                    e.target.style.transform = 'translateY(0)';
+                  }}
+                >
                   <i className="fas fa-arrow-left"></i> Back to Admin
                 </button>
-                <button className="btn btn-sm btn-danger" onClick={handleLogout}>
+                <button 
+                  className="btn btn-sm btn-danger" 
+                  onClick={handleLogout}
+                  style={{
+                    padding: '8px 16px',
+                    fontWeight: '500'
+                  }}
+                >
                   <i className="fas fa-sign-out-alt"></i> Logout
                 </button>
               </div>
@@ -1230,6 +1802,15 @@ export default function WebsiteEditor() {
               </li>
               <li className="admin-tab-item">
                 <button 
+                  className={`admin-tab-button ${activeSection === 'homepage' ? 'active' : ''}`}
+                  onClick={() => setActiveSection('homepage')}
+                >
+                  <i className="fas fa-home"></i>
+                  <span>Homepage</span>
+                </button>
+              </li>
+              <li className="admin-tab-item">
+                <button 
                   className={`admin-tab-button ${activeSection === 'replace-images' ? 'active' : ''}`}
                   onClick={() => setActiveSection('replace-images')}
                 >
@@ -1250,6 +1831,7 @@ export default function WebsiteEditor() {
             <div className="admin-content">
               {activeSection === 'products' && <ProductsSection />}
               {activeSection === 'news' && <NewsSection />}
+              {activeSection === 'homepage' && <HomepageSection />}
               {activeSection === 'replace-images' && <ImageReplacerSection />}
             </div>
           )}

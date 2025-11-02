@@ -6,10 +6,108 @@ import Slider from "react-slick";
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
+
 const Index = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const isRTL = router.locale === 'ar';
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+
+  // Fetch blog posts and featured products from database
+  useEffect(() => {
+    const fetchBlogPosts = async () => {
+      try {
+        const response = await fetch('/api/news?published_only=true&limit=3');
+        const result = await response.json();
+        if (result.success && result.data) {
+          setBlogPosts(result.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch blog posts:', error);
+      }
+    };
+
+    const fetchFeaturedProducts = async () => {
+      try {
+        const response = await fetch('/api/homepage/featured-products-detail');
+        const result = await response.json();
+        console.log('Featured products API response:', result);
+        if (result.success && result.data) {
+          console.log('Featured products data:', result.data);
+          result.data.forEach((p, i) => {
+            console.log(`Product ${i + 1}:`, {
+              name_en: p.name_en,
+              main_image: p.main_image,
+              category: p.category
+            });
+          });
+          setFeaturedProducts(result.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch featured products:', error);
+      }
+    };
+
+    fetchBlogPosts();
+    fetchFeaturedProducts();
+  }, []);
+
+  // Get title based on current language
+  const getTitle = (post) => {
+    if (router.locale === 'ar') return post.title_ar || post.title_en;
+    if (router.locale === 'ru') return post.title_ru || post.title_en;
+    return post.title_en;
+  };
+
+  // Get product name based on current language
+  const getProductName = (product) => {
+    if (router.locale === 'ar') return product.name_ar || product.name_en;
+    if (router.locale === 'ru') return product.name_ru || product.name_en;
+    return product.name_en;
+  };
+
+  // Get product image - same logic as products.jsx for glass jars
+  const getProductImagePath = (productNameEn) => {
+    const imageMap = {
+      'Whole Green Olives': 'Whole Green Olives .png',
+      'Pitted Green Olives': 'Pitted Green Olives .png',
+      'Sliced Green Olives': 'Sliced Green Olives .png',
+      'Whole Black Olives': 'Whole Black Olives.png',
+      'Pitted Black Olives': 'Pitted Black Olives .png',
+      'Sliced Black Olives': 'Sliced Black Olives .png',
+      'Whole Black Natural Picual Olives': 'Whole Black Natural Picual Olives .jpg',
+      'Pitted Black Natural Picual Olives': 'Pitted Black Natural Picual Olives.png',
+      'Sliced Black Natural Picual Olives': 'Sliced  Black Natural Picual Olives.png',
+      'Sliced Lombardi Pepper': 'Sliced Lombardi Pepper.png',
+      'Pepperoncini Pepper': 'pepperoncini Pepper.png',
+      'Cherry Pepper': 'Cherry Pepper.png',
+      'Kardoula Pepper': 'Kardoula Pepper.png',
+      'Whole Lombardi Pepper': 'Whole Lombardi Pepper.jpg',
+      'Sliced Green Jalapeno Pepper': 'Sliced Green Jalapeno Pepper.png',
+      'Sliced Red en Jalapeno Pepper': 'Sliced Red en Jalapeno Pepper.png',
+      'Habiba Pepper': 'Habiba Peppper.jpg',
+      'Mexican Pepper': 'Mexican Pepper.png',
+      'Macedonian Pepper': 'Macedonian pepper jar.png',
+      'Olive Black Natural Dolce': 'Olive Black Natural Dolce.png',
+      'Pitted Black Natural Dolce': 'Pitted Black Natural Dolce.png',
+      'Pitted Black Natural Kalamata Olives': 'Pitted Black Natural Kalamata Olives.png',
+      'Sliced Black Natural Kalamata Olives': 'Sliced Black Natural Kalamata Olives.png',
+      'Whole Black Natural Kalamata Olives': 'Whole Black Natural Kalamata Olives.png',
+      'Artichoke Hearts': 'Artichoke Hearts .png',
+      'Artichoke Quarter': 'Artichoke Quarter .png',
+      'Artichoke Bottom': 'Artichoke Bottom jar.png',
+    };
+
+    const imageName = imageMap[productNameEn];
+    if (imageName) {
+      return `/assets/images/products/GLASS JARS/${imageName}`;
+    }
+
+    // Fallback
+    return '/assets/images/products/GLASS JARS/Whole Green Olives .png';
+  };
   
   // Disable RTL for debugging
   const heroSliderProps = {
@@ -336,162 +434,154 @@ const Index = () => {
             </div>
           </div>
           <div className="row">
-            <div className="col-xl-4 col-lg-6 col-sm-12">
-              {/*====== Service Item ======*/}
-              <div
-                className="single-service-item mb-30 wow fadeInUp"
-                data-wow-delay=".2s"
-              >
-                <div className="service-info">
-                  <h4 className="title">
-                    <Link legacyBehavior href="/products?category=greenOlives">
-                      <a>{t('productsPage.products.wholeGreenOlives')}</a>
-                    </Link>
-                  </h4>
+            {featuredProducts.length > 0 ? (
+              featuredProducts.map((product, index) => {
+                // Use database main_image if available, otherwise fall back to mapping
+                const imageUrl = product.main_image || getProductImagePath(product.name_en);
+                if (index === 0) {
+                  console.log('First product image debug:', {
+                    name: product.name_en,
+                    main_image: product.main_image,
+                    mapped_image: getProductImagePath(product.name_en),
+                    final_imageUrl: imageUrl
+                  });
+                }
+                return (
+                  <div key={product.id} className="col-xl-4 col-lg-6 col-sm-12">
+                    {/*====== Service Item ======*/}
+                    <div
+                      className="single-service-item mb-30 wow fadeInUp"
+                      data-wow-delay={`.${20 + index * 5}s`}
+                    >
+                      <div className="service-info">
+                        <h4 className="title">
+                          <Link legacyBehavior href={`/products?category=${product.category}`}>
+                            <a>{getProductName(product)}</a>
+                          </Link>
+                        </h4>
+                      </div>
+                      <div className="service-img">
+                        <Link legacyBehavior href={`/products?category=${product.category}`}>
+                          <a className="icon-btn">
+                            <i className="far fa-plus" />
+                          </a>
+                        </Link>
+                        <img
+                          src={imageUrl}
+                          alt={getProductName(product)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              // Fallback to hardcoded products if no featured products set
+              <>
+                <div className="col-xl-4 col-lg-6 col-sm-12">
+                  <div className="single-service-item mb-30 wow fadeInUp" data-wow-delay=".2s">
+                    <div className="service-info">
+                      <h4 className="title">
+                        <Link legacyBehavior href="/products?category=greenOlives">
+                          <a>{t('productsPage.products.wholeGreenOlives')}</a>
+                        </Link>
+                      </h4>
+                    </div>
+                    <div className="service-img">
+                      <Link legacyBehavior href="/products?category=greenOlives">
+                        <a className="icon-btn"><i className="far fa-plus" /></a>
+                      </Link>
+                      <img src="/assets/images/products/GLASS JARS/Whole Green Olives .png" alt="Whole Green Olives" />
+                    </div>
+                  </div>
                 </div>
-                <div className="service-img">
-                  <Link legacyBehavior href="/products?category=greenOlives">
-                    <a className="icon-btn">
-                      <i className="far fa-plus" />
-                    </a>
-                  </Link>
-                  <img
-                    src="/assets/images/products/GLASS JARS/Whole Green Olives .jpg"
-                    alt="Whole Green Olives"
-                  />
+                <div className="col-xl-4 col-lg-6 col-sm-12">
+                  <div className="single-service-item mb-30 wow fadeInDown" data-wow-delay=".25s">
+                    <div className="service-info">
+                      <h4 className="title">
+                        <Link legacyBehavior href="/products?category=blackOlives">
+                          <a>{t('productsPage.products.slicedBlackOlives')}</a>
+                        </Link>
+                      </h4>
+                    </div>
+                    <div className="service-img">
+                      <Link legacyBehavior href="/products?category=blackOlives">
+                        <a className="icon-btn"><i className="far fa-plus" /></a>
+                      </Link>
+                      <img src="/assets/images/products/GLASS JARS/Sliced Black Olives .png" alt="Sliced Black Olives" />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="col-xl-4 col-lg-6 col-sm-12">
-              {/*====== Service Item ======*/}
-              <div
-                className="single-service-item mb-30 wow fadeInDown"
-                data-wow-delay=".25s"
-              >
-                <div className="service-info">
-                  <h4 className="title">
-                    <Link legacyBehavior href="/products?category=blackOlives">
-                      <a>{t('productsPage.products.slicedBlackOlives')}</a>
-                    </Link>
-                  </h4>
+                <div className="col-xl-4 col-lg-6 col-sm-12">
+                  <div className="single-service-item mb-30 wow fadeInUp" data-wow-delay=".3s">
+                    <div className="service-info">
+                      <h4 className="title">
+                        <Link legacyBehavior href="/products?category=peppers">
+                          <a>{t('productsPage.products.pepperonciniPepper')}</a>
+                        </Link>
+                      </h4>
+                    </div>
+                    <div className="service-img">
+                      <Link legacyBehavior href="/products?category=peppers">
+                        <a className="icon-btn"><i className="far fa-plus" /></a>
+                      </Link>
+                      <img src="/assets/images/products/GLASS JARS/pepperoncini Pepper.png" alt="Pepperoncini Pepper" />
+                    </div>
+                  </div>
                 </div>
-                <div className="service-img">
-                  <Link legacyBehavior href="/products?category=blackOlives">
-                    <a className="icon-btn">
-                      <i className="far fa-plus" />
-                    </a>
-                  </Link>
-                  <img
-                    src="/assets/images/products/GLASS JARS/Sliced Black Olives .jpg"
-                    alt="Sliced Black Olives"
-                  />
+                <div className="col-xl-4 col-lg-6 col-sm-12">
+                  <div className="single-service-item mb-30 wow fadeInDown" data-wow-delay=".35s">
+                    <div className="service-info">
+                      <h4 className="title">
+                        <Link legacyBehavior href="/products?category=greenOlives">
+                          <a>{t('productsPage.products.pittedGreenOlives')}</a>
+                        </Link>
+                      </h4>
+                    </div>
+                    <div className="service-img">
+                      <Link legacyBehavior href="/products?category=greenOlives">
+                        <a className="icon-btn"><i className="far fa-plus" /></a>
+                      </Link>
+                      <img src="/assets/images/products/GLASS JARS/Pitted Green Olives .png" alt="Pitted Green Olives" />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="col-xl-4 col-lg-6 col-sm-12">
-              {/*====== Service Item ======*/}
-              <div
-                className="single-service-item mb-30 wow fadeInUp"
-                data-wow-delay=".3s"
-              >
-                <div className="service-info">
-                  <h4 className="title">
-                    <Link legacyBehavior href="/products?category=peppers">
-                      <a>{t('productsPage.products.pepperonciniPepper')}</a>
-                    </Link>
-                  </h4>
+                <div className="col-xl-4 col-lg-6 col-sm-12">
+                  <div className="single-service-item mb-30 wow fadeInUp" data-wow-delay=".4s">
+                    <div className="service-info">
+                      <h4 className="title">
+                        <Link legacyBehavior href="/products?category=peppers">
+                          <a>{t('productsPage.products.cherryPepper')}</a>
+                        </Link>
+                      </h4>
+                    </div>
+                    <div className="service-img">
+                      <Link legacyBehavior href="/products?category=peppers">
+                        <a className="icon-btn"><i className="far fa-plus" /></a>
+                      </Link>
+                      <img src="/assets/images/products/GLASS JARS/Cherry Pepper.png" alt="Cherry Pepper" />
+                    </div>
+                  </div>
                 </div>
-                <div className="service-img">
-                  <Link legacyBehavior href="/products?category=peppers">
-                    <a className="icon-btn">
-                      <i className="far fa-plus" />
-                    </a>
-                  </Link>
-                  <img
-                    src="/assets/images/products/GLASS JARS/pepperoncini Pepper.jpg"
-                    alt="Pepperoncini Pepper"
-                  />
+                <div className="col-xl-4 col-lg-6 col-sm-12">
+                  <div className="single-service-item mb-30 wow fadeInDown" data-wow-delay=".45s">
+                    <div className="service-info">
+                      <h4 className="title">
+                        <Link legacyBehavior href="/products?category=picklesVegetables">
+                          <a>{t('productsPage.products.artichokeHearts')}</a>
+                        </Link>
+                      </h4>
+                    </div>
+                    <div className="service-img">
+                      <Link legacyBehavior href="/products?category=picklesVegetables">
+                        <a className="icon-btn"><i className="far fa-plus" /></a>
+                      </Link>
+                      <img src="/assets/images/products/GLASS JARS/Artichoke Hearts .png" alt="Artichoke Hearts" />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="col-xl-4 col-lg-6 col-sm-12">
-              {/*====== Service Item ======*/}
-              <div
-                className="single-service-item mb-30 wow fadeInDown"
-                data-wow-delay=".35s"
-              >
-                <div className="service-info">
-                  <h4 className="title">
-                    <Link legacyBehavior href="/products?category=greenOlives">
-                      <a>{t('productsPage.products.pittedGreenOlives')}</a>
-                    </Link>
-                  </h4>
-                </div>
-                <div className="service-img">
-                  <Link legacyBehavior href="/products?category=greenOlives">
-                    <a className="icon-btn">
-                      <i className="far fa-plus" />
-                    </a>
-                  </Link>
-                  <img
-                    src="/assets/images/products/GLASS JARS/Pitted Green Olives .jpg"
-                    alt="Pitted Green Olives"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-xl-4 col-lg-6 col-sm-12">
-              {/*====== Service Item ======*/}
-              <div
-                className="single-service-item mb-30 wow fadeInUp"
-                data-wow-delay=".4s"
-              >
-                <div className="service-info">
-                  <h4 className="title">
-                    <Link legacyBehavior href="/products?category=peppers">
-                      <a>{t('productsPage.products.cherryPepper')}</a>
-                    </Link>
-                  </h4>
-                </div>
-                <div className="service-img">
-                  <Link legacyBehavior href="/products?category=peppers">
-                    <a className="icon-btn">
-                      <i className="far fa-plus" />
-                    </a>
-                  </Link>
-                  <img
-                    src="/assets/images/products/GLASS JARS/Cherry Pepper.jpg"
-                    alt="Cherry Pepper"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-xl-4 col-lg-6 col-sm-12">
-              {/*====== Service Item ======*/}
-              <div
-                className="single-service-item mb-30 wow fadeInDown"
-                data-wow-delay=".45s"
-              >
-                <div className="service-info">
-                  <h4 className="title">
-                    <Link legacyBehavior href="/products?category=picklesVegetables">
-                      <a>{t('productsPage.products.artichokeHearts')}</a>
-                    </Link>
-                  </h4>
-                </div>
-                <div className="service-img">
-                  <Link legacyBehavior href="/products?category=picklesVegetables">
-                    <a className="icon-btn">
-                      <i className="far fa-plus" />
-                    </a>
-                  </Link>
-                  <img
-                    src="/assets/images/products/GLASS JARS/Artichoke Hearts .jpg"
-                    alt="Artichoke Hearts"
-                  />
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -736,90 +826,85 @@ const Index = () => {
             </div>
           </div>
           <div className="row justify-content-center">
-            <div className="col-xl-4 col-md-6 col-sm-12">
-              {/*====== Single Blog Post  ======*/}
-              <div
-                className="single-blog-post-two mb-40 wow wow fadeInUp"
-                data-wow-delay=".2s"
-              >
-                <div className="entry-content">
-                  <div className="post-meta">
-                    <span className="date">
-                      <span>{t('blog.date')}</span>
-                    </span>
-                    <span className="comment">
-                      <span>{t('blog.comments')}</span>
-                    </span>
-                  </div>
-                  <h4 className="entry-title">
-                    <span>{t('blog.posts.0')}</span>
-                  </h4>
-                  <div className="author">
-                    <h6>
-                      <span>{t('blog.by')}</span>
-                      <span>{t('blog.author')}</span>
-                    </h6>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <div className="col-xl-4 col-md-6 col-sm-12">
-              {/*====== Single Blog Post  ======*/}
-              <div
-                className="single-blog-post-two mb-40 wow fadeInDown"
-                data-wow-delay=".25s"
-              >
-                <div className="entry-content">
-                  <div className="post-meta">
-                    <span className="date">
-                      <span>{t('blog.date')}</span>
-                    </span>
-                    <span className="comment">
-                      <span>{t('blog.comments')}</span>
-                    </span>
-                  </div>
-                  <h4 className="entry-title">
-                    <span>{t('blog.posts.1')}</span>
-                  </h4>
-                  <div className="author">
-                    <h6>
-                      <span>{t('blog.by')}</span>
-                      <span>{t('blog.author')}</span>
-                    </h6>
+            {blogPosts.length > 0 ? (
+              blogPosts.map((post, index) => (
+                <div className="col-xl-4 col-md-6 col-sm-12" key={post.id}>
+                  {/*====== Single Blog Post  ======*/}
+                  <div
+                    className="single-blog-post-two mb-40 wow fadeInUp"
+                    data-wow-delay={`.${2 + index}s`}
+                  >
+                    <div className="entry-content">
+                      <div className="post-meta">
+                        <span className="date">
+                          <span>{new Date(post.published_at).toLocaleDateString(router.locale, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                        </span>
+                        {post.category && (
+                          <span className="comment">
+                            <span>{post.category}</span>
+                          </span>
+                        )}
+                      </div>
+                      <h4 className="entry-title">
+                        <span>{getTitle(post)}</span>
+                      </h4>
+                      <div className="author">
+                        <h6>
+                          <span>{t('blog.by')}</span>
+                          <span>{post.author_name || t('blog.author')}</span>
+                        </h6>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-              </div>
-            </div>
-            <div className="col-xl-4 col-md-6 col-sm-12">
-              {/*====== Single Blog Post  ======*/}
-              <div
-                className="single-blog-post-two mb-40 wow fadeInUp"
-                data-wow-delay=".3s"
-              >
-                <div className="entry-content">
-                  <div className="post-meta">
-                    <span className="date">
-                      <span>{t('blog.date')}</span>
-                    </span>
-                    <span className="comment">
-                      <span>{t('blog.comments')}</span>
-                    </span>
-                  </div>
-                  <h4 className="entry-title">
-                    <span>{t('blog.posts.2')}</span>
-                  </h4>
-                  <div className="author">
-                    <h6>
-                      <span>{t('blog.by')}</span>
-                      <span>{t('blog.author')}</span>
-                    </h6>
+              ))
+            ) : (
+              // Fallback to hardcoded posts if no data from database
+              <>
+                <div className="col-xl-4 col-md-6 col-sm-12">
+                  <div className="single-blog-post-two mb-40 wow fadeInUp" data-wow-delay=".2s">
+                    <div className="entry-content">
+                      <div className="post-meta">
+                        <span className="date"><span>{t('blog.date')}</span></span>
+                        <span className="comment"><span>{t('blog.comments')}</span></span>
+                      </div>
+                      <h4 className="entry-title"><span>{t('blog.posts.0')}</span></h4>
+                      <div className="author">
+                        <h6><span>{t('blog.by')}</span><span>{t('blog.author')}</span></h6>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-              </div>
-            </div>
+                <div className="col-xl-4 col-md-6 col-sm-12">
+                  <div className="single-blog-post-two mb-40 wow fadeInDown" data-wow-delay=".25s">
+                    <div className="entry-content">
+                      <div className="post-meta">
+                        <span className="date"><span>{t('blog.date')}</span></span>
+                        <span className="comment"><span>{t('blog.comments')}</span></span>
+                      </div>
+                      <h4 className="entry-title"><span>{t('blog.posts.1')}</span></h4>
+                      <div className="author">
+                        <h6><span>{t('blog.by')}</span><span>{t('blog.author')}</span></h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-xl-4 col-md-6 col-sm-12">
+                  <div className="single-blog-post-two mb-40 wow fadeInUp" data-wow-delay=".3s">
+                    <div className="entry-content">
+                      <div className="post-meta">
+                        <span className="date"><span>{t('blog.date')}</span></span>
+                        <span className="comment"><span>{t('blog.comments')}</span></span>
+                      </div>
+                      <h4 className="entry-title"><span>{t('blog.posts.2')}</span></h4>
+                      <div className="author">
+                        <h6><span>{t('blog.by')}</span><span>{t('blog.author')}</span></h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>

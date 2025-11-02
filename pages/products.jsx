@@ -15,7 +15,7 @@ const Products = () => {
   
   // State for search functionality
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   // State for database products
   const [dbProducts, setDbProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -412,30 +412,30 @@ const Products = () => {
     
     return (
       <div key={productKey} className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-        <div className="product-card mb-40 wow fadeInUp" data-wow-delay={`${0.1 + index * 0.05}s`}>
-          <div className="product-image">
+      <div className="product-card mb-40 wow fadeInUp" data-wow-delay={`${0.1 + index * 0.05}s`}>
+        <div className="product-image">
             <img 
               src={getCurrentProductImage(product)} 
               alt={productName} 
             />
-            <div className="product-overlay">
+          <div className="product-overlay">
               <Link legacyBehavior href={`/specifications?package=${getProductView(productKey)}`}>
-                <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
-              </Link>
-            </div>
+              <a className="inquiry-btn">{t('productsPage.buttons.viewSpecs')}</a>
+            </Link>
           </div>
-          <div className="product-info">
+        </div>
+        <div className="product-info">
             <h5 className="product-name">{productName}</h5>
             <p className="product-package">{productDesc}</p>
-            <div className="product-details">
-              <div className="view-toggle-buttons">
+          <div className="product-details">
+            <div className="view-toggle-buttons">
                 {renderProductPackagingButtons(product)}
-              </div>
             </div>
           </div>
         </div>
       </div>
-    );
+    </div>
+  );
   };
   
   return (
@@ -517,18 +517,18 @@ const Products = () => {
                   </div>
                 </div>
               ) : (
-                <div className="row">
-                  {getFilteredProducts().map((product, index) => renderProductCard(product, index))}
-                  {getFilteredProducts().length === 0 && (
-                    <div className="col-12">
-                      <div className="no-products-found text-center py-5">
-                        <i className="fas fa-search" style={{fontSize: '4rem', color: '#ccc', marginBottom: '20px'}}></i>
-                        <h4>No products found</h4>
-                        <p>Try adjusting your search or browse our categories</p>
-                      </div>
+              <div className="row">
+                {getFilteredProducts().map((product, index) => renderProductCard(product, index))}
+                {getFilteredProducts().length === 0 && (
+                  <div className="col-12">
+                    <div className="no-products-found text-center py-5">
+                      <i className="fas fa-search" style={{fontSize: '4rem', color: '#ccc', marginBottom: '20px'}}></i>
+                      <h4>No products found</h4>
+                      <p>Try adjusting your search or browse our categories</p>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
+              </div>
               )}
             </div>
           </div>
