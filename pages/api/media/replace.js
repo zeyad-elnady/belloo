@@ -84,126 +84,78 @@ export default async function handler(req, res) {
       });
     }
 
-    const path = require('path');
-    const isStaticFile = existingMedia.file_path && existingMedia.file_path.startsWith('/assets/');
+    // Use Supabase Storage for ALL files
+    const fileBuffer = fs.readFileSync(file.filepath);
+    const fileName = `${Date.now()}-${file.originalFilename || file.newFilename}`;
     
-    let finalPath, finalUrl;
+    // Determine bucket based on folder
+    let bucket = 'website';
+    if (folder === 'products' || folder.startsWith('product')) {
+      bucket = 'products';
+    } else if (folder === 'news' || folder.startsWith('news')) {
+      bucket = 'news';
+    }
 
-    if (isStaticFile) {
-      // For static website assets, replace the actual file in /public folder
-      const publicPath = path.join(process.cwd(), 'public', existingMedia.file_path);
-      const fileBuffer = fs.readFileSync(file.filepath);
-      
-      // Create directory if it doesn't exist
-      const dir = path.dirname(publicPath);
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-      }
-      
-      // Replace the physical file
-      fs.writeFileSync(publicPath, fileBuffer);
-      
-      console.log('✅ Replaced static file at:', publicPath);
-      
-      finalPath = existingMedia.file_path;
-      finalUrl = existingMedia.file_path;
-      
-      // Update media library record with new file size
-      const { data: mediaData, error: mediaError } = await supabaseAdmin
-        .from('media_library')
-        .update({
-          file_size: file.size,
-          file_type: file.mimetype,
-          mime_type: file.mimetype,
-          // Keep everything else the same
-          file_name: existingMedia.file_name,
-          file_path: existingMedia.file_path,
-          folder: existingMedia.folder,
-          alt_text: existingMedia.alt_text,
-          caption: existingMedia.caption
-        })
-        .eq('id', mediaId)
-        .select()
-        .single();
+    // Upload to Supabase Storage
+    const storagePath = `${folder}/${fileName}`;
+    const { data: uploadData, error: uploadError } = await supabaseAdmin
+      .storage
+      .from(bucket)
+      .upload(storagePath, fileBuffer, {
+        contentType: file.mimetype,
+        upsert: false,
+      });
 
-      if (mediaError) {
-        console.error('Error updating media library:', mediaError);
-      }
-      
-    } else {
-      // For uploaded files, use Supabase Storage
-      const fileBuffer = fs.readFileSync(file.filepath);
-      const fileName = `${Date.now()}-${file.originalFilename || file.newFilename}`;
-      
-      // Determine bucket based on folder
-      let bucket = 'website';
-      if (folder === 'products' || folder.startsWith('product')) {
-        bucket = 'products';
-      } else if (folder === 'news' || folder.startsWith('news')) {
-        bucket = 'news';
-      }
+    if (uploadError) {
+      console.error('❌ Supabase upload error:', uploadError);
+      fs.unlinkSync(file.filepath);
+      return res.status(500).json({ 
+        success: false, 
+        error: `Upload to storage failed: ${uploadError.message || 'Unknown error'}`,
+        details: uploadError.message
+      });
+    }
 
-      // Upload to Supabase Storage
-      const storagePath = `${folder}/${fileName}`;
-      const { data: uploadData, error: uploadError } = await supabaseAdmin
-        .storage
-        .from(bucket)
-        .upload(storagePath, fileBuffer, {
-          contentType: file.mimetype,
-          upsert: false,
-        });
+    // Get public URL
+    const { data: { publicUrl } } = supabaseAdmin
+      .storage
+      .from(bucket)
+      .getPublicUrl(storagePath);
 
-      if (uploadError) {
-        console.error('❌ Supabase upload error:', uploadError);
-        fs.unlinkSync(file.filepath);
-        return res.status(500).json({ 
-          success: false, 
-          error: `Upload to storage failed: ${uploadError.message || 'Unknown error'}`,
-          details: uploadError.message
-        });
-      }
+    const finalPath = uploadData.path;
+    const finalUrl = publicUrl;
 
-      // Get public URL
-      const { data: { publicUrl } } = supabaseAdmin
-        .storage
-        .from(bucket)
-        .getPublicUrl(storagePath);
+    // Update media library record
+    const { data: mediaData, error: mediaError } = await supabaseAdmin
+      .from('media_library')
+      .update({
+        file_name: file.originalFilename || file.newFilename,
+        file_path: publicUrl,
+        file_size: file.size,
+        file_type: file.mimetype,
+        mime_type: file.mimetype,
+        folder,
+        alt_text: existingMedia.alt_text,
+        caption: existingMedia.caption
+      })
+      .eq('id', mediaId)
+      .select()
+      .single();
 
-      finalPath = uploadData.path;
-      finalUrl = publicUrl;
+    if (mediaError) {
+      console.error('Error updating media library:', mediaError);
+    }
 
-      // Update media library record
-      const { data: mediaData, error: mediaError } = await supabaseAdmin
-        .from('media_library')
-        .update({
-          file_name: file.originalFilename || file.newFilename,
-          file_path: publicUrl,
-          file_size: file.size,
-          file_type: file.mimetype,
-          mime_type: file.mimetype,
-          folder,
-          alt_text: existingMedia.alt_text,
-          caption: existingMedia.caption
-        })
-        .eq('id', mediaId)
-        .select()
-        .single();
-
-      if (mediaError) {
-        console.error('Error updating media library:', mediaError);
-      }
-
-      // Delete old file from storage
-      if (existingMedia.file_path && !existingMedia.file_path.startsWith('/assets/')) {
-        try {
-          const oldFilePath = existingMedia.file_path.split('/').slice(-2).join('/');
-          await supabaseAdmin
-            .storage
-            .from(bucket)
-            .remove([oldFilePath]);
-        } catch (err) {
-          console.log('Note: Could not delete old file:', err.message);
-        }
+    // Delete old file from storage
+    if (existingMedia.file_path && !existingMedia.file_path.startsWith('/assets/') && !existingMedia.file_path.startsWith('http')) {
+      try {
+        const oldFilePath = existingMedia.file_path.split('/').slice(-2).join('/');
+        await supabaseAdmin
+          .storage
+          .from(bucket)
+          .remove([oldFilePath]);
+      } catch (err) {
+        console.log('Note: Could not delete old file:', err.message);
       }
     }
 
@@ -212,15 +164,15 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       success: true,
-      message: 'Image replaced successfully! The website now shows the new image.',
+      message: 'Image replaced successfully in Supabase Storage!',
       data: {
         id: mediaId,
         file_path: finalPath,
         public_url: finalUrl,
-        file_name: existingMedia.file_name,
+        file_name: file.originalFilename || file.newFilename,
         file_size: file.size,
         mime_type: file.mimetype,
-        is_static: isStaticFile
+        bucket: bucket
       },
     });
   } catch (error) {

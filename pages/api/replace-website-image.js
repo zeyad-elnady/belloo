@@ -1,6 +1,7 @@
+const { supabaseAdmin } = require('../../lib/supabase');
+const { verifyAuth } = require('../../lib/auth');
 const formidable = require('formidable');
 const fs = require('fs');
-const path = require('path');
 
 const IncomingForm = formidable.IncomingForm || formidable.formidable || formidable;
 
@@ -10,36 +11,36 @@ export const config = {
   },
 };
 
-// Map of image IDs to their file paths
-const IMAGE_PATHS = {
+// Map of image IDs to their Supabase storage info
+const IMAGE_CONFIG = {
   // Hero Section
-  'hero-1': 'public/assets/images/hero/hero_two-slider-1.jpg',
-  'hero-2': 'public/assets/images/hero/hero_two-slider-2.jpg',
-  'hero-3': 'public/assets/images/hero/hero_two-slider-3.jpg',
+  'hero-1': { bucket: 'website', folder: 'hero', filename: 'hero_two-slider-1.jpg' },
+  'hero-2': { bucket: 'website', folder: 'hero', filename: 'hero_two-slider-2.jpg' },
+  'hero-3': { bucket: 'website', folder: 'hero', filename: 'hero_two-slider-3.jpg' },
   
   // Skills Section
-  'skill-4': 'public/assets/images/skill/skill-4.png',
-  'skill-5': 'public/assets/images/skill/skill-5.png',
+  'skill-4': { bucket: 'website', folder: 'skill', filename: 'skill-4.png' },
+  'skill-5': { bucket: 'website', folder: 'skill', filename: 'skill-5.png' },
   
   // About Section
-  'about-1': 'public/assets/images/about/about-1.jpg',
-  'about-3': 'public/assets/images/about/about-3.jpg',
-  'about-4': 'public/assets/images/about/about-4.jpg',
-  'about-5': 'public/assets/images/about/about-5.jpg',
+  'about-1': { bucket: 'website', folder: 'about', filename: 'about-1.jpg' },
+  'about-3': { bucket: 'website', folder: 'about', filename: 'about-3.jpg' },
+  'about-4': { bucket: 'website', folder: 'about', filename: 'about-4.jpg' },
+  'about-5': { bucket: 'website', folder: 'about', filename: 'about-5.jpg' },
   
   // Gallery Section
-  'gallery-cta-1': 'public/assets/images/gallery/cta-1.jpg',
-  'gallery-widget-1': 'public/assets/images/gallery/thumb-widget-1.jpg',
-  'gallery-widget-2': 'public/assets/images/gallery/thumb-widget-2.png',
-  'gallery-widget-3': 'public/assets/images/gallery/thumb-widget-3.png',
-  'gallery-widget-4': 'public/assets/images/gallery/thumb-widget-4.png',
-  'gallery-widget-5': 'public/assets/images/gallery/thumb-widget-5.png',
-  'gallery-widget-6': 'public/assets/images/gallery/thumb-widget-6.png',
+  'gallery-cta-1': { bucket: 'website', folder: 'gallery', filename: 'cta-1.jpg' },
+  'gallery-widget-1': { bucket: 'website', folder: 'gallery', filename: 'thumb-widget-1.jpg' },
+  'gallery-widget-2': { bucket: 'website', folder: 'gallery', filename: 'thumb-widget-2.png' },
+  'gallery-widget-3': { bucket: 'website', folder: 'gallery', filename: 'thumb-widget-3.png' },
+  'gallery-widget-4': { bucket: 'website', folder: 'gallery', filename: 'thumb-widget-4.png' },
+  'gallery-widget-5': { bucket: 'website', folder: 'gallery', filename: 'thumb-widget-5.png' },
+  'gallery-widget-6': { bucket: 'website', folder: 'gallery', filename: 'thumb-widget-6.png' },
   
   // Background Images
-  'bg-about': 'public/assets/images/bg/about-bg-1.jpg',
-  'bg-page': 'public/assets/images/bg/page-bg-1.jpg',
-  'bg-features': 'public/assets/images/bg/features-bg-1.jpg',
+  'bg-about': { bucket: 'website', folder: 'bg', filename: 'about-bg-1.jpg' },
+  'bg-page': { bucket: 'website', folder: 'bg', filename: 'page-bg-1.jpg' },
+  'bg-features': { bucket: 'website', folder: 'bg', filename: 'features-bg-1.jpg' },
 };
 
 export default async function handler(req, res) {
@@ -48,6 +49,15 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Verify authentication
+    const { authenticated, user } = await verifyAuth(req);
+    if (!authenticated) {
+      return res.status(401).json({ 
+        success: false, 
+        error: 'Not authenticated' 
+      });
+    }
+
     const form = new IncomingForm({
       maxFileSize: 10 * 1024 * 1024, // 10MB
       keepExtensions: true,
@@ -70,7 +80,7 @@ export default async function handler(req, res) {
       });
     }
 
-    if (!targetImage || !IMAGE_PATHS[targetImage]) {
+    if (!targetImage || !IMAGE_CONFIG[targetImage]) {
       return res.status(400).json({ 
         success: false, 
         error: 'Invalid target image' 
@@ -78,7 +88,7 @@ export default async function handler(req, res) {
     }
 
     // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'];
     if (!allowedTypes.includes(file.mimetype)) {
       fs.unlinkSync(file.filepath);
       return res.status(400).json({ 
@@ -87,43 +97,58 @@ export default async function handler(req, res) {
       });
     }
 
-    // Get target file path
-    const targetPath = path.join(process.cwd(), IMAGE_PATHS[targetImage]);
+    // Get image configuration
+    const config = IMAGE_CONFIG[targetImage];
+    const storagePath = `${config.folder}/${config.filename}`;
     
-    console.log('\n🔄 REPLACING IMAGE:');
-    console.log('   Target:', targetPath);
-    console.log('   Source:', file.filepath);
+    console.log('\n🔄 REPLACING IMAGE IN SUPABASE:');
+    console.log('   Bucket:', config.bucket);
+    console.log('   Path:', storagePath);
     console.log('   Size:', file.size, 'bytes');
     
     // Read the uploaded file
     const fileBuffer = fs.readFileSync(file.filepath);
     
-    // Create backup of original (just in case)
-    const backupPath = targetPath + '.backup';
-    if (fs.existsSync(targetPath)) {
-      fs.copyFileSync(targetPath, backupPath);
-      console.log('   ✅ Backup created');
+    // Upload to Supabase Storage (replace existing)
+    const { data: uploadData, error: uploadError } = await supabaseAdmin
+      .storage
+      .from(config.bucket)
+      .upload(storagePath, fileBuffer, {
+        contentType: file.mimetype,
+        upsert: true, // This will replace the existing file
+      });
+
+    if (uploadError) {
+      console.error('❌ Supabase upload error:', uploadError);
+      fs.unlinkSync(file.filepath);
+      return res.status(500).json({ 
+        success: false, 
+        error: `Upload failed: ${uploadError.message}`,
+        details: uploadError.message
+      });
     }
     
-    // Replace the file
-    fs.writeFileSync(targetPath, fileBuffer);
-    console.log('   ✅ File replaced successfully!');
+    // Get public URL
+    const { data: { publicUrl } } = supabaseAdmin
+      .storage
+      .from(config.bucket)
+      .getPublicUrl(storagePath);
+
+    console.log('   ✅ File uploaded successfully!');
+    console.log('   ✅ Public URL:', publicUrl);
     
     // Clean up temp file
     fs.unlinkSync(file.filepath);
     
-    // Verify the new file
-    const stats = fs.statSync(targetPath);
-    console.log('   ✅ New file size:', stats.size, 'bytes');
-    console.log('   ✅ Last modified:', stats.mtime);
-    
     return res.status(200).json({
       success: true,
-      message: 'Image replaced successfully!',
+      message: 'Image replaced successfully in Supabase Storage!',
       data: {
-        path: IMAGE_PATHS[targetImage],
-        size: stats.size,
-        lastModified: stats.mtime
+        imageId: targetImage,
+        path: storagePath,
+        publicUrl: publicUrl,
+        size: file.size,
+        bucket: config.bucket
       },
     });
     
@@ -133,7 +158,8 @@ export default async function handler(req, res) {
     return res.status(500).json({ 
       success: false, 
       error: 'Internal server error',
-      message: error.message
+      message: error.message,
+      details: error.toString()
     });
   }
 }
