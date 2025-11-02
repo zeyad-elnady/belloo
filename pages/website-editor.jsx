@@ -1019,13 +1019,33 @@ export default function WebsiteEditor() {
 
   // Image Replacer Section Component
   const ImageReplacerSection = () => {
+    const [currentImageUrls, setCurrentImageUrls] = useState({});
+    
+    // Function to fetch current image URLs from Supabase
+    const fetchCurrentImages = async () => {
+      try {
+        const response = await fetch('/api/website-images/config');
+        const data = await response.json();
+        if (data.success && data.images) {
+          setCurrentImageUrls(data.images);
+        }
+      } catch (error) {
+        console.error('Failed to load current image URLs:', error);
+      }
+    };
+    
+    // Fetch on mount
+    useEffect(() => {
+      fetchCurrentImages();
+    }, []);
+    
     const websiteImages = [
       // Hero Section
       { 
         id: 'hero-1',
         name: 'Hero Slider - Image 1',
         path: '/assets/images/hero/hero_two-slider-1.jpg',
-        currentPath: '/assets/images/hero/hero_two-slider-1.jpg',
+        currentPath: currentImageUrls['hero-1'] || '/assets/images/hero/hero_two-slider-1.jpg',
         usage: 'Homepage - Hero section slider',
         category: 'Hero Section'
       },
@@ -1033,7 +1053,7 @@ export default function WebsiteEditor() {
         id: 'hero-2',
         name: 'Hero Slider - Image 2',
         path: '/assets/images/hero/hero_two-slider-2.jpg',
-        currentPath: '/assets/images/hero/hero_two-slider-2.jpg',
+        currentPath: currentImageUrls['hero-2'] || '/assets/images/hero/hero_two-slider-2.jpg',
         usage: 'Homepage - Hero section slider',
         category: 'Hero Section'
       },
@@ -1041,7 +1061,7 @@ export default function WebsiteEditor() {
         id: 'hero-3',
         name: 'Hero Slider - Image 3',
         path: '/assets/images/hero/hero_two-slider-3.jpg',
-        currentPath: '/assets/images/hero/hero_two-slider-3.jpg',
+        currentPath: currentImageUrls['hero-3'] || '/assets/images/hero/hero_two-slider-3.jpg',
         usage: 'Homepage - Hero section slider',
         category: 'Hero Section'
       },
@@ -1051,7 +1071,7 @@ export default function WebsiteEditor() {
         id: 'skill-4',
         name: 'Skills Background - Left',
         path: '/assets/images/skill/skill-4.png',
-        currentPath: '/assets/images/skill/skill-4.png',
+        currentPath: currentImageUrls['skill-4'] || '/assets/images/skill/skill-4.png',
         usage: 'Homepage - Skills section background (left)',
         category: 'Skills Section'
       },
@@ -1059,7 +1079,7 @@ export default function WebsiteEditor() {
         id: 'skill-5',
         name: 'Skills Background - Right',
         path: '/assets/images/skill/skill-5.png',
-        currentPath: '/assets/images/skill/skill-5.png',
+        currentPath: currentImageUrls['skill-5'] || '/assets/images/skill/skill-5.png',
         usage: 'Homepage - Skills section background (right)',
         category: 'Skills Section'
       },
@@ -1069,7 +1089,7 @@ export default function WebsiteEditor() {
         id: 'about-1',
         name: 'About - Image 1',
         path: '/assets/images/about/about-1.jpg',
-        currentPath: '/assets/images/about/about-1.jpg',
+        currentPath: currentImageUrls['about-1'] || '/assets/images/about/about-1.jpg',
         usage: 'About page - Gallery image',
         category: 'About Section'
       },
@@ -1077,7 +1097,7 @@ export default function WebsiteEditor() {
         id: 'about-3',
         name: 'About - Image 3',
         path: '/assets/images/about/about-3.jpg',
-        currentPath: '/assets/images/about/about-3.jpg',
+        currentPath: currentImageUrls['about-3'] || '/assets/images/about/about-3.jpg',
         usage: 'About page - Gallery image',
         category: 'About Section'
       },
@@ -1085,7 +1105,7 @@ export default function WebsiteEditor() {
         id: 'about-4',
         name: 'About - Image 4',
         path: '/assets/images/about/about-4.jpg',
-        currentPath: '/assets/images/about/about-4.jpg',
+        currentPath: currentImageUrls['about-4'] || '/assets/images/about/about-4.jpg',
         usage: 'About page - Gallery image',
         category: 'About Section'
       },
@@ -1093,7 +1113,7 @@ export default function WebsiteEditor() {
         id: 'about-5',
         name: 'About - Image 5',
         path: '/assets/images/about/about-5.jpg',
-        currentPath: '/assets/images/about/about-5.jpg',
+        currentPath: currentImageUrls['about-5'] || '/assets/images/about/about-5.jpg',
         usage: 'About page - Gallery image',
         category: 'About Section'
       },
@@ -1103,7 +1123,7 @@ export default function WebsiteEditor() {
         id: 'gallery-cta-1',
         name: 'Gallery - CTA Image',
         path: '/assets/images/gallery/cta-1.jpg',
-        currentPath: '/assets/images/gallery/cta-1.jpg',
+        currentPath: currentImageUrls['gallery-cta-1'] || '/assets/images/gallery/cta-1.jpg',
         usage: 'Gallery section - Call to action',
         category: 'Gallery'
       },
@@ -1111,7 +1131,7 @@ export default function WebsiteEditor() {
         id: 'gallery-widget-1',
         name: 'Gallery - Widget Image 1',
         path: '/assets/images/gallery/thumb-widget-1.jpg',
-        currentPath: '/assets/images/gallery/thumb-widget-1.jpg',
+        currentPath: currentImageUrls['gallery-widget-1'] || '/assets/images/gallery/thumb-widget-1.jpg',
         usage: 'Gallery section - Widget thumbnail',
         category: 'Gallery'
       },
@@ -1119,7 +1139,7 @@ export default function WebsiteEditor() {
         id: 'gallery-widget-2',
         name: 'Gallery - Widget Image 2',
         path: '/assets/images/gallery/thumb-widget-2.png',
-        currentPath: '/assets/images/gallery/thumb-widget-2.png',
+        currentPath: currentImageUrls['gallery-widget-2'] || '/assets/images/gallery/thumb-widget-2.png',
         usage: 'Gallery section - Widget thumbnail',
         category: 'Gallery'
       },
@@ -1127,7 +1147,7 @@ export default function WebsiteEditor() {
         id: 'gallery-widget-3',
         name: 'Gallery - Widget Image 3',
         path: '/assets/images/gallery/thumb-widget-3.png',
-        currentPath: '/assets/images/gallery/thumb-widget-3.png',
+        currentPath: currentImageUrls['gallery-widget-3'] || '/assets/images/gallery/thumb-widget-3.png',
         usage: 'Gallery section - Widget thumbnail',
         category: 'Gallery'
       },
@@ -1135,7 +1155,7 @@ export default function WebsiteEditor() {
         id: 'gallery-widget-4',
         name: 'Gallery - Widget Image 4',
         path: '/assets/images/gallery/thumb-widget-4.png',
-        currentPath: '/assets/images/gallery/thumb-widget-4.png',
+        currentPath: currentImageUrls['gallery-widget-4'] || '/assets/images/gallery/thumb-widget-4.png',
         usage: 'Gallery section - Widget thumbnail',
         category: 'Gallery'
       },
@@ -1143,7 +1163,7 @@ export default function WebsiteEditor() {
         id: 'gallery-widget-5',
         name: 'Gallery - Widget Image 5',
         path: '/assets/images/gallery/thumb-widget-5.png',
-        currentPath: '/assets/images/gallery/thumb-widget-5.png',
+        currentPath: currentImageUrls['gallery-widget-5'] || '/assets/images/gallery/thumb-widget-5.png',
         usage: 'Gallery section - Widget thumbnail',
         category: 'Gallery'
       },
@@ -1151,7 +1171,7 @@ export default function WebsiteEditor() {
         id: 'gallery-widget-6',
         name: 'Gallery - Widget Image 6',
         path: '/assets/images/gallery/thumb-widget-6.png',
-        currentPath: '/assets/images/gallery/thumb-widget-6.png',
+        currentPath: currentImageUrls['gallery-widget-6'] || '/assets/images/gallery/thumb-widget-6.png',
         usage: 'Gallery section - Widget thumbnail',
         category: 'Gallery'
       },
@@ -1161,7 +1181,7 @@ export default function WebsiteEditor() {
         id: 'bg-about',
         name: 'Background - About Section',
         path: '/assets/images/bg/about-bg-1.jpg',
-        currentPath: '/assets/images/bg/about-bg-1.jpg',
+        currentPath: currentImageUrls['bg-about'] || '/assets/images/bg/about-bg-1.jpg',
         usage: 'About page background',
         category: 'Backgrounds'
       },
@@ -1169,7 +1189,7 @@ export default function WebsiteEditor() {
         id: 'bg-page',
         name: 'Background - Page Header',
         path: '/assets/images/bg/page-bg-1.jpg',
-        currentPath: '/assets/images/bg/page-bg-1.jpg',
+        currentPath: currentImageUrls['bg-page'] || '/assets/images/bg/page-bg-1.jpg',
         usage: 'Page header background',
         category: 'Backgrounds'
       },
@@ -1177,7 +1197,7 @@ export default function WebsiteEditor() {
         id: 'bg-features',
         name: 'Background - Features Section',
         path: '/assets/images/bg/features-bg-1.jpg',
-        currentPath: '/assets/images/bg/features-bg-1.jpg',
+        currentPath: currentImageUrls['bg-features'] || '/assets/images/bg/features-bg-1.jpg',
         usage: 'Features section background',
         category: 'Backgrounds'
       }
@@ -1206,7 +1226,7 @@ export default function WebsiteEditor() {
       // Confirm replacement
       const confirmed = confirm(
         `Replace "${websiteImages.find(img => img.id === imageId)?.name}"?\n\n` +
-        'After replacing, you must restart the server to see changes.'
+        'This will upload the new image to Supabase Storage and update your website immediately.'
       );
 
       if (!confirmed) {
@@ -1234,12 +1254,12 @@ export default function WebsiteEditor() {
           throw new Error(data.error || 'Upload failed');
         }
 
-        alert('✅ Image replaced successfully!\n\n' + 
-              'IMPORTANT: You must restart the dev server:\n' +
-              '1. Press Ctrl+C in terminal\n' +
-              '2. Run: npm run dev\n' +
-              '3. Open website in incognito window\n\n' +
-              'Then you will see the new image!');
+        alert('✅ Image replaced successfully in Supabase Storage!\n\n' + 
+              'The website now shows the new image.\n' +
+              'Refresh the page (Ctrl+Shift+R) to see it update here in the dashboard.');
+        
+        // Reload the image URLs from Supabase
+        await fetchCurrentImages();
         
         setReplacePreview('');
         setSelectedImage('');
