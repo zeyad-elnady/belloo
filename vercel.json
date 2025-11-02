@@ -6,11 +6,5 @@
     }
   },
   "regions": ["iad1"],
-  "installCommand": "npm install --legacy-peer-deps",
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
-    }
-  ]
+  "installCommand": "npm install --legacy-peer-deps"
 }
