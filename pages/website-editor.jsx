@@ -1020,9 +1020,13 @@ export default function WebsiteEditor() {
   // Image Replacer Section Component
   const ImageReplacerSection = () => {
     const [currentImageUrls, setCurrentImageUrls] = useState({});
+    const [imagesLoading, setImagesLoading] = useState(true);
     
     // Function to fetch current image URLs from Supabase
-    const fetchCurrentImages = async () => {
+    const fetchCurrentImages = async (showLoading = true) => {
+      if (showLoading) {
+        setImagesLoading(true);
+      }
       try {
         const response = await fetch('/api/website-images/config');
         const data = await response.json();
@@ -1031,6 +1035,10 @@ export default function WebsiteEditor() {
         }
       } catch (error) {
         console.error('Failed to load current image URLs:', error);
+      } finally {
+        if (showLoading) {
+          setImagesLoading(false);
+        }
       }
     };
     
@@ -1256,10 +1264,10 @@ export default function WebsiteEditor() {
 
         alert('✅ Image replaced successfully in Supabase Storage!\n\n' + 
               'The website now shows the new image.\n' +
-              'Refresh the page (Ctrl+Shift+R) to see it update here in the dashboard.');
+              'The dashboard preview will update automatically.');
         
-        // Reload the image URLs from Supabase
-        await fetchCurrentImages();
+        // Reload the image URLs from Supabase (without showing loading spinner)
+        await fetchCurrentImages(false);
         
         setReplacePreview('');
         setSelectedImage('');
@@ -1285,34 +1293,43 @@ export default function WebsiteEditor() {
           </p>
         </div>
 
-        {/* Category Filter */}
-        <div style={{ marginBottom: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-          <button
-            type="button"
-            className={`btn btn-sm ${imageCategory === 'all' ? 'btn-primary' : 'btn-outline'}`}
-            onClick={() => setImageCategory('all')}
-          >
-            All Images ({websiteImages.length})
-          </button>
-          {['Hero Section', 'Skills Section', 'About Section', 'Gallery', 'Backgrounds'].map((cat) => {
-            const count = websiteImages.filter(img => img.category === cat).length;
-            if (count === 0) return null;
-            return (
+        {/* Show loading state while fetching images */}
+        {imagesLoading ? (
+          <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+            <i className="fas fa-spinner fa-spin" style={{ fontSize: '48px', color: '#4a7c59', marginBottom: '20px' }}></i>
+            <h3>Loading images from Supabase Storage...</h3>
+            <p style={{ color: '#666' }}>Please wait</p>
+          </div>
+        ) : (
+          <>
+            {/* Category Filter */}
+            <div style={{ marginBottom: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
               <button
-                key={cat}
                 type="button"
-                className={`btn btn-sm ${imageCategory === cat ? 'btn-primary' : 'btn-outline'}`}
-                onClick={() => setImageCategory(cat)}
+                className={`btn btn-sm ${imageCategory === 'all' ? 'btn-primary' : 'btn-outline'}`}
+                onClick={() => setImageCategory('all')}
               >
-                {cat} ({count})
+                All Images ({websiteImages.length})
               </button>
-            );
-          })}
-        </div>
+              {['Hero Section', 'Skills Section', 'About Section', 'Gallery', 'Backgrounds'].map((cat) => {
+                const count = websiteImages.filter(img => img.category === cat).length;
+                if (count === 0) return null;
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    className={`btn btn-sm ${imageCategory === cat ? 'btn-primary' : 'btn-outline'}`}
+                    onClick={() => setImageCategory(cat)}
+                  >
+                    {cat} ({count})
+                  </button>
+                );
+              })}
+            </div>
 
-        {/* Image Cards Grid */}
-        <div className="image-cards-grid">
-          {websiteImages.filter(img => imageCategory === 'all' || img.category === imageCategory).map((img) => (
+            {/* Image Cards Grid */}
+            <div className="image-cards-grid">
+              {websiteImages.filter(img => imageCategory === 'all' || img.category === imageCategory).map((img) => (
             <div key={img.id} className={`image-card ${uploading && selectedImage === img.id ? 'uploading' : ''}`}>
               <div className="image-card-preview">
                 <img src={img.currentPath} alt={img.name} />
@@ -1350,15 +1367,17 @@ export default function WebsiteEditor() {
                 </button>
               </div>
             </div>
-          ))}
-        </div>
+              ))}
+            </div>
 
-        {websiteImages.filter(img => imageCategory === 'all' || img.category === imageCategory).length === 0 && (
-          <div className="empty-state">
-            <i className="fas fa-images"></i>
-            <h3>No Images Found</h3>
-            <p>No images in this category</p>
-          </div>
+            {websiteImages.filter(img => imageCategory === 'all' || img.category === imageCategory).length === 0 && (
+              <div className="empty-state">
+                <i className="fas fa-images"></i>
+                <h3>No Images Found</h3>
+                <p>No images in this category</p>
+              </div>
+            )}
+          </>
         )}
       </div>
     );
