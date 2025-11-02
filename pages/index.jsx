@@ -14,8 +14,9 @@ const Index = () => {
   const isRTL = router.locale === 'ar';
   const [blogPosts, setBlogPosts] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [websiteImages, setWebsiteImages] = useState({});
 
-  // Fetch blog posts and featured products from database
+  // Fetch blog posts, featured products, and website images from database
   useEffect(() => {
     const fetchBlogPosts = async () => {
       try {
@@ -50,8 +51,22 @@ const Index = () => {
       }
     };
 
+    const fetchWebsiteImages = async () => {
+      try {
+        const response = await fetch('/api/website-images/config');
+        const result = await response.json();
+        if (result.success && result.images) {
+          console.log('✅ Loaded website images config:', result.images);
+          setWebsiteImages(result.images);
+        }
+      } catch (error) {
+        console.error('Failed to fetch website images:', error);
+      }
+    };
+
     fetchBlogPosts();
     fetchFeaturedProducts();
+    fetchWebsiteImages();
   }, []);
 
   // Get title based on current language
@@ -133,7 +148,7 @@ const Index = () => {
                 className="image-layer bg_cover"
                 style={{
                   backgroundImage:
-                    "url(/assets/images/hero/hero_two-slider-1.jpg)",
+                    `url(${websiteImages['hero-1'] || "/assets/images/hero/hero_two-slider-1.jpg"})`,
                 }}
               />
           <div className="container">
@@ -178,7 +193,7 @@ const Index = () => {
                 className="image-layer bg_cover"
                 style={{
                   backgroundImage:
-                    "url(/assets/images/hero/hero_two-slider-2.jpg)",
+                    `url(${websiteImages['hero-2'] || "/assets/images/hero/hero_two-slider-2.jpg"})`,
                 }}
               />
               <div className="container">
@@ -223,7 +238,7 @@ const Index = () => {
                 className="image-layer bg_cover"
                 style={{
                   backgroundImage:
-                    "url(/assets/images/hero/hero_two-slider-3.jpg)",
+                    `url(${websiteImages['hero-3'] || "/assets/images/hero/hero_two-slider-3.jpg"})`,
                 }}
               />
               <div className="container">
@@ -649,12 +664,12 @@ const Index = () => {
               {/*====== Skills Image Box ======*/}
               <div className="skill-two_image-box mb-20 p-r z-1 wow fadeInRight">
                 <img
-                  src="/assets/images/skill/skill-4.png"
+                  src={websiteImages['skill-4'] || "/assets/images/skill/skill-4.png"}
                   className="skill-img-one"
                   alt="Skill Image"
                 />
                 <img
-                  src="/assets/images/skill/skill-5.png"
+                  src={websiteImages['skill-5'] || "/assets/images/skill/skill-5.png"}
                   className="skill-img-two"
                   alt="Skill Image"
                 />
