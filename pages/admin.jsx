@@ -137,24 +137,30 @@ export default function Admin() {
         body: JSON.stringify({ ids: itemsToDelete })
       });
 
-      if (response.ok) {
+      const data = await response.json();
+
+      if (response.ok && data.success) {
         // Remove deleted items from state
         if (type === 'contact') {
           setContactSubmissions(prev => prev.filter(item => !itemsToDelete.includes(item.id.toString())));
-        } else {
+        } else if (type === 'jobs') {
           setJobApplications(prev => prev.filter(item => !itemsToDelete.includes(item.id.toString())));
         }
         
         // Clear selections
         setSelectedItems(prev => prev.filter(item => !item.startsWith(`${type}-`)));
         
-        alert(`Successfully deleted ${itemsToDelete.length} item(s)`);
+        alert(data.message || `Successfully deleted ${itemsToDelete.length} item(s)`);
+        
+        // Refresh data
+        fetchData();
       } else {
-        alert('Failed to delete items');
+        console.error('Delete failed:', data);
+        alert(data.error || 'Failed to delete items. Please try again.');
       }
     } catch (error) {
       console.error('Bulk delete error:', error);
-      alert('Error deleting items');
+      alert('Error deleting items. Please try again.');
     }
   };
 
