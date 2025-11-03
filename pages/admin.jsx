@@ -956,28 +956,49 @@ export default function Admin() {
             <i className="fas fa-mail-bulk me-2"></i>
             <h3>Newsletter Subscribers ({filteredNewsletter.length})</h3>
           </div>
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
             <select 
               value={exportFormat} 
               onChange={(e) => setExportFormat(e.target.value)}
               style={{
-                padding: '8px 12px',
-                borderRadius: '6px',
-                border: '1px solid #e2e8f0',
+                padding: '10px 16px',
+                borderRadius: '8px',
+                border: '2px solid #e2e8f0',
                 fontSize: '14px',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                background: '#fff',
+                fontWeight: '500',
+                color: '#2d3748',
+                transition: 'all 0.2s'
               }}
             >
-              <option value="csv">CSV</option>
-              <option value="json">JSON</option>
+              <option value="csv">CSV Format</option>
+              <option value="json">JSON Format</option>
               <option value="txt">TXT (Emails only)</option>
             </select>
             <button 
-              className="admin-action-btn admin-action-btn-primary" 
               onClick={() => handleExport(exportFormat)}
-              style={{ minWidth: '120px' }}
+              style={{ 
+                padding: '10px 20px',
+                background: '#4D602C',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '14px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                transition: 'all 0.3s',
+                boxShadow: '0 2px 4px rgba(77, 96, 44, 0.2)',
+                minWidth: '140px',
+                justifyContent: 'center'
+              }}
+              onMouseOver={(e) => e.target.style.background = '#3d4d23'}
+              onMouseOut={(e) => e.target.style.background = '#4D602C'}
             >
-              <i className="fas fa-download me-2"></i>
+              <i className="fas fa-download"></i>
               Export {exportFormat.toUpperCase()}
             </button>
           </div>

@@ -156,38 +156,49 @@ const Sidebar = ({ show, handleClose }) => {
                       const email = e.target.email.value;
                       
                       if (!email) {
-                        alert('Please enter your email address.');
+                        const messageDiv = document.getElementById('sidebar-newsletter-message');
+                        messageDiv.innerHTML = '<div style="color: #ff6b6b; padding: 12px; background: rgba(255,107,107,0.1); border-radius: 8px; margin-top: 12px; text-align: center; font-size: 13px;"><i class="fas fa-exclamation-circle mr-2"></i>Please enter your email address</div>';
+                        setTimeout(() => messageDiv.innerHTML = '', 3000);
                         return;
                       }
                       
-                      // Submit to Google Sheets
                       try {
                         const submitButton = e.target.querySelector('button[type="submit"]');
                         const originalText = submitButton.innerHTML;
+                        const messageDiv = document.getElementById('sidebar-newsletter-message');
                         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>' + t('newsletter.subscribing');
                         submitButton.disabled = true;
                         
-                        // Use form data for better compatibility with Google Apps Script
-                        const formData = new FormData();
-                        formData.append('email', email.trim());
-                        formData.append('source', 'Sidebar');
-                        formData.append('language', router.locale || 'en');
-                        
-                        const response = await fetch('https://script.google.com/macros/s/AKfycbw8CS8rMqQ2E4WzNkpRKJ0tNXn8Lg6Y17BMXAv-Iw3rjTzxfb7UlCKWmndPCmHbDarDkQ/exec', {
+                        const response = await fetch('/api/newsletter/subscribe', {
                           method: 'POST',
-                          mode: 'no-cors',
-                          body: formData
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            email: email.trim(),
+                            source: 'Sidebar',
+                            language: router.locale || 'en'
+                          })
                         });
 
-                        // With no-cors mode, we can't read the response, so we assume success
-                        alert(t('newsletter.successWithWelcome') || '🎉 Successfully subscribed! If you don\'t receive a welcome email, you may already be subscribed.');
-                        e.target.reset();
+                        const result = await response.json();
+
+                        if (result.success) {
+                          messageDiv.innerHTML = '<div style="color: #4D602C; padding: 12px; background: rgba(77,96,44,0.1); border-radius: 8px; margin-top: 12px; text-align: center; font-size: 13px; border: 1px solid rgba(77,96,44,0.3);"><i class="fas fa-check-circle mr-2"></i>' + result.message + '</div>';
+                          e.target.reset();
+                          setTimeout(() => messageDiv.innerHTML = '', 5000);
+                        } else {
+                          messageDiv.innerHTML = '<div style="color: #ff6b6b; padding: 12px; background: rgba(255,107,107,0.1); border-radius: 8px; margin-top: 12px; text-align: center; font-size: 13px;"><i class="fas fa-exclamation-circle mr-2"></i>' + result.error + '</div>';
+                          setTimeout(() => messageDiv.innerHTML = '', 5000);
+                        }
                         
                         // Restore button
                         submitButton.innerHTML = originalText;
                         submitButton.disabled = false;
                       } catch (error) {
-                        alert(t('newsletter.errorMessage'));
+                        const messageDiv = document.getElementById('sidebar-newsletter-message');
+                        messageDiv.innerHTML = '<div style="color: #ff6b6b; padding: 12px; background: rgba(255,107,107,0.1); border-radius: 8px; margin-top: 12px; text-align: center; font-size: 13px;"><i class="fas fa-exclamation-circle mr-2"></i>' + (t('newsletter.errorMessage') || 'An error occurred') + '</div>';
+                        setTimeout(() => messageDiv.innerHTML = '', 5000);
                         const submitButton = e.target.querySelector('button[type="submit"]');
                         submitButton.innerHTML = t('newsletter.subscribe');
                         submitButton.disabled = false;
@@ -234,6 +245,7 @@ const Sidebar = ({ show, handleClose }) => {
                         {t('newsletter.subscribe')}
                       </button>
                     </div>
+                    <div id="sidebar-newsletter-message"></div>
                   </form>
 
                   {/* Benefits List */}
