@@ -24,6 +24,11 @@ const DEFAULT_IMAGES = {
 };
 
 export default async function handler(req, res) {
+  // Prevent caching of this API response
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  
   try {
     const imageConfig = { ...DEFAULT_IMAGES };
 
@@ -45,15 +50,18 @@ export default async function handler(req, res) {
           });
 
         if (data && data.length > 0) {
-          // File exists in Supabase, get the public URL
+          // File exists in Supabase, get the public URL with cache-busting
           const { data: { publicUrl } } = supabaseAdmin
             .storage
             .from('website')
-            .getPublicUrl(`${folder}/${filename}`);
+            .getPublicUrl(`${folder}/${filename}`, {
+              download: false
+            });
           
-          // Add cache-busting timestamp
-          imageConfig[imageId] = `${publicUrl}?t=${Date.now()}`;
-          console.log(`✅ Using Supabase URL for ${imageId}`);
+          // Aggressive cache-busting: timestamp + random number
+          const cacheBust = `t=${Date.now()}&r=${Math.random().toString(36).substring(7)}`;
+          imageConfig[imageId] = `${publicUrl}?${cacheBust}`;
+          console.log(`✅ Using Supabase URL for ${imageId}: ${imageConfig[imageId]}`);
         }
       } catch (err) {
         console.log(`Using default path for ${imageId}`);

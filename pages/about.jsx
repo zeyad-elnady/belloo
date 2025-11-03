@@ -270,6 +270,93 @@ const About = () => {
         `}</style>
       </section>
       {/*====== End Features Section ======*/}
+      {/*====== Start Important Highlights Section ======*/}
+      <section className="features-section pt-95">
+        <div className="container">
+          <div className="row align-items-xl-center">
+            <div className="col-lg-6">
+              <div className="section-title mb-55 wow fadeInLeft">
+                <span className="sub-title">
+                  <i className="flaticon-plant" />
+                  {t('features.subtitle')}
+                </span>
+                <h2>{t('features.title')}</h2>
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <div className="features-content-box mb-55 wow fadeInRight">
+                <p>
+                  {t('features.description')}
+                </p>
+          </div>
+                    </div>
+                  </div>
+          {/* Features Grid - Responsive and Aligned */}
+          <div className="row features-grid-wrapper">
+            <div className="col-lg-3 col-md-6 col-sm-6 col-12 mb-4">
+              <div className="features-thumb-item-two enhanced-feature-box h-100 wow fadeInDown" data-wow-delay=".2s">
+                <div className="text">
+                  <div className="icon">
+                    <img src="/assets/images/icon/001-02.png" alt="Global Reach Icon" />
+                  </div>
+                  <h5 className="title">{t('features.globalReach.title')}</h5>
+                  <p>{t('features.globalReach.description')}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="col-lg-3 col-md-6 col-sm-6 col-12 mb-4">
+              <div className="features-thumb-item-two enhanced-feature-box h-100 wow fadeInUp" data-wow-delay=".25s">
+                <div className="text">
+                  <div className="icon">
+                    <img src="/assets/images/icon/002-02.png" alt="Certified Quality Icon" />
+                  </div>
+                  <h5 className="title">{t('features.certifiedQuality.title')}</h5>
+                  <p>{t('features.certifiedQuality.description')}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="col-lg-3 col-md-6 col-sm-6 col-12 mb-4">
+              <div className="features-thumb-item-two enhanced-feature-box h-100 wow fadeInDown" data-wow-delay=".3s">
+                <div className="text">
+                  <div className="icon">
+                    <img src="/assets/images/icon/001-04.png" alt="Unmatched Variety Icon" />
+                  </div>
+                  <h5 className="title">{t('features.unmatchedVariety.title')}</h5>
+                  <p>{t('features.unmatchedVariety.description')}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="col-lg-3 col-md-6 col-sm-6 col-12 mb-4">
+              <div className="features-thumb-item-two enhanced-feature-box h-100 wow fadeInUp" data-wow-delay=".35s">
+                <div className="text">
+                  <div className="icon">
+                    <img src="/assets/images/icon/001-03.png" alt="Flexible Packaging Icon" />
+                  </div>
+                  <h5 className="title">{t('features.flexiblePackaging.title')}</h5>
+                  <p>{t('features.flexiblePackaging.description')}</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Fifth box centered */}
+            <div className="col-lg-3 col-md-6 col-sm-6 col-12 mb-4">
+              <div className="features-thumb-item-two enhanced-feature-box h-100 wow fadeInDown" data-wow-delay=".4s">
+                <div className="text">
+                  <div className="icon">
+                    <img src="/assets/images/icon/001-05.png" alt="Logistics Strength Icon" />
+                  </div>
+                  <h5 className="title">{t('features.logisticsStrength.title')}</h5>
+                  <p>{t('features.logisticsStrength.description')}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*====== End Important Highlights Section ======*/}
       {/*====== Start CTA Section  ======*/}
       <section
         className="cta-bg-section bg_cover pt-100 p-r z-1"
