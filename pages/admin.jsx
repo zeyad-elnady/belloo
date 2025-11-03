@@ -15,6 +15,8 @@ export default function Admin() {
   const [searchTerm, setSearchTerm] = useState('');
   const [dateFilter, setDateFilter] = useState({ start: '', end: '' });
   const [showFilters, setShowFilters] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [currentMessage, setCurrentMessage] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -613,7 +615,14 @@ export default function Admin() {
                         {submission.message}
                       </div>
                       {submission.message.length > 100 && (
-                        <button className="admin-message-expand" title="View full message">
+                        <button 
+                          className="admin-message-expand" 
+                          title="View full message"
+                          onClick={() => {
+                            setCurrentMessage(submission);
+                            setShowMessageModal(true);
+                          }}
+                        >
                           <i className="fas fa-expand-alt"></i>
                         </button>
                       )}
@@ -1249,6 +1258,264 @@ export default function Admin() {
           )}
         </div>
       </div>
+
+      {/* Message Modal */}
+      {showMessageModal && currentMessage && (
+        <div 
+          className="admin-modal-overlay"
+          onClick={() => setShowMessageModal(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10000,
+            padding: '20px',
+            backdropFilter: 'blur(4px)'
+          }}
+        >
+          <div 
+            className="admin-modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: '#fff',
+              borderRadius: '16px',
+              maxWidth: '700px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflow: 'auto',
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+              animation: 'modalSlideIn 0.3s ease-out'
+            }}
+          >
+            {/* Modal Header */}
+            <div style={{
+              padding: '24px 28px',
+              borderBottom: '2px solid #f1f5f9',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              background: 'linear-gradient(135deg, #4D602C 0%, #5a7333 100%)',
+              borderRadius: '16px 16px 0 0'
+            }}>
+              <h3 style={{ 
+                margin: 0, 
+                fontSize: '20px', 
+                fontWeight: '700',
+                color: '#fff',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px'
+              }}>
+                <i className="fas fa-envelope-open"></i>
+                Message Details
+              </h3>
+              <button
+                onClick={() => setShowMessageModal(false)}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  border: 'none',
+                  borderRadius: '8px',
+                  width: '36px',
+                  height: '36px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  color: '#fff',
+                  fontSize: '20px',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
+                onMouseOut={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div style={{ padding: '28px' }}>
+              {/* Contact Info */}
+              <div style={{ 
+                marginBottom: '24px',
+                padding: '20px',
+                background: '#f8fafc',
+                borderRadius: '12px',
+                border: '1px solid #e2e8f0'
+              }}>
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                  gap: '16px'
+                }}>
+                  <div>
+                    <div style={{ 
+                      fontSize: '12px', 
+                      color: '#64748b', 
+                      marginBottom: '6px',
+                      fontWeight: '600',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}>
+                      Name
+                    </div>
+                    <div style={{ 
+                      fontSize: '15px', 
+                      color: '#1e293b',
+                      fontWeight: '600',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}>
+                      <i className="fas fa-user" style={{ color: '#4D602C', fontSize: '14px' }}></i>
+                      {currentMessage.name}
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{ 
+                      fontSize: '12px', 
+                      color: '#64748b', 
+                      marginBottom: '6px',
+                      fontWeight: '600',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}>
+                      Email
+                    </div>
+                    <div style={{ fontSize: '15px', color: '#1e293b', fontWeight: '500' }}>
+                      <a 
+                        href={`mailto:${currentMessage.email}`}
+                        style={{ 
+                          color: '#4D602C',
+                          textDecoration: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px'
+                        }}
+                      >
+                        <i className="fas fa-envelope" style={{ fontSize: '14px' }}></i>
+                        {currentMessage.email}
+                      </a>
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{ 
+                      fontSize: '12px', 
+                      color: '#64748b', 
+                      marginBottom: '6px',
+                      fontWeight: '600',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}>
+                      Phone
+                    </div>
+                    <div style={{ fontSize: '15px', color: '#1e293b', fontWeight: '500' }}>
+                      <a 
+                        href={`tel:${currentMessage.phone}`}
+                        style={{ 
+                          color: '#4D602C',
+                          textDecoration: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px'
+                        }}
+                      >
+                        <i className="fas fa-phone" style={{ fontSize: '14px' }}></i>
+                        {currentMessage.phone}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Subject */}
+              <div style={{ marginBottom: '24px' }}>
+                <div style={{ 
+                  fontSize: '12px', 
+                  color: '#64748b', 
+                  marginBottom: '8px',
+                  fontWeight: '600',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px'
+                }}>
+                  Subject
+                </div>
+                <div style={{ 
+                  fontSize: '18px', 
+                  color: '#1e293b',
+                  fontWeight: '700',
+                  padding: '16px',
+                  background: '#f8fafc',
+                  borderRadius: '8px',
+                  border: '1px solid #e2e8f0'
+                }}>
+                  {currentMessage.subject}
+                </div>
+              </div>
+
+              {/* Message */}
+              <div>
+                <div style={{ 
+                  fontSize: '12px', 
+                  color: '#64748b', 
+                  marginBottom: '8px',
+                  fontWeight: '600',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px'
+                }}>
+                  Message
+                </div>
+                <div style={{ 
+                  fontSize: '15px', 
+                  color: '#334155',
+                  lineHeight: '1.7',
+                  padding: '20px',
+                  background: '#f8fafc',
+                  borderRadius: '8px',
+                  border: '1px solid #e2e8f0',
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word'
+                }}>
+                  {currentMessage.message}
+                </div>
+              </div>
+
+              {/* Date */}
+              <div style={{ 
+                marginTop: '24px',
+                paddingTop: '20px',
+                borderTop: '1px solid #e2e8f0',
+                fontSize: '13px',
+                color: '#64748b',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                <i className="fas fa-clock"></i>
+                Received: {formatDate(currentMessage.created_at)}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes modalSlideIn {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
 
     </>
   );
