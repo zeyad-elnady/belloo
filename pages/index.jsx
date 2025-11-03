@@ -7,6 +7,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import NewsletterSuccessToast from '../components/NewsletterSuccessToast';
 
 const Index = () => {
   const { t } = useTranslation('common');
@@ -15,6 +16,8 @@ const Index = () => {
   const [blogPosts, setBlogPosts] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [websiteImages, setWebsiteImages] = useState({});
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   // Fetch blog posts, featured products, and website images from database
   useEffect(() => {
@@ -933,7 +936,6 @@ const Index = () => {
               <div className="newsletter-form-wrapper wow fadeInUp" data-wow-delay=".2s">
                 <form 
                   onSubmit={async (e) => {
-                    console.log('Newsletter form submission started');
                     e.preventDefault();
 
                     try {
@@ -949,32 +951,35 @@ const Index = () => {
                       const submitButton = e.target.querySelector('button[type="submit"]');
                       if (submitButton) {
                         const originalText = submitButton.innerHTML;
-                        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>' + t('newsletter.subscribing');
+                        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>' + (t('newsletter.subscribing') || 'Subscribing...');
                         submitButton.disabled = true;
 
                         try {
-                          console.log('Submitting newsletter subscription...');
-
-                          // Use form data for better compatibility with Google Apps Script
-                          const formData = new FormData();
-                          formData.append('email', email.trim());
-                          formData.append('source', 'Homepage');
-                          formData.append('language', router.locale || 'en');
-                          
-                          const response = await fetch('https://script.google.com/macros/s/AKfycbw8CS8rMqQ2E4WzNkpRKJ0tNXn8Lg6Y17BMXAv-Iw3rjTzxfb7UlCKWmndPCmHbDarDkQ/exec', {
+                          const response = await fetch('/api/newsletter/subscribe', {
                             method: 'POST',
-                            mode: 'no-cors',
-                            body: formData
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              email: email.trim(),
+                              source: 'Homepage',
+                              language: router.locale || 'en'
+                            })
                           });
 
-                          // With no-cors mode, we can't read the response, so we assume success
-                          console.log('Newsletter subscription sent successfully');
-                          alert(t('newsletter.successWithWelcome') || '🎉 Successfully subscribed! If you don\'t receive a welcome email, you may already be subscribed.');
-                          e.target.reset();
+                          const result = await response.json();
+
+                          if (result.success) {
+                            setSuccessMessage(result.message);
+                            setShowSuccessToast(true);
+                            e.target.reset();
+                          } else {
+                            alert(result.error || t('newsletter.errorMessage') || 'Failed to subscribe. Please try again.');
+                          }
 
                         } catch (error) {
-                          console.error('Newsletter submission error:', error);
-                          alert(t('newsletter.errorMessage'));
+                          console.error('Newsletter subscription error:', error);
+                          alert(t('newsletter.errorMessage') || 'An error occurred. Please try again.');
                         } finally {
                           // Restore button state
                           submitButton.innerHTML = originalText;
@@ -1045,6 +1050,14 @@ const Index = () => {
         </div>
       </section>
       {/*====== End Newsletter Section ======*/}
+      
+      {/* Success Toast */}
+      {showSuccessToast && (
+        <NewsletterSuccessToast 
+          message={successMessage} 
+          onClose={() => setShowSuccessToast(false)} 
+        />
+      )}
     </Layout>
   );
 };

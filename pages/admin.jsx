@@ -5,6 +5,7 @@ import Head from 'next/head';
 export default function Admin() {
   const [contactSubmissions, setContactSubmissions] = useState([]);
   const [jobApplications, setJobApplications] = useState([]);
+  const [newsletterSubscribers, setNewsletterSubscribers] = useState([]);
   const [activeTab, setActiveTab] = useState('contact');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -55,6 +56,14 @@ export default function Admin() {
       
       if (jobData.success) {
         setJobApplications(jobData.data);
+      }
+
+      // Fetch newsletter subscribers
+      const newsletterResponse = await fetch('/api/newsletter');
+      const newsletterData = await newsletterResponse.json();
+      
+      if (newsletterData.success) {
+        setNewsletterSubscribers(newsletterData.data);
       }
 
     } catch (err) {
@@ -893,6 +902,176 @@ export default function Admin() {
     );
   };
 
+  // Newsletter Subscribers Component
+  const NewsletterSection = () => {
+    const [newsletterSearch, setNewsletterSearch] = useState('');
+    const [exportFormat, setExportFormat] = useState('csv');
+
+    const filteredNewsletter = newsletterSubscribers.filter(subscriber => {
+      const searchLower = newsletterSearch.toLowerCase();
+      const emailUser = subscriber.email.split('@')[0].toLowerCase();
+      return emailUser.includes(searchLower) || subscriber.email.toLowerCase().includes(searchLower);
+    });
+
+    const handleExport = async (format) => {
+      try {
+        const response = await fetch(`/api/newsletter/export?format=${format}`);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `newsletter-subscribers.${format}`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      } catch (error) {
+        console.error('Export error:', error);
+        alert('Failed to export newsletter subscribers');
+      }
+    };
+
+    const handleDelete = async (id) => {
+      try {
+        const response = await fetch(`/api/newsletter?id=${id}`, {
+          method: 'DELETE'
+        });
+        const data = await response.json();
+        if (data.success) {
+          fetchData();
+        } else {
+          alert('Failed to delete subscriber');
+        }
+      } catch (error) {
+        console.error('Delete error:', error);
+        alert('Failed to delete subscriber');
+      }
+    };
+
+    return (
+      <>
+        <div className="admin-section-header">
+          <div className="admin-section-title">
+            <i className="fas fa-mail-bulk me-2"></i>
+            <h3>Newsletter Subscribers ({filteredNewsletter.length})</h3>
+          </div>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <select 
+              value={exportFormat} 
+              onChange={(e) => setExportFormat(e.target.value)}
+              style={{
+                padding: '8px 12px',
+                borderRadius: '6px',
+                border: '1px solid #e2e8f0',
+                fontSize: '14px',
+                cursor: 'pointer'
+              }}
+            >
+              <option value="csv">CSV</option>
+              <option value="json">JSON</option>
+              <option value="txt">TXT (Emails only)</option>
+            </select>
+            <button 
+              className="admin-action-btn admin-action-btn-primary" 
+              onClick={() => handleExport(exportFormat)}
+              style={{ minWidth: '120px' }}
+            >
+              <i className="fas fa-download me-2"></i>
+              Export {exportFormat.toUpperCase()}
+            </button>
+          </div>
+        </div>
+
+        <div className="admin-filters">
+          <div className="admin-filter-group">
+            <div className="admin-search-box">
+              <i className="fas fa-search"></i>
+              <input
+                type="text"
+                placeholder="Search by email (before @)..."
+                value={newsletterSearch}
+                onChange={(e) => setNewsletterSearch(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="admin-table-wrapper">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th style={{ width: '40%' }}>Email</th>
+                <th style={{ width: '15%' }}>Source</th>
+                <th style={{ width: '10%' }}>Language</th>
+                <th style={{ width: '15%' }}>Subscribed</th>
+                <th style={{ width: '10%' }}>Status</th>
+                <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredNewsletter.map((subscriber) => (
+                <tr key={subscriber.id}>
+                  <td>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <i className="fas fa-envelope" style={{ color: '#4D602C', fontSize: '16px' }}></i>
+                      <strong>{subscriber.email}</strong>
+                    </div>
+                  </td>
+                  <td>{subscriber.source || 'Website'}</td>
+                  <td>
+                    <span className="admin-badge">{subscriber.language || 'en'}</span>
+                  </td>
+                  <td>{formatDate(subscriber.subscribed_at)}</td>
+                  <td>
+                    {subscriber.is_active ? (
+                      <span className="admin-badge admin-badge-success">
+                        <i className="fas fa-check-circle me-1"></i>
+                        Active
+                      </span>
+                    ) : (
+                      <span className="admin-badge admin-badge-danger">
+                        <i className="fas fa-times-circle me-1"></i>
+                        Inactive
+                      </span>
+                    )}
+                  </td>
+                  <td style={{ textAlign: 'center' }}>
+                    <button
+                      className="admin-action-btn"
+                      onClick={() => {
+                        if (confirm(`Are you sure you want to delete ${subscriber.email}?`)) {
+                          handleDelete(subscriber.id);
+                        }
+                      }}
+                      title="Delete subscriber"
+                    >
+                      <i className="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          
+          {filteredNewsletter.length === 0 && (
+            <div className="admin-no-data">
+              <div className="admin-no-data-icon">
+                <i className="fas fa-mail-bulk"></i>
+              </div>
+              <h5 className="admin-no-data-title">No subscribers found</h5>
+              <p className="admin-no-data-text">
+                {newsletterSearch 
+                  ? 'Try adjusting your search' 
+                  : 'Newsletter subscribers will appear here'}
+              </p>
+            </div>
+          )}
+        </div>
+      </>
+    );
+  };
+
   if (!user) {
     return (
       <div className="admin-body">
@@ -1004,6 +1183,16 @@ export default function Admin() {
               </li>
               <li className="admin-tab-item">
                 <button 
+                  className={`admin-tab-button ${activeTab === 'newsletter' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('newsletter')}
+                >
+                  <i className="fas fa-mail-bulk"></i>
+                  <span>Newsletter</span>
+                  <span className="admin-tab-counter">{newsletterSubscribers.length}</span>
+                </button>
+              </li>
+              <li className="admin-tab-item">
+                <button 
                   className={`admin-tab-button ${activeTab === 'website-editor' ? 'active' : ''}`}
                   onClick={() => router.push('/website-editor')}
                 >
@@ -1033,6 +1222,7 @@ export default function Admin() {
             <div className="admin-content">
               {activeTab === 'contact' && <ContactSubmissionsTable />}
               {activeTab === 'jobs' && <JobApplicationsTable />}
+              {activeTab === 'newsletter' && <NewsletterSection />}
               {activeTab === 'profile' && <ProfileSettings />}
             </div>
           )}
