@@ -185,7 +185,7 @@ const Sidebar = ({ show, handleClose }) => {
 
                         if (result.success) {
                           messageDiv.innerHTML = '<div style="color: #4D602C; padding: 12px; background: rgba(77,96,44,0.1); border-radius: 8px; margin-top: 12px; text-align: center; font-size: 13px; border: 1px solid rgba(77,96,44,0.3);"><i class="fas fa-check-circle mr-2"></i>' + result.message + '</div>';
-                          e.target.reset();
+                        e.target.reset();
                           setTimeout(() => messageDiv.innerHTML = '', 5000);
                         } else {
                           messageDiv.innerHTML = '<div style="color: #ff6b6b; padding: 12px; background: rgba(255,107,107,0.1); border-radius: 8px; margin-top: 12px; text-align: center; font-size: 13px;"><i class="fas fa-exclamation-circle mr-2"></i>' + result.error + '</div>';

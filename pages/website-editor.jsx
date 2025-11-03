@@ -906,7 +906,14 @@ export default function WebsiteEditor() {
         setImagesLoading(true);
       }
       try {
-        const response = await fetch('/api/website-images/config');
+        // Add cache-busting to force fresh API response
+        const response = await fetch(`/api/website-images/config?t=${Date.now()}`, {
+          cache: 'no-store', // Prevent browser from caching this request
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        });
         const data = await response.json();
         if (data.success && data.images) {
           setCurrentImageUrls(data.images);
@@ -1143,6 +1150,9 @@ export default function WebsiteEditor() {
         alert('✅ Image replaced successfully in Supabase Storage!\n\n' + 
               'The website now shows the new image.\n' +
               'The dashboard preview will update automatically.');
+        
+        // Wait 2 seconds for Supabase CDN to purge and refresh
+        await new Promise(resolve => setTimeout(resolve, 2000));
         
         // Reload the image URLs from Supabase (without showing loading spinner)
         await fetchCurrentImages(false);

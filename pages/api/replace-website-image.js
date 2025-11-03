@@ -129,13 +129,27 @@ export default async function handler(req, res) {
       });
     }
     
+    console.log('   ✅ File uploaded successfully!');
+    
+    // CRITICAL: Force Supabase CDN to purge cache by downloading the file
+    // This makes Supabase refresh its CDN immediately instead of waiting
+    try {
+      await supabaseAdmin
+        .storage
+        .from(config.bucket)
+        .download(storagePath);
+      console.log('   ✅ CDN cache purged (forced refresh)');
+    } catch (purgeError) {
+      console.warn('   ⚠️ Could not purge CDN cache:', purgeError.message);
+      // Continue anyway - not critical
+    }
+    
     // Get public URL
     const { data: { publicUrl } } = supabaseAdmin
       .storage
       .from(config.bucket)
       .getPublicUrl(storagePath);
 
-    console.log('   ✅ File uploaded successfully!');
     console.log('   ✅ Public URL:', publicUrl);
     
     // Clean up temp file
