@@ -40,7 +40,7 @@ export default async function handler(req, res) {
         const folder = pathParts[0];
         const filename = pathParts[pathParts.length - 1];
         
-        // Check if file exists in Supabase Storage
+        // Check if file exists in Supabase Storage and get metadata
         const { data } = await supabaseAdmin
           .storage
           .from('website')
@@ -50,7 +50,7 @@ export default async function handler(req, res) {
           });
 
         if (data && data.length > 0) {
-          // File exists in Supabase, get the public URL with cache-busting
+          // File exists in Supabase, get the public URL
           const { data: { publicUrl } } = supabaseAdmin
             .storage
             .from('website')
@@ -58,9 +58,12 @@ export default async function handler(req, res) {
               download: false
             });
           
-          // Aggressive cache-busting: timestamp + random number
-          const cacheBust = `t=${Date.now()}&r=${Math.random().toString(36).substring(7)}`;
-          imageConfig[imageId] = `${publicUrl}?${cacheBust}`;
+          // Use file's last modified timestamp as version (changes only when file changes)
+          const fileMetadata = data[0];
+          const lastModified = fileMetadata.updated_at || fileMetadata.created_at;
+          const version = new Date(lastModified).getTime();
+          
+          imageConfig[imageId] = `${publicUrl}?v=${version}`;
           console.log(`✅ Using Supabase URL for ${imageId}: ${imageConfig[imageId]}`);
         }
       } catch (err) {

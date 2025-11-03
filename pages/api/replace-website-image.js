@@ -116,6 +116,7 @@ export default async function handler(req, res) {
       .upload(storagePath, fileBuffer, {
         contentType: file.mimetype,
         upsert: true, // This will replace the existing file
+        cacheControl: 'public, max-age=60', // Short CDN cache: 60 seconds for quick updates
       });
 
     if (uploadError) {
