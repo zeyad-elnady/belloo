@@ -26,17 +26,23 @@ export default async function handler(req, res) {
       });
     }
 
+    // Convert IDs to integers
+    const numericIds = ids.map(id => parseInt(id, 10));
+
+    console.log('Deleting contact submissions with IDs:', numericIds);
+
     // Delete contact submissions
     const { error } = await supabaseAdmin
       .from('contact_submissions')
       .delete()
-      .in('id', ids);
+      .in('id', numericIds);
 
     if (error) {
       console.error('Error deleting contact submissions:', error);
       return res.status(500).json({ 
         success: false, 
-        error: 'Failed to delete contact submissions' 
+        error: error.message || 'Failed to delete contact submissions',
+        details: error
       });
     }
 
