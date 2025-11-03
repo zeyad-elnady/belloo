@@ -62,19 +62,22 @@ const Index = () => {
         if (result.success && result.images) {
           console.log('✅ Loaded website images config:', result.images);
           
-          // Add cache-busting timestamp to Supabase URLs to prevent browser caching old images
-          const imagesWithCacheBust = {};
-          Object.keys(result.images).forEach(key => {
-            const url = result.images[key];
-            // Only add cache-busting to Supabase URLs
-            if (url.includes('supabase.co')) {
-              imagesWithCacheBust[key] = `${url}?t=${Date.now()}`;
-            } else {
-              imagesWithCacheBust[key] = url;
-            }
+          // Preload all images before displaying them
+          const imageUrls = Object.values(result.images);
+          const preloadPromises = imageUrls.map(url => {
+            return new Promise((resolve, reject) => {
+              const img = new Image();
+              img.onload = () => resolve(url);
+              img.onerror = () => resolve(url); // Still resolve even on error to prevent blocking
+              img.src = url;
+            });
           });
           
-          setWebsiteImages(imagesWithCacheBust);
+          // Wait for all images to be loaded into browser cache
+          await Promise.all(preloadPromises);
+          console.log('✅ All images preloaded into browser cache');
+          
+          setWebsiteImages(result.images);
           setImagesLoaded(true);
         }
       } catch (error) {
@@ -152,25 +155,59 @@ const Index = () => {
   
   return (
     <Layout header={3} footer={3}>
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
       {/*====== Start Banner Section ======*/}
       <section className="banner-section">
-          {/*====== Hero Wrapper ======*/}
-          <div className="hero-wrapper-three">
-            <div className="hero-waves">
-              <img src="/assets/images/hero/bg-2.png" className="waves one" alt="Background waves" />
-              <img src="/assets/images/hero/bg.png" className="waves two" alt="Background waves" />
+        {/*====== Hero Wrapper ======*/}
+        <div className="hero-wrapper-three" style={{ minHeight: '600px', position: 'relative' }}>
+          <div className="hero-waves">
+            <img src="/assets/images/hero/bg-2.png" className="waves one" alt="Background waves" />
+            <img src="/assets/images/hero/bg.png" className="waves two" alt="Background waves" />
+          </div>
+          
+          {/* Loading overlay while images preload */}
+          {!imagesLoaded && (
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'rgba(77, 96, 44, 0.9)',
+              zIndex: 100
+            }}>
+              <div style={{ textAlign: 'center', color: 'white' }}>
+                <div style={{
+                  width: '50px',
+                  height: '50px',
+                  border: '4px solid rgba(255,255,255,0.3)',
+                  borderTop: '4px solid white',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite',
+                  margin: '0 auto 20px'
+                }}></div>
+                <p style={{ fontSize: '16px', opacity: 0.9 }}>Loading...</p>
+              </div>
             </div>
+          )}
+          
           {/*====== Hero Slider ======*/}
-          <Slider {...heroSliderProps} className="hero-slider-two">
+          <Slider {...heroSliderProps} className="hero-slider-two" style={{ opacity: imagesLoaded ? 1 : 0, transition: 'opacity 0.5s ease' }}>
             {/*====== Single Slider ======*/}
             <div className="single-slider">
               <div
                 className="image-layer bg_cover"
                 style={{
                   backgroundImage:
-                    `url(${imagesLoaded && websiteImages['hero-1'] ? websiteImages['hero-1'] : "/assets/images/hero/hero_two-slider-1.jpg"})`,
-                  opacity: imagesLoaded ? 1 : 0.7,
-                  transition: 'opacity 0.5s ease-in-out'
+                    `url(${websiteImages['hero-1'] || "/assets/images/hero/hero_two-slider-1.jpg"})`,
                 }}
               />
           <div className="container">
@@ -215,9 +252,7 @@ const Index = () => {
                 className="image-layer bg_cover"
                 style={{
                   backgroundImage:
-                    `url(${imagesLoaded && websiteImages['hero-2'] ? websiteImages['hero-2'] : "/assets/images/hero/hero_two-slider-2.jpg"})`,
-                  opacity: imagesLoaded ? 1 : 0.7,
-                  transition: 'opacity 0.5s ease-in-out'
+                    `url(${websiteImages['hero-2'] || "/assets/images/hero/hero_two-slider-2.jpg"})`,
                 }}
               />
               <div className="container">
@@ -262,9 +297,7 @@ const Index = () => {
                 className="image-layer bg_cover"
                 style={{
                   backgroundImage:
-                    `url(${imagesLoaded && websiteImages['hero-3'] ? websiteImages['hero-3'] : "/assets/images/hero/hero_two-slider-3.jpg"})`,
-                  opacity: imagesLoaded ? 1 : 0.7,
-                  transition: 'opacity 0.5s ease-in-out'
+                    `url(${websiteImages['hero-3'] || "/assets/images/hero/hero_two-slider-3.jpg"})`,
                 }}
               />
               <div className="container">
@@ -674,16 +707,14 @@ const Index = () => {
               {/*====== Skills Image Box ======*/}
               <div className="skill-two_image-box mb-20 p-r z-1 wow fadeInRight">
                 <img
-                  src={imagesLoaded && websiteImages['skill-4'] ? websiteImages['skill-4'] : "/assets/images/skill/skill-4.png"}
+                  src={websiteImages['skill-4'] || "/assets/images/skill/skill-4.png"}
                   className="skill-img-one"
                   alt="Skill Image"
-                  style={{ opacity: imagesLoaded ? 1 : 0.7, transition: 'opacity 0.5s ease-in-out' }}
                 />
                 <img
-                  src={imagesLoaded && websiteImages['skill-5'] ? websiteImages['skill-5'] : "/assets/images/skill/skill-5.png"}
+                  src={websiteImages['skill-5'] || "/assets/images/skill/skill-5.png"}
                   className="skill-img-two"
                   alt="Skill Image"
-                  style={{ opacity: imagesLoaded ? 1 : 0.7, transition: 'opacity 0.5s ease-in-out' }}
                 />
                 <div className="circle-logo">
                   <div className="inner-circle">
