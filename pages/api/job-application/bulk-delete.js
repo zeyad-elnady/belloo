@@ -26,16 +26,13 @@ export default async function handler(req, res) {
       });
     }
 
-    // Convert IDs to integers
-    const numericIds = ids.map(id => parseInt(id, 10));
-
-    console.log('Deleting job applications with IDs:', numericIds);
+    console.log('Deleting job applications with IDs:', ids);
 
     // First, fetch the applications to get CV file paths
     const { data: applications, error: fetchError } = await supabaseAdmin
       .from('job_applications')
       .select('cv_file_path')
-      .in('id', numericIds);
+      .in('id', ids);
 
     if (fetchError) {
       console.error('Error fetching applications:', fetchError);
@@ -66,7 +63,7 @@ export default async function handler(req, res) {
     const { error } = await supabaseAdmin
       .from('job_applications')
       .delete()
-      .in('id', numericIds);
+      .in('id', ids);
 
     if (error) {
       console.error('Error deleting job applications:', error);
@@ -79,7 +76,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       success: true,
-      message: `Successfully deleted ${numericIds.length} job application(s)`,
+      message: `Successfully deleted ${ids.length} job application(s)`,
     });
   } catch (error) {
     console.error('Bulk delete error:', error);

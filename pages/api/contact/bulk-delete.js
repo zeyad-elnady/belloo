@@ -26,16 +26,13 @@ export default async function handler(req, res) {
       });
     }
 
-    // Convert IDs to integers
-    const numericIds = ids.map(id => parseInt(id, 10));
-
-    console.log('Deleting contact submissions with IDs:', numericIds);
+    console.log('Deleting contact submissions with IDs:', ids);
 
     // Delete contact submissions
     const { error } = await supabaseAdmin
       .from('contact_submissions')
       .delete()
-      .in('id', numericIds);
+      .in('id', ids);
 
     if (error) {
       console.error('Error deleting contact submissions:', error);

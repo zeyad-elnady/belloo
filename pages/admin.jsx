@@ -119,7 +119,7 @@ export default function Admin() {
   const handleBulkDelete = async (type) => {
     const itemsToDelete = selectedItems
       .filter(item => item.startsWith(`${type}-`))
-      .map(item => item.split('-')[1]);
+      .map(item => item.substring(type.length + 1)); // Remove "type-" prefix to get full ID
 
     if (itemsToDelete.length === 0) {
       alert('Please select items to delete');
