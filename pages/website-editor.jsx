@@ -633,7 +633,7 @@ export default function WebsiteEditor() {
               {/* Main Content - English */}
               <div className="form-section">
                 <h3 style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '2px solid #e2e8f0' }}>
-                  <i className="fas fa-newspaper"></i> Article Content
+                  <i className="fas fa-newspaper"></i> Article Title
                 </h3>
                 
                 <div className="form-group">
@@ -646,33 +646,6 @@ export default function WebsiteEditor() {
                     required
                     style={{ fontSize: '16px', padding: '12px' }}
                   />
-                </div>
-                
-                <div className="form-group">
-                  <label style={{ fontSize: '15px', fontWeight: '600', color: '#1e293b' }}>Summary (English)</label>
-                  <textarea
-                    name="excerpt_en"
-                    defaultValue={editingNews?.excerpt_en}
-                    placeholder="Brief summary of the article (1-2 sentences)..."
-                    rows="2"
-                    style={{ fontSize: '15px' }}
-                  ></textarea>
-                </div>
-                
-                <div className="form-group">
-                  <label style={{ fontSize: '15px', fontWeight: '600', color: '#1e293b' }}>
-                    Full Article (English)
-                  </label>
-                  <textarea
-                    name="content_en"
-                    defaultValue={editingNews?.content_en}
-                    placeholder="Write your full article content here. You can use HTML tags like <h2>, <p>, <ul>, <li>..."
-                    rows="12"
-                    style={{ fontSize: '15px', fontFamily: 'monospace' }}
-                  ></textarea>
-                  <small style={{ display: 'block', marginTop: '8px', padding: '8px', background: '#f1f5f9', borderRadius: '4px' }}>
-                    💡 <strong>Tip:</strong> Use HTML: <code>&lt;h2&gt;Heading&lt;/h2&gt;</code> <code>&lt;p&gt;Paragraph&lt;/p&gt;</code> <code>&lt;ul&gt;&lt;li&gt;List&lt;/li&gt;&lt;/ul&gt;</code>
-                  </small>
                 </div>
               </div>
 
@@ -692,28 +665,6 @@ export default function WebsiteEditor() {
                       dir="rtl"
                     />
                   </div>
-                  
-                  <div className="form-group">
-                    <label>Summary (Arabic)</label>
-                    <textarea
-                      name="excerpt_ar"
-                      defaultValue={editingNews?.excerpt_ar}
-                      placeholder="ملخص المقال..."
-                      rows="2"
-                      dir="rtl"
-                    ></textarea>
-                  </div>
-                  
-                  <div className="form-group">
-                    <label>Full Article (Arabic)</label>
-                    <textarea
-                      name="content_ar"
-                      defaultValue={editingNews?.content_ar}
-                      placeholder="المحتوى الكامل للمقال..."
-                      rows="8"
-                      dir="rtl"
-                    ></textarea>
-                  </div>
                 </div>
               </details>
 
@@ -731,26 +682,6 @@ export default function WebsiteEditor() {
                       defaultValue={editingNews?.title_ru}
                       placeholder="Заголовок статьи..."
                     />
-                  </div>
-                  
-                  <div className="form-group">
-                    <label>Summary (Russian)</label>
-                    <textarea
-                      name="excerpt_ru"
-                      defaultValue={editingNews?.excerpt_ru}
-                      placeholder="Краткое изложение статьи..."
-                      rows="2"
-                    ></textarea>
-                  </div>
-                  
-                  <div className="form-group">
-                    <label>Full Article (Russian)</label>
-                    <textarea
-                      name="content_ru"
-                      defaultValue={editingNews?.content_ru}
-                      placeholder="Полное содержание статьи..."
-                      rows="8"
-                    ></textarea>
                   </div>
                 </div>
               </details>
@@ -1683,12 +1614,12 @@ export default function WebsiteEditor() {
       title_en: formData.get('title_en'),
       title_ar: formData.get('title_ar'),
       title_ru: formData.get('title_ru'),
-      content_en: formData.get('content_en'),
-      content_ar: formData.get('content_ar'),
-      content_ru: formData.get('content_ru'),
-      excerpt_en: formData.get('excerpt_en'),
-      excerpt_ar: formData.get('excerpt_ar'),
-      excerpt_ru: formData.get('excerpt_ru'),
+      content_en: '',
+      content_ar: '',
+      content_ru: '',
+      excerpt_en: '',
+      excerpt_ar: '',
+      excerpt_ru: '',
       category: formData.get('category'),
       featured_image: featuredImageUrl,
       author_name: formData.get('author_name'),
