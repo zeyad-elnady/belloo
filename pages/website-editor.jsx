@@ -686,59 +686,6 @@ export default function WebsiteEditor() {
                 </div>
               </details>
 
-              {/* Featured Image - Collapsible */}
-              <details className="form-section" style={{ cursor: 'pointer', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '0' }}>
-                <summary style={{ padding: '15px 20px', background: '#f8fafc', fontWeight: '600', borderRadius: '8px' }}>
-                  <i className="fas fa-image"></i> Featured Image (Optional - Click to expand)
-                </summary>
-                <div style={{ padding: '20px' }}>
-                  {editingNews?.featured_image && (
-                    <div className="form-group">
-                      <label>Current Image</label>
-                      <div className="current-image-preview">
-                        <img src={editingNews.featured_image} alt="Current featured" />
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="form-group">
-                    <label>Upload New Image</label>
-                    <input
-                      type="file"
-                      name="featured_image_file"
-                      accept="image/*"
-                      className="file-input"
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                          const preview = document.getElementById('news-image-preview');
-                          const reader = new FileReader();
-                          reader.onload = (e) => {
-                            preview.src = e.target.result;
-                            preview.style.display = 'block';
-                          };
-                          reader.readAsDataURL(file);
-                        }
-                      }}
-                    />
-                  </div>
-
-                  <div className="image-preview-container">
-                    <img id="news-image-preview" className="image-preview" style={{ display: 'none' }} alt="Preview" />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Or paste image URL</label>
-                    <input
-                      type="text"
-                      name="featured_image_url"
-                      defaultValue={editingNews?.featured_image}
-                      placeholder="/assets/images/blog/..."
-                    />
-                  </div>
-                </div>
-              </details>
-
               <div className="modal-footer" style={{ marginTop: '30px', padding: '20px', background: '#f8fafc', borderTop: '2px solid #e2e8f0' }}>
                 <button type="button" className="btn btn-outline" onClick={() => setShowNewsModal(false)}>
                   <i className="fas fa-times"></i> Cancel
@@ -1596,19 +1543,6 @@ export default function WebsiteEditor() {
     e.preventDefault();
     const formData = new FormData(e.target);
 
-    let featuredImageUrl = formData.get('featured_image_url') || editingNews?.featured_image;
-    const imageFile = formData.get('featured_image_file');
-
-    if (imageFile && imageFile.size > 0) {
-      const uploadedUrl = await handleImageUpload(imageFile);
-      if (uploadedUrl) {
-        featuredImageUrl = uploadedUrl;
-      } else {
-        alert('Failed to upload featured image. Please try again.');
-        return;
-      }
-    }
-
     const newsData = {
       slug: formData.get('slug'),
       title_en: formData.get('title_en'),
@@ -1621,7 +1555,7 @@ export default function WebsiteEditor() {
       excerpt_ar: '',
       excerpt_ru: '',
       category: formData.get('category'),
-      featured_image: featuredImageUrl,
+      featured_image: '',
       author_name: formData.get('author_name'),
       is_published: formData.get('is_published') === 'on',
       published_at: formData.get('published_at') || new Date().toISOString(),
