@@ -80,14 +80,7 @@ const Header3 = () => {
       // Set scrolled state for styling
       setIsScrolled(currentScrollY > 50);
 
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down
-        setIsVisible(false);
-      } else if (currentScrollY < lastScrollY) {
-        // Scrolling up
-        setIsVisible(true);
-      }
-
+      // Header always stays visible - no hide on scroll
       setLastScrollY(currentScrollY);
     };
 
