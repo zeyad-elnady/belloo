@@ -477,26 +477,16 @@ const Index = () => {
                   <p className="mb-45">
                       {t('about.description')}
                   </p>
-                  <div className="about-inner-content d-flex justify-content-between">
-                    <div className="inner-content">
-                      <ul className="check-style-one mb-45">
-                        <li>
-                          <i className="far fa-check" />
-                          {t('about.checkItems.0')}
-                        </li>
-                        <li>
-                          <i className="far fa-check" />
-                          {t('about.checkItems.1')}
-                        </li>
-                      </ul>
-                          </div>
-                    <div className="experience-box-two">
-                      <h2 className="number">
-                        <Counter end={30} />+
-                      </h2>
-                      <h6>{t('about.productVarieties')}</h6>
-                        </div>
-                      </div>
+                  <ul className="check-style-one mb-45">
+                    <li>
+                      <i className="far fa-check" />
+                      {t('about.checkItems.0')}
+                    </li>
+                    <li>
+                      <i className="far fa-check" />
+                      {t('about.checkItems.1')}
+                    </li>
+                  </ul>
                   <div className="about-button mt-30">
                     <Link href="/about" className="main-btn golden-btn">
                       {t('about.learnMoreButton') || 'Learn More About Us'}
@@ -790,138 +780,6 @@ const Index = () => {
         </div>
       </section>
       {/*====== End Skills Section  ======*/}
-
-
-
-      {/*====== Start Testimonial Section  ======*/}
-      <section className="testimonial-section">
-        <div className="container-fluid">
-          {/*====== Testimonial Wrapper ======*/}
-          <div className="testimonial-wrapper main-bg wow fadeInDown">
-              <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-lg-7">
-                  {/*====== Testimonial Slider  ======*/}
-                    <Slider
-                    {...sliderProps.testimonialSliderTwo}
-                    className="testimonial-slider-two"
-                  >
-                    {/*====== Single Testimonial Item  ======*/}
-                    <div className="single-testimonial-item-two mb-60">
-                      <div className="quote-rating-box">
-                        <div className="icon">
-                          <img
-                            src="/assets/images/testimonial/quote2.png"
-                            alt="quote icon"
-                          />
-                        </div>
-                        <div className="ratings-box">
-                          <h3>{t('testimonials.testimonial1.title')}</h3>
-                          <ul className="ratings">
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <p>{t('testimonials.testimonial1.text')}</p>
-                      <div className="author-info">
-                        <h6>{t('testimonials.testimonial1.author')}</h6>
-                        <p className="position">{t('testimonials.testimonial1.position')}</p>
-                      </div>
-                    </div>
-                    {/*====== Single Testimonial Item  ======*/}
-                    <div className="single-testimonial-item-two mb-60">
-                      <div className="quote-rating-box">
-                        <div className="icon">
-                          <img
-                            src="/assets/images/testimonial/quote2.png"
-                            alt="quote icon"
-                          />
-                        </div>
-                        <div className="ratings-box">
-                          <h3>{t('testimonials.testimonial2.title')}</h3>
-                          <ul className="ratings">
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <p>{t('testimonials.testimonial2.text')}</p>
-                      <div className="author-info">
-                        <h6>{t('testimonials.testimonial2.author')}</h6>
-                        <p className="position">{t('testimonials.testimonial2.position')}</p>
-                      </div>
-                    </div>
-                    {/*====== Single Testimonial Item  ======*/}
-                    <div className="single-testimonial-item-two mb-60">
-                      <div className="quote-rating-box">
-                        <div className="icon">
-                          <img
-                            src="/assets/images/testimonial/quote2.png"
-                            alt="quote icon"
-                          />
-                        </div>
-                        <div className="ratings-box">
-                          <h3>{t('testimonials.testimonial3.title')}</h3>
-                          <ul className="ratings">
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                            <li>
-                              <i className="fas fa-star" />
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <p>{t('testimonials.testimonial3.text')}</p>
-                      <div className="author-info">
-                        <h6>{t('testimonials.testimonial3.author')}</h6>
-                        <p className="position">{t('testimonials.testimonial3.position')}</p>
-                      </div>
-                    </div>
-                    </Slider>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/*====== End Testimonial Section  ======*/}
       {/*====== Start Blog Section  ======*/}
       <section className="blog-section pt-100 pb-60">
         <div className="container">

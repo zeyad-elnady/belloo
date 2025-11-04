@@ -93,10 +93,38 @@ const Specifications = () => {
           {/* Back Button */}
           <div className="row mb-40">
             <div className="col-12">
-              <Link href="/" className="back-button">
+              <button 
+                onClick={() => router.back()} 
+                className="back-button"
+                style={{
+                  background: '#5a7249',
+                  color: 'white',
+                  border: 'none',
+                  padding: '14px',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '18px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 2px 8px rgba(90, 114, 73, 0.2)',
+                  width: '48px',
+                  height: '48px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#4a5f3a';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(90, 114, 73, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#5a7249';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(90, 114, 73, 0.2)';
+                }}
+              >
                 <i className="far fa-arrow-left"></i>
-                <span>{t('common.backToHome') || 'Back to Home'}</span>
-              </Link>
+              </button>
             </div>
           </div>
 
