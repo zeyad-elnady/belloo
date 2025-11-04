@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
 import Layout from '@/src/layouts/Layout';
 import PageBanner from '@/src/components/PageBanner';
 
@@ -89,6 +90,16 @@ const Specifications = () => {
       
       <section className="specifications-section pt-130 pb-130">
         <div className="container">
+          {/* Back Button */}
+          <div className="row mb-40">
+            <div className="col-12">
+              <Link href="/" className="back-button">
+                <i className="far fa-arrow-left"></i>
+                <span>{t('common.backToHome') || 'Back to Home'}</span>
+              </Link>
+            </div>
+          </div>
+
           {/* Package Type Selector */}
           <div className="package-selector mb-60">
             <div className="row justify-content-center">

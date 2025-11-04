@@ -9195,6 +9195,45 @@ ul.slick-dots li.slick-active {
   }
 }
 
+/* Back Button Styling */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: #4D602C;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(77, 96, 44, 0.2);
+}
+
+.back-button:hover {
+  background: #3d4d22;
+  color: #fff;
+  transform: translateX(-5px);
+  box-shadow: 0 4px 12px rgba(77, 96, 44, 0.3);
+}
+
+.back-button i {
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+.back-button:hover i {
+  transform: translateX(-3px);
+}
+
+@media (max-width: 768px) {
+  .back-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
 /* Specifications Page Styling */
 .specifications-section {
   background: #f8f9fa;
