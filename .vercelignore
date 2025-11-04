@@ -15,9 +15,6 @@ HOW_TO_*.md
 scripts/
 uploads/cvs/
 
-# Video files (large static assets should be on CDN)
-public/assets/video/
-
 # PDF files (can be served from CDN)
 public/assets/pdf/
 
