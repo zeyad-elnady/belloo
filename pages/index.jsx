@@ -19,14 +19,7 @@ const Index = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  
-  // Get the appropriate video based on locale
-  const getVideoSource = () => {
-    if (router.locale === 'ar') {
-      return "/assets/video/world%20map%20arabic.mp4";
-    }
-    return "/assets/video/world%20map.mp4"; // Default for English and Russian
-  };
+  const [mapVideoUrl, setMapVideoUrl] = useState('');
 
   // Fetch blog posts, featured products, and website images from database
   useEffect(() => {
@@ -93,6 +86,24 @@ const Index = () => {
     fetchFeaturedProducts();
     fetchWebsiteImages();
   }, []);
+
+  // Fetch map video URL from Supabase based on locale
+  useEffect(() => {
+    const fetchMapVideo = async () => {
+      try {
+        const response = await fetch(`/api/videos/map-video?locale=${router.locale}`);
+        const result = await response.json();
+        if (result.success && result.videoUrl) {
+          setMapVideoUrl(result.videoUrl);
+          console.log('✅ Loaded map video URL:', result.videoUrl);
+        }
+      } catch (error) {
+        console.error('Failed to fetch map video:', error);
+      }
+    };
+
+    fetchMapVideo();
+  }, [router.locale]); // Re-fetch when language changes
 
   // Get title based on current language
   const getTitle = (post) => {
@@ -329,12 +340,12 @@ const Index = () => {
                 <div className="inner-counter">
                   <div className="icon">
                     <i className="fas fa-check" />
-                  </div>
+                    </div>
                   <h2 className="number">
                     <Counter end={10} />+
                   </h2>
                   <p>{t('highlightsPage.stats.countries')}</p>
-                </div>
+                  </div>
               </div>
             </div>
             <div className="col-lg-3 col-sm-6">
@@ -376,8 +387,8 @@ const Index = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+                  </div>
+                </div>
       </section>
       {/*====== End Our Achievements Section ======*/}
 
@@ -412,26 +423,42 @@ const Index = () => {
                     background: '#f8f9fa'
                   }}
                 >
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="auto"
-                    style={{
+                  {mapVideoUrl ? (
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="auto"
+                      key={mapVideoUrl}
+                      style={{
+                        width: '100%',
+                        height: '400px',
+                        objectFit: 'cover',
+                        display: 'block'
+                      }}
+                      onError={(e) => {
+                        console.error('Video failed to load:', e);
+                        console.log('Attempted video source:', mapVideoUrl);
+                      }}
+                    >
+                      <source src={mapVideoUrl} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  ) : (
+                    <div style={{
                       width: '100%',
                       height: '400px',
-                      objectFit: 'cover',
-                      display: 'block'
-                    }}
-                    onError={(e) => {
-                      console.error('Video failed to load:', e);
-                      console.log('Attempted video source:', getVideoSource());
-                    }}
-                  >
-                    <source src={getVideoSource()} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
+                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'white',
+                      fontSize: '18px'
+                    }}>
+                      Loading video...
+                    </div>
+                  )}
                   
                   {/* Overlay with company info */}
                   <div className="video-overlay map-text-overlay">
@@ -502,7 +529,7 @@ const Index = () => {
                       {t('about.learnMoreButton') || 'Learn More About Us'}
                       <i className="far fa-arrow-right" />
                     </Link>
-                  </div>
+                      </div>
                           </div>
                         </div>
                       </div>
@@ -1065,7 +1092,7 @@ const Index = () => {
                           if (result.success) {
                             setSuccessMessage(result.message);
                             setShowSuccessToast(true);
-                            e.target.reset();
+                          e.target.reset();
                           } else {
                             alert(result.error || t('newsletter.errorMessage') || 'Failed to subscribe. Please try again.');
                           }
