@@ -1567,22 +1567,10 @@ button {
   margin-bottom: 22px;
 }
 .hero-content .sub-title:before {
-  display: inline-block;
-  content: "";
-  width: 55px;
-  height: 3px;
-  vertical-align: middle;
-  -webkit-margin-end: 30px;
-          margin-inline-end: 30px;
+  display: none;
 }
 .hero-content.text-center .sub-title:after {
-  display: inline-block;
-  content: "";
-  width: 55px;
-  height: 3px;
-  vertical-align: middle;
-  -webkit-margin-start: 30px;
-          margin-inline-start: 30px;
+  display: none;
 }
 .hero-content h1 {
   margin-bottom: 33px;

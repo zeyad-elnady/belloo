@@ -74,6 +74,7 @@ export default function Document(props) {
         <link rel="stylesheet" href="/assets/css/floating-header.css" />
         {/*====== WhatsApp Button css ======*/}
         <link rel="stylesheet" href="/assets/css/whatsapp-button.css" />
+        <link rel="stylesheet" href="/assets/css/call-button.css" />
         {/*====== Tree Positioning Fix css ======*/}
         <link rel="stylesheet" href="/assets/css/tree-positioning-fix.css" />
         {/*====== Hero Button Fix css ======*/}

@@ -63,6 +63,45 @@ const App = ({ Component, pageProps }) => {
       {loading && <Preloader />}
       {!loading && <Component {...pageProps} />}
       
+      {/* Call Button */}
+      <div 
+        id="call-button" 
+        onClick={() => window.open('tel:+201101511185', '_self')}
+        style={{
+          position: 'fixed',
+          bottom: '120px',
+          right: '30px',
+          width: '70px',
+          height: '70px',
+          backgroundColor: '#4D602C',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          zIndex: 9999,
+          boxShadow: '0 4px 20px rgba(77, 96, 44, 0.4)',
+          transition: 'all 0.3s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.target.style.transform = 'translateY(-5px) scale(1.05)';
+          e.target.style.boxShadow = '0 8px 30px rgba(77, 96, 44, 0.6)';
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.transform = 'translateY(0) scale(1)';
+          e.target.style.boxShadow = '0 4px 20px rgba(77, 96, 44, 0.4)';
+        }}
+      >
+        <svg 
+          width="28" 
+          height="28" 
+          viewBox="0 0 24 24" 
+          fill="white"
+        >
+          <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+        </svg>
+      </div>
+
       {/* WhatsApp Button */}
       <div 
         id="whatsapp-button" 

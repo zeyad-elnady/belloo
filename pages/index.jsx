@@ -19,6 +19,14 @@ const Index = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  
+  // Get the appropriate video based on locale
+  const getVideoSource = () => {
+    if (router.locale === 'ar') {
+      return "/assets/video/world map arabic.mp4";
+    }
+    return "/assets/video/world map.mp4"; // Default for English and Russian
+  };
 
   // Fetch blog posts, featured products, and website images from database
   useEffect(() => {
@@ -372,6 +380,71 @@ const Index = () => {
         </div>
       </section>
       {/*====== End Our Achievements Section ======*/}
+
+      {/*====== Start Global Reach Video Section  ======*/}
+      <section className="global-reach-section pt-100 pb-50">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-xl-8 col-lg-10">
+              <div className="section-title text-center mb-50 wow fadeInDown">
+                <span className="sub-title">
+                  <i className="flaticon-plant" />
+                  {t('aboutPage.globalReach.subtitle') || 'Our Global Reach'}
+                </span>
+                <h2>{t('aboutPage.globalReach.title') || 'From Egypt to the World'}</h2>
+                <p className="section-description">
+                  {t('aboutPage.globalReach.description') || 'Discover our worldwide presence and export network that brings premium Egyptian products to international markets'}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="row justify-content-center">
+            <div className="col-lg-10">
+              <div className="global-reach-video-box wow fadeInUp" data-wow-delay="0.2s">
+                <div 
+                  className="video-container"
+                  style={{
+                    position: 'relative',
+                    borderRadius: '20px',
+                    overflow: 'hidden',
+                    boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
+                    transition: 'all 0.3s ease',
+                    background: '#f8f9fa'
+                  }}
+                >
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{
+                      width: '100%',
+                      height: '400px',
+                      objectFit: 'cover',
+                      display: 'block'
+                    }}
+                  >
+                    <source src={getVideoSource()} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  
+                  {/* Overlay with company info */}
+                  <div className="video-overlay map-text-overlay">
+                    <h4 className="map-overlay-title">
+                      {t('aboutPage.globalReach.overlayTitle') || 'Exporting Excellence Worldwide'}
+                    </h4>
+                    <p className="map-overlay-description">
+                      {t('aboutPage.globalReach.overlayDescription') || 'From our facilities in Egypt, we serve markets across continents with premium quality products'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*====== End Global Reach Video Section  ======*/}
+      
       {/*====== Start About Section ======*/}
       <section className="about-bg-section">
         {/*====== About BG ======*/}
@@ -419,6 +492,12 @@ const Index = () => {
                       <h6>{t('about.productVarieties')}</h6>
                         </div>
                       </div>
+                  <div className="about-button mt-30">
+                    <Link href="/about" className="main-btn golden-btn">
+                      {t('about.learnMoreButton') || 'Learn More About Us'}
+                      <i className="far fa-arrow-right" />
+                    </Link>
+                  </div>
                           </div>
                         </div>
                       </div>
