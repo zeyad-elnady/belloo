@@ -23,9 +23,9 @@ const Index = () => {
   // Get the appropriate video based on locale
   const getVideoSource = () => {
     if (router.locale === 'ar') {
-      return "/assets/video/world map arabic.mp4";
+      return "/assets/video/world%20map%20arabic.mp4";
     }
-    return "/assets/video/world map.mp4"; // Default for English and Russian
+    return "/assets/video/world%20map.mp4"; // Default for English and Russian
   };
 
   // Fetch blog posts, featured products, and website images from database
@@ -417,11 +417,16 @@ const Index = () => {
                     loop
                     muted
                     playsInline
+                    preload="auto"
                     style={{
                       width: '100%',
                       height: '400px',
                       objectFit: 'cover',
                       display: 'block'
+                    }}
+                    onError={(e) => {
+                      console.error('Video failed to load:', e);
+                      console.log('Attempted video source:', getVideoSource());
                     }}
                   >
                     <source src={getVideoSource()} type="video/mp4" />
