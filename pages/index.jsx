@@ -19,7 +19,14 @@ const Index = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  const [mapVideoUrl, setMapVideoUrl] = useState('');
+  
+  // Get the appropriate video based on locale
+  const getVideoSource = () => {
+    if (router.locale === 'ar') {
+      return "/assets/video/world-map-arabic.mp4";
+    }
+    return "/assets/video/world-map.mp4"; // Default for English and Russian
+  };
 
   // Fetch blog posts, featured products, and website images from database
   useEffect(() => {
@@ -86,24 +93,6 @@ const Index = () => {
     fetchFeaturedProducts();
     fetchWebsiteImages();
   }, []);
-
-  // Fetch map video URL from Supabase based on locale
-  useEffect(() => {
-    const fetchMapVideo = async () => {
-      try {
-        const response = await fetch(`/api/videos/map-video?locale=${router.locale}`);
-        const result = await response.json();
-        if (result.success && result.videoUrl) {
-          setMapVideoUrl(result.videoUrl);
-          console.log('✅ Loaded map video URL:', result.videoUrl);
-        }
-      } catch (error) {
-        console.error('Failed to fetch map video:', error);
-      }
-    };
-
-    fetchMapVideo();
-  }, [router.locale]); // Re-fetch when language changes
 
   // Get title based on current language
   const getTitle = (post) => {
@@ -423,42 +412,26 @@ const Index = () => {
                     background: '#f8f9fa'
                   }}
                 >
-                  {mapVideoUrl ? (
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      preload="auto"
-                      key={mapVideoUrl}
-                      style={{
-                        width: '100%',
-                        height: '400px',
-                        objectFit: 'cover',
-                        display: 'block'
-                      }}
-                      onError={(e) => {
-                        console.error('Video failed to load:', e);
-                        console.log('Attempted video source:', mapVideoUrl);
-                      }}
-                    >
-                      <source src={mapVideoUrl} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  ) : (
-                    <div style={{
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    style={{
                       width: '100%',
                       height: '400px',
-                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                      fontSize: '18px'
-                    }}>
-                      Loading video...
-                    </div>
-                  )}
+                      objectFit: 'cover',
+                      display: 'block'
+                    }}
+                    onError={(e) => {
+                      console.error('Video failed to load:', e);
+                      console.log('Attempted video source:', getVideoSource());
+                    }}
+                  >
+                    <source src={getVideoSource()} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                   
                   {/* Overlay with company info */}
                   <div className="video-overlay map-text-overlay">
