@@ -9,52 +9,304 @@ const Sustainability = () => {
     <Layout header={3} footer={3}>
       <PageBanner pageName={t('sustainabilityPage.pageTitle')} />
       
-      {/* Hero Section */}
-      <section className="sustainability-hero-section pt-120 pb-100">
+      {/* Hero Content Section - Full Width with Background */}
+      <section 
+        className="sustainability-intro-section pt-130 pb-130 p-r z-1"
+        style={{
+          background: 'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)',
+          position: 'relative',
+          overflow: 'hidden'
+        }}
+      >
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-lg-8">
-              <div className="section-title text-center mb-70 wow fadeInDown">
-                <span className="sub-title">
-                  <i className="flaticon-plant" />
+            <div className="col-lg-10">
+              <div className="text-center text-white wow fadeInUp">
+                <span className="sub-title" style={{ color: '#f0e68c', fontSize: '16px', fontWeight: '600', letterSpacing: '1px' }}>
+                  <i className="flaticon-plant" style={{ marginRight: '10px' }} />
                   {t('sustainabilityPage.subtitle')}
                 </span>
-                <h2 className="sustainability-main-title">{t('sustainabilityPage.title')}</h2>
-              </div>
-              <div className="hero-description text-center wow fadeInUp">
-                <p className="lead-text">
+                <h1 style={{ fontSize: '48px', fontWeight: '700', marginTop: '20px', marginBottom: '30px', lineHeight: '1.2' }}>
+                  {t('sustainabilityPage.title')}
+                </h1>
+                <p style={{ fontSize: '20px', lineHeight: '1.8', maxWidth: '800px', margin: '0 auto', opacity: '0.95' }}>
                   {t('sustainabilityPage.description')}
                 </p>
               </div>
             </div>
           </div>
         </div>
+        
+        {/* Decorative elements */}
+        <div style={{
+          position: 'absolute',
+          bottom: '-50px',
+          left: '0',
+          width: '100%',
+          height: '100px',
+          background: 'white',
+          clipPath: 'polygon(0 50%, 100% 0, 100% 100%, 0 100%)'
+        }} />
       </section>
 
-      {/* Main Content Grid */}
-      <section className="sustainability-content-section pb-120">
+      {/* Commitment Values - Enhanced Design */}
+      <section className="pt-100 pb-100">
         <div className="container">
+          <div className="row justify-content-center mb-70">
+            <div className="col-lg-8 text-center">
+              <div className="section-title wow fadeInDown">
+                <span className="sub-title">
+                  <i className="flaticon-plant" />
+                  {t('sustainabilityPage.commitment.title')}
+                </span>
+                <h2>Our Core Values</h2>
+                <p style={{ marginTop: '20px', fontSize: '17px', color: '#666' }}>
+                  The principles that guide everything we do
+                </p>
+              </div>
+            </div>
+          </div>
           
-          {/* Commitment Card */}
-          <div className="row mb-80">
-            <div className="col-lg-12">
-              <div className="sustainability-card commitment-card wow fadeInUp">
-                <div className="card-header">
-                  <div className="icon-container">
-                    <div className="icon-circle">
-                      <i className="fas fa-leaf"></i>
+          <div className="row justify-content-center">
+            {t('sustainabilityPage.commitment.items', { returnObjects: true }).map((item, index) => {
+              const icons = ['fa-seedling', 'fa-shield-alt', 'fa-users', 'fa-award'];
+              const gradients = [
+                'linear-gradient(135deg, #5a7249 0%, #6b8e59 100%)',
+                'linear-gradient(135deg, #4a5f3a 0%, #5a7249 100%)',
+                'linear-gradient(135deg, #6b8e59 0%, #7a9d69 100%)',
+                'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)'
+              ];
+              
+              return (
+                <div key={index} className="col-lg-6 col-md-6 col-sm-12">
+                  <div 
+                    className="value-card-horizontal mb-40 wow fadeInUp" 
+                    data-wow-delay={`.${index * 1}s`}
+                    style={{
+                      background: 'white',
+                      padding: '35px 30px',
+                      borderRadius: '20px',
+                      boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
+                      transition: 'all 0.4s ease',
+                      border: '2px solid #f0f0f0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '25px',
+                      position: 'relative',
+                      overflow: 'hidden'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateX(10px)';
+                      e.currentTarget.style.borderColor = '#5a7249';
+                      e.currentTarget.style.boxShadow = '0 15px 50px rgba(90, 114, 73, 0.2)';
+                      e.currentTarget.querySelector('.icon-wrapper').style.transform = 'rotate(360deg) scale(1.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateX(0)';
+                      e.currentTarget.style.borderColor = '#f0f0f0';
+                      e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)';
+                      e.currentTarget.querySelector('.icon-wrapper').style.transform = 'rotate(0deg) scale(1)';
+                    }}
+                  >
+                    {/* Decorative background element */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '-30px',
+                      right: '-30px',
+                      width: '120px',
+                      height: '120px',
+                      borderRadius: '50%',
+                      background: 'rgba(90, 114, 73, 0.03)',
+                      zIndex: 0
+                    }} />
+                    
+                    {/* Icon */}
+                    <div 
+                      className="icon-wrapper"
+                      style={{
+                        width: '90px',
+                        height: '90px',
+                        borderRadius: '20px',
+                        background: gradients[index],
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0,
+                        boxShadow: '0 10px 25px rgba(90, 114, 73, 0.25)',
+                        transition: 'all 0.6s ease',
+                        position: 'relative',
+                        zIndex: 1
+                      }}
+                    >
+                      <i className={`fas ${icons[index]}`} style={{ fontSize: '36px', color: 'white' }} />
+                    </div>
+                    
+                    {/* Text Content */}
+                    <div style={{ flex: 1, position: 'relative', zIndex: 1 }}>
+                      <div style={{
+                        display: 'inline-block',
+                        padding: '5px 15px',
+                        background: 'rgba(90, 114, 73, 0.08)',
+                        borderRadius: '20px',
+                        marginBottom: '12px',
+                        fontSize: '12px',
+                        fontWeight: '600',
+                        color: '#5a7249',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px'
+                      }}>
+                        Value {index + 1}
+                      </div>
+                      <p style={{ 
+                        fontSize: '16px', 
+                        lineHeight: '1.7', 
+                        color: '#333',
+                        margin: 0,
+                        fontWeight: '500'
+                      }}>
+                        {item}
+                      </p>
+                    </div>
+                    
+                    {/* Arrow indicator */}
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      background: 'rgba(90, 114, 73, 0.1)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                      position: 'relative',
+                      zIndex: 1
+                    }}>
+                      <i className="fas fa-arrow-right" style={{ fontSize: '16px', color: '#5a7249' }} />
                     </div>
                   </div>
-                  <h3 className="card-title">{t('sustainabilityPage.commitment.title')}</h3>
                 </div>
-                <div className="card-content">
-                  <div className="commitment-items-grid">
-                    {t('sustainabilityPage.commitment.items', { returnObjects: true }).map((item, index) => (
-                      <div key={index} className="commitment-item">
-                        <div className="item-icon">
-                          <i className="fas fa-check"></i>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Quality Assurance & Certifications */}
+      <section className="pt-90 pb-90" style={{ background: '#f8f9fa' }}>
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-lg-6">
+              <div className="wow fadeInLeft">
+                <div className="section-title mb-40">
+                  <span className="sub-title">
+                    <i className="flaticon-plant" />
+                    {t('sustainabilityPage.qualityAssurance.title')}
+                  </span>
+                  <h2>International Standards</h2>
+                </div>
+                <p style={{ fontSize: '17px', lineHeight: '1.8', color: '#555', marginBottom: '40px' }}>
+                  {t('sustainabilityPage.qualityAssurance.description')}
+                </p>
+                
+                {/* Image Gallery */}
+                <div className="row">
+                  <div className="col-6 mb-20">
+                    <img 
+                      src="/assets/images/about/about-3.jpg" 
+                      alt="Quality Control"
+                      style={{
+                        width: '100%',
+                        borderRadius: '12px',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.1)'
+                      }}
+                    />
+                  </div>
+                  <div className="col-6 mb-20">
+                    <img 
+                      src="/assets/images/about/about-5.jpg" 
+                      alt="Production"
+                      style={{
+                        width: '100%',
+                        borderRadius: '12px',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.1)'
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="col-lg-6">
+              <div className="wow fadeInRight">
+                <div 
+                  style={{
+                    background: 'white',
+                    padding: '50px 40px',
+                    borderRadius: '20px',
+                    boxShadow: '0 15px 50px rgba(0,0,0,0.1)'
+                  }}
+                >
+                  <h4 style={{ marginBottom: '35px', color: '#333', textAlign: 'center', fontSize: '24px' }}>
+                    {t('sustainabilityPage.qualityAssurance.certifications.title')}
+                  </h4>
+                  
+                  <div className="certifications-list">
+                    {[
+                      { img: '/assets/images/icon/brc-logo.png', alt: 'BRC', index: 0 },
+                      { img: '/assets/images/icon/fda.jpg', alt: 'FDA', index: 1 },
+                      { img: '/assets/images/icon/iso.jpg', alt: 'ISO', index: 2 },
+                      { img: '/assets/images/icon/حلا-01-01.png', alt: 'Halal', index: 3 }
+                    ].map((cert) => (
+                      <div 
+                        key={cert.index}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          padding: '20px',
+                          marginBottom: '15px',
+                          borderRadius: '12px',
+                          background: '#f8f9fa',
+                          transition: 'all 0.3s ease',
+                          cursor: 'pointer'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = '#5a7249';
+                          e.currentTarget.style.transform = 'translateX(10px)';
+                          e.currentTarget.querySelector('p').style.color = 'white';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = '#f8f9fa';
+                          e.currentTarget.style.transform = 'translateX(0)';
+                          e.currentTarget.querySelector('p').style.color = '#333';
+                        }}
+                      >
+                        <div 
+                          style={{
+                            width: '70px',
+                            height: '70px',
+                            background: 'white',
+                            borderRadius: '10px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginRight: '20px',
+                            flexShrink: 0,
+                            boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
+                          }}
+                        >
+                          <img 
+                            src={cert.img}
+                            alt={cert.alt}
+                            style={{
+                              maxWidth: '55px',
+                              maxHeight: '55px',
+                              objectFit: 'contain'
+                            }}
+                          />
                         </div>
-                        <span className="item-text">{item}</span>
+                        <p style={{ margin: 0, fontSize: '15px', fontWeight: '500', color: '#333', transition: 'color 0.3s ease' }}>
+                          {t('sustainabilityPage.qualityAssurance.certifications.items', { returnObjects: true })[cert.index]}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -62,299 +314,391 @@ const Sustainability = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Quality Assurance Card */}
-          <div className="row mb-80">
-            <div className="col-lg-12">
-              <div className="sustainability-card quality-card wow fadeInUp" data-wow-delay=".1s">
-                <div className="card-header">
-                  <div className="icon-container">
-                    <div className="icon-circle quality-icon">
-                      <i className="fas fa-award"></i>
-                    </div>
+      {/* Global Reach Section */}
+      <section className="pt-100 pb-50">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-lg-5">
+              <div className="wow fadeInLeft">
+                <div 
+                  style={{
+                    background: 'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)',
+                    padding: '60px 40px',
+                    borderRadius: '20px',
+                    color: 'white',
+                    boxShadow: '0 20px 60px rgba(90, 114, 73, 0.3)'
+                  }}
+                >
+                  <div style={{ marginBottom: '30px' }}>
+                    <i className="fas fa-globe" style={{ fontSize: '50px', color: '#f0e68c' }} />
                   </div>
-                  <h3 className="card-title">{t('sustainabilityPage.qualityAssurance.title')}</h3>
-                </div>
-                <div className="card-content">
-                  <p className="card-description">
-                    {t('sustainabilityPage.qualityAssurance.description')}
-                  </p>
-                  <div className="certifications-section">
-                    <h4 className="certifications-title">{t('sustainabilityPage.qualityAssurance.certifications.title')}</h4>
-                    <div className="certifications-grid">
-                      <div className="certification-item">
-                        <div className="cert-logo">
-                          <img 
-                            src="/assets/images/icon/brc-logo.png" 
-                            alt="BRC Certified" 
-                            className="cert-image"
-                          />
-                        </div>
-                        <span className="cert-text">
-                          {t('sustainabilityPage.qualityAssurance.certifications.items', { returnObjects: true })[0]}
-                        </span>
-                      </div>
-                      
-                      <div className="certification-item">
-                        <div className="cert-logo">
-                          <img 
-                            src="/assets/images/icon/fda.jpg" 
-                            alt="FDA Approved" 
-                            className="cert-image"
-                          />
-                        </div>
-                        <span className="cert-text">
-                          {t('sustainabilityPage.qualityAssurance.certifications.items', { returnObjects: true })[1]}
-                        </span>
-                      </div>
-                      
-                      <div className="certification-item">
-                        <div className="cert-logo">
-                          <img 
-                            src="/assets/images/icon/iso.jpg" 
-                            alt="ISO Certified" 
-                            className="cert-image"
-                          />
-                        </div>
-                        <span className="cert-text">
-                          {t('sustainabilityPage.qualityAssurance.certifications.items', { returnObjects: true })[2]}
-                        </span>
-                      </div>
-                      
-                      <div className="certification-item">
-                        <div className="cert-logo">
-                          <img 
-                            src="/assets/images/icon/حلا-01-01.png" 
-                            alt="Halal Certified" 
-                            className="cert-image"
-                          />
-                        </div>
-                        <span className="cert-text">
-                          {t('sustainabilityPage.qualityAssurance.certifications.items', { returnObjects: true })[3]}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Global Reach & Customer Promise - Two Column Layout */}
-          <div className="row">
-            <div className="col-lg-6 mb-50">
-              <div className="sustainability-card global-reach-card wow fadeInLeft" data-wow-delay=".2s">
-                <div className="card-header">
-                  <div className="icon-container">
-                    <div className="icon-circle global-icon">
-                      <i className="fas fa-globe"></i>
-                    </div>
-                  </div>
-                  <h3 className="card-title">{t('sustainabilityPage.globalReach.title')}</h3>
-                </div>
-                <div className="card-content">
-                  <p className="card-description">
+                  <h3 style={{ fontSize: '28px', marginBottom: '20px', color: 'white' }}>
+                    {t('sustainabilityPage.globalReach.title')}
+                  </h3>
+                  <p style={{ fontSize: '16px', lineHeight: '1.8', opacity: '0.95' }}>
                     {t('sustainabilityPage.globalReach.description')}
                   </p>
                 </div>
               </div>
             </div>
             
-            <div className="col-lg-6 mb-50">
-              <div className="sustainability-card promise-card wow fadeInRight" data-wow-delay=".3s">
-                <div className="card-header">
-                  <div className="icon-container">
-                    <div className="icon-circle promise-icon">
-                      <i className="fas fa-handshake"></i>
+            <div className="col-lg-7">
+              <div className="wow fadeInRight">
+                <img 
+                  src="/assets/images/about/about-4.jpg"
+                  alt="Global Reach"
+                  style={{
+                    width: '100%',
+                    borderRadius: '20px',
+                    boxShadow: '0 15px 50px rgba(0,0,0,0.15)'
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Customer Promise Section */}
+      <section className="pt-50 pb-100">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-lg-7 order-lg-1 order-2">
+              <div className="wow fadeInLeft">
+                <img 
+                  src="/assets/images/about/about-1.jpg"
+                  alt="Customer Promise"
+                  style={{
+                    width: '100%',
+                    borderRadius: '20px',
+                    boxShadow: '0 15px 50px rgba(0,0,0,0.15)'
+                  }}
+                />
+              </div>
+            </div>
+            
+            <div className="col-lg-5 order-lg-2 order-1 mb-lg-0 mb-40">
+              <div className="wow fadeInRight">
+                <div className="section-title mb-30">
+                  <span className="sub-title">
+                    <i className="flaticon-plant" />
+                    {t('sustainabilityPage.customerPromise.title')}
+                  </span>
+                  <h3>Our Commitment to You</h3>
+                </div>
+                
+                <div>
+                  {t('sustainabilityPage.customerPromise.items', { returnObjects: true }).map((item, index) => (
+                    <div 
+                      key={index}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        marginBottom: '20px',
+                        padding: '15px',
+                        background: 'white',
+                        borderRadius: '12px',
+                        boxShadow: '0 5px 20px rgba(0,0,0,0.05)',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateX(10px)';
+                        e.currentTarget.style.boxShadow = '0 10px 30px rgba(90, 114, 73, 0.15)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateX(0)';
+                        e.currentTarget.style.boxShadow = '0 5px 20px rgba(0,0,0,0.05)';
+                      }}
+                    >
+                      <div 
+                        style={{
+                          width: '40px',
+                          height: '40px',
+                          borderRadius: '50%',
+                          background: 'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginRight: '15px',
+                          flexShrink: 0
+                        }}
+                      >
+                        <i className="fas fa-check" style={{ color: 'white', fontSize: '16px' }} />
+                      </div>
+                      <p style={{ margin: 0, fontSize: '15px', color: '#555', lineHeight: '1.6' }}>
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final Statement Banner - Enhanced */}
+      <section 
+        className="statement-banner-section"
+        style={{
+          background: 'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)',
+          position: 'relative',
+          overflow: 'hidden',
+          padding: '120px 0'
+        }}
+      >
+        {/* Decorative Background Elements */}
+        <div style={{
+          position: 'absolute',
+          top: '-50px',
+          left: '-50px',
+          width: '300px',
+          height: '300px',
+          borderRadius: '50%',
+          background: 'rgba(255, 255, 255, 0.05)',
+          animation: 'float 6s ease-in-out infinite'
+        }} />
+        
+        <div style={{
+          position: 'absolute',
+          bottom: '-100px',
+          right: '-100px',
+          width: '400px',
+          height: '400px',
+          borderRadius: '50%',
+          background: 'rgba(255, 255, 255, 0.03)',
+          animation: 'float 8s ease-in-out infinite reverse'
+        }} />
+        
+        {/* Leaf decorations */}
+        <img 
+          src="/assets/images/shape/leaf-1.png" 
+          alt="" 
+          style={{
+            position: 'absolute',
+            top: '30px',
+            left: '10%',
+            width: '80px',
+            opacity: '0.2',
+            animation: 'rotate 20s linear infinite'
+          }}
+        />
+        
+        <img 
+          src="/assets/images/shape/leaf-2.png" 
+          alt="" 
+          style={{
+            position: 'absolute',
+            bottom: '40px',
+            right: '15%',
+            width: '60px',
+            opacity: '0.2',
+            animation: 'rotate 15s linear infinite reverse'
+          }}
+        />
+        
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+          <div className="row justify-content-center">
+            <div className="col-lg-10">
+              <div className="text-center wow fadeInUp">
+                {/* Quote Icon with fancy background */}
+                <div style={{
+                  marginBottom: '40px',
+                  position: 'relative',
+                  display: 'inline-block'
+                }}>
+                  <div style={{
+                    width: '120px',
+                    height: '120px',
+                    borderRadius: '50%',
+                    background: 'rgba(240, 230, 140, 0.15)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto',
+                    position: 'relative',
+                    animation: 'pulse 3s ease-in-out infinite'
+                  }}>
+                    <div style={{
+                      width: '90px',
+                      height: '90px',
+                      borderRadius: '50%',
+                      background: 'rgba(240, 230, 140, 0.2)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <i className="fas fa-quote-left" style={{ 
+                        fontSize: '40px', 
+                        color: '#f0e68c',
+                        textShadow: '0 4px 8px rgba(0,0,0,0.2)'
+                      }} />
                     </div>
                   </div>
-                  <h3 className="card-title">{t('sustainabilityPage.customerPromise.title')}</h3>
                 </div>
-                <div className="card-content">
-                  <div className="promise-items-grid">
-                    {t('sustainabilityPage.customerPromise.items', { returnObjects: true }).map((item, index) => (
-                      <div key={index} className="promise-item">
-                        <div className="item-icon">
-                          <i className="fas fa-star"></i>
-                        </div>
-                        <span className="item-text">{item}</span>
-                      </div>
-                    ))}
+                
+                {/* Main Quote Text */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  padding: '50px 60px',
+                  borderRadius: '20px',
+                  backdropFilter: 'blur(10px)',
+                  border: '2px solid rgba(240, 230, 140, 0.2)',
+                  boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
+                  maxWidth: '950px',
+                  margin: '0 auto'
+                }}>
+                  <p 
+                    style={{
+                      fontSize: '28px',
+                      lineHeight: '1.8',
+                      color: 'white',
+                      fontStyle: 'italic',
+                      margin: '0 0 30px 0',
+                      fontWeight: '300',
+                      textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
+                    "{t('sustainabilityPage.statement')}"
+                  </p>
+                  
+                  {/* Decorative Divider */}
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    gap: '15px'
+                  }}>
+                    <div style={{
+                      width: '50px',
+                      height: '2px',
+                      background: 'linear-gradient(to right, transparent, #f0e68c)'
+                    }} />
+                    <i className="fas fa-leaf" style={{ 
+                      color: '#f0e68c', 
+                      fontSize: '20px',
+                      animation: 'pulse 2s ease-in-out infinite'
+                    }} />
+                    <div style={{
+                      width: '50px',
+                      height: '2px',
+                      background: 'linear-gradient(to left, transparent, #f0e68c)'
+                    }} />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
+        
+        {/* Wave decoration at bottom */}
+        <div style={{
+          position: 'absolute',
+          bottom: '0',
+          left: '0',
+          width: '100%',
+          height: '100px',
+          background: 'white',
+          clipPath: 'ellipse(70% 100% at 50% 100%)',
+          opacity: '0.05'
+        }} />
       </section>
 
-      {/* Closing Statement */}
-      <section className="closing-statement-section pb-120">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-lg-8">
-              <div className="statement-container text-center wow fadeInUp">
-                <div className="statement-icon">
-                  <i className="fas fa-quote-left"></i>
-                </div>
-                <blockquote className="statement-text">
-                  {t('sustainabilityPage.statement')}
-                </blockquote>
-                <div className="statement-line"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Custom CSS for certification logos */}
       <style jsx>{`
-        .cert-logo {
-          width: 80px;
-          height: 80px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: white;
-          border-radius: 12px;
-          padding: 10px;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0) translateX(0);
+          }
+          50% {
+            transform: translateY(-20px) translateX(10px);
+          }
+        }
+        
+        @keyframes rotate {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.05);
+            opacity: 0.9;
+          }
+        }
+        
+        .statement-banner-section {
           transition: all 0.3s ease;
-          margin-bottom: 15px;
-          border: 2px solid #f0f0f0;
         }
-
-        .cert-logo:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-          border-color: #4d602c;
-        }
-
-        .cert-image {
-          max-width: 100%;
-          max-height: 100%;
-          object-fit: contain;
-          filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-        }
-
-        .certification-item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          padding: 30px 25px;
-          border-radius: 16px;
-          background: rgba(255,255,255,0.8);
-          transition: all 0.3s ease;
-          min-height: 180px;
-          justify-content: flex-start;
-        }
-
-        .certification-item:hover {
-          background: rgba(77, 96, 44, 0.05);
-          transform: translateY(-3px);
-          box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-
-        .certifications-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 25px;
-          margin-top: 30px;
-        }
-
-        .cert-text {
-          font-size: 14px;
-          line-height: 1.4;
-          color: #555;
-          font-weight: 500;
-          max-width: 180px;
-        }
-
+        
         @media (max-width: 768px) {
-          .certifications-grid {
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
+          h1 {
+            font-size: 36px !important;
           }
           
-          .cert-logo {
-            width: 60px;
-            height: 60px;
+          .value-card-horizontal {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 20px !important;
+            padding: 30px 25px !important;
           }
           
-          .cert-text {
-            font-size: 13px;
-          }
-        }
-
-        /* Add padding to main card content areas with important declarations to override existing CSS */
-        .card-content {
-          padding: 20px 30px !important;
-        }
-
-        .card-description {
-          margin-bottom: 25px !important;
-          line-height: 1.7 !important;
-          padding: 0 15px !important;
-        }
-
-        .certifications-title {
-          margin-bottom: 20px !important;
-          padding: 0 15px !important;
-        }
-
-        .sustainability-card {
-          padding: 45px 40px !important;
-          border-radius: 20px !important;
-          margin-bottom: 30px !important;
-        }
-
-        @media (max-width: 768px) {
-          .card-content {
-            padding: 15px 25px !important;
+          .value-card-horizontal .icon-wrapper {
+            width: 80px !important;
+            height: 80px !important;
           }
           
-          .sustainability-card {
-            padding: 35px 25px !important;
+          .certifications-list > div {
+            padding: 15px !important;
           }
           
-          .card-description {
-            padding: 0 10px !important;
+          .statement-banner-section {
+            padding: 80px 0 !important;
           }
-
-          .certifications-title {
-            padding: 0 10px !important;
+          
+          .statement-banner-section > div > div > div > div > div:first-child {
+            width: 80px !important;
+            height: 80px !important;
+          }
+          
+          .statement-banner-section > div > div > div > div > div:first-child > div {
+            width: 60px !important;
+            height: 60px !important;
+          }
+          
+          .statement-banner-section p {
+            font-size: 20px !important;
+            padding: 30px 25px !important;
           }
         }
-
-        @media (max-width: 480px) {
-          .certifications-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+        
+        @media (max-width: 576px) {
+          h1 {
+            font-size: 28px !important;
           }
           
-          .certification-item {
-            min-height: 150px;
-            padding: 20px 15px;
-          }
-
-          .card-content {
-            padding: 15px 20px !important;
+          p[style*="fontSize: '28px'"] {
+            font-size: 18px !important;
           }
           
-          .sustainability-card {
+          .statement-banner-section {
+            padding: 60px 0 !important;
+          }
+          
+          .statement-banner-section p {
+            font-size: 18px !important;
             padding: 25px 20px !important;
-          }
-          
-          .card-description {
-            padding: 0 5px !important;
-            font-size: 14px !important;
-            line-height: 1.6 !important;
-          }
-
-          .certifications-title {
-            padding: 0 5px !important;
           }
         }
       `}</style>

@@ -262,8 +262,40 @@ const About = () => {
         `}</style>
       </section>
       {/*====== End Features Section ======*/}
+      {/*====== Start CTA Section  ======*/}
+      <section
+        className="cta-bg-section bg_cover pt-100 p-r z-1"
+        style={{ backgroundImage: "url(/assets/images/bg/cta-bg-1.jpg)" }}
+      >
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-lg-5">
+              {/*======  CTA Content Box  ======*/}
+              <div className="cta-content-box text-white mb-50 wow fadeInLeft">
+                <div className="section-title mb-20">
+                  <span className="sub-title">
+                    <i className="flaticon-plant" />
+                    {t('aboutPage.cta.subtitle')}
+                  </span>
+                  <h2>{t('aboutPage.cta.title')}</h2>
+                </div>
+                <p className="mb-30">
+                  {t('aboutPage.cta.description')}
+                </p>
+              </div>
+            </div>
+            <div className="col-lg-7">
+              {/*======  CTA Image Box  ======*/}
+              <div className="cta-image-box mb-50 wow fadeInRight">
+                <img src="/assets/images/gallery/cta-1.jpg" alt="Image" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*====== End CTA Section  ======*/}
       {/*====== Start Important Highlights Section ======*/}
-      <section className="features-section pt-95">
+      <section className="features-section pt-95 pb-70">
         <div className="container">
           <div className="row align-items-xl-center">
             <div className="col-lg-6">
@@ -349,38 +381,6 @@ const About = () => {
         </div>
       </section>
       {/*====== End Important Highlights Section ======*/}
-      {/*====== Start CTA Section  ======*/}
-      <section
-        className="cta-bg-section bg_cover pt-100 p-r z-1"
-        style={{ backgroundImage: "url(/assets/images/bg/cta-bg-1.jpg)" }}
-      >
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-5">
-              {/*======  CTA Content Box  ======*/}
-              <div className="cta-content-box text-white mb-50 wow fadeInLeft">
-                <div className="section-title mb-20">
-                  <span className="sub-title">
-                    <i className="flaticon-plant" />
-                    {t('aboutPage.cta.subtitle')}
-                  </span>
-                  <h2>{t('aboutPage.cta.title')}</h2>
-                </div>
-                <p className="mb-30">
-                  {t('aboutPage.cta.description')}
-                </p>
-              </div>
-            </div>
-            <div className="col-lg-7">
-              {/*======  CTA Image Box  ======*/}
-              <div className="cta-image-box mb-50 wow fadeInRight">
-                <img src="/assets/images/gallery/cta-1.jpg" alt="Image" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/*====== End CTA Section  ======*/}
 
     </Layout>
   );

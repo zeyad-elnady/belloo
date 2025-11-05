@@ -114,76 +114,30 @@ const Footer3 = () => {
                 </div>
               </div>
               <div className="col-lg-3 col-md-6 col-sm-6">
-                {/*====== Footer Widget ======*/}
-                <div className="footer-widget footer-gallery-widget float-lg-right mb-40 wow fadeInUp">
-                  <h4 className="widget-title">Gallery</h4>
+                {/*====== Footer Widget - Social Media ======*/}
+                <div className="footer-widget footer-social-widget float-lg-right mb-40 wow fadeInUp">
+                  <h4 className="widget-title">{t('footer.followUs')}</h4>
                   <div className="widget-content">
-                    <ul className="gallery-list">
+                    <ul className="social-icons-list">
                       <li>
-                        <a href="#">
-                          <img
-                            src="/assets/images/gallery/thumb-widget-1.jpg"
-                            alt="Image"
-                          />
-                          <div className="hover-overlay">
-                            <i className="fas fa-arrow-right" />
-                          </div>
-                        </a>
+                        <div className="social-icon">
+                          <i className="fab fa-facebook-f" />
+                        </div>
                       </li>
                       <li>
-                        <a href="#">
-                          <img
-                            src="/assets/images/gallery/thumb-widget-2.png"
-                            alt="Image"
-                          />
-                          <div className="hover-overlay">
-                            <i className="fas fa-arrow-right" />
-                          </div>
-                        </a>
+                        <div className="social-icon">
+                          <i className="fab fa-instagram" />
+                        </div>
                       </li>
                       <li>
-                        <a href="#">
-                          <img
-                            src="/assets/images/gallery/thumb-widget-3.png"
-                            alt="Image"
-                          />
-                          <div className="hover-overlay">
-                            <i className="fas fa-arrow-right" />
-                          </div>
-                        </a>
+                        <div className="social-icon">
+                          <i className="fab fa-twitter" />
+                        </div>
                       </li>
                       <li>
-                        <a href="#">
-                          <img
-                            src="/assets/images/gallery/thumb-widget-4.png"
-                            alt="Image"
-                          />
-                          <div className="hover-overlay">
-                            <i className="fas fa-arrow-right" />
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <img
-                            src="/assets/images/gallery/thumb-widget-5.png"
-                            alt="Image"
-                          />
-                          <div className="hover-overlay">
-                            <i className="fas fa-arrow-right" />
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <img
-                            src="/assets/images/gallery/thumb-widget-6.png"
-                            alt="Image"
-                          />
-                          <div className="hover-overlay">
-                            <i className="fas fa-arrow-right" />
-                          </div>
-                        </a>
+                        <div className="social-icon">
+                          <i className="fab fa-linkedin-in" />
+                        </div>
                       </li>
                     </ul>
                   </div>

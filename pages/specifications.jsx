@@ -162,6 +162,141 @@ const Specifications = () => {
                   <p className="specs-description">{currentSpecs.description}</p>
                 </div>
 
+                {/* Product Image Viewer */}
+                <div className="product-viewer mb-60">
+                  <div className="row align-items-center">
+                    <div className="col-lg-6">
+                      <div 
+                        className="product-image-container"
+                        style={{
+                          background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                          borderRadius: '20px',
+                          padding: '40px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          minHeight: '400px',
+                          boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
+                          position: 'relative',
+                          overflow: 'hidden'
+                        }}
+                      >
+                        {/* Decorative background */}
+                        <div style={{
+                          position: 'absolute',
+                          top: '-50px',
+                          right: '-50px',
+                          width: '200px',
+                          height: '200px',
+                          borderRadius: '50%',
+                          background: 'rgba(90, 114, 73, 0.05)'
+                        }} />
+                        
+                        <img 
+                          src={`/assets/images/products/${currentPackage.toUpperCase().replace('-', ' ')}/default.png`}
+                          alt={currentSpecs.title}
+                          style={{
+                            maxWidth: '100%',
+                            maxHeight: '350px',
+                            objectFit: 'contain',
+                            position: 'relative',
+                            zIndex: 1,
+                            filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.15))'
+                          }}
+                          onError={(e) => {
+                            e.target.src = '/assets/images/products/rate.png';
+                          }}
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="col-lg-6">
+                      <div className="product-info" style={{ padding: '20px' }}>
+                        <div style={{
+                          display: 'inline-block',
+                          padding: '8px 20px',
+                          background: 'rgba(90, 114, 73, 0.1)',
+                          borderRadius: '25px',
+                          marginBottom: '20px',
+                          fontSize: '14px',
+                          fontWeight: '600',
+                          color: '#5a7249',
+                          textTransform: 'uppercase',
+                          letterSpacing: '1px'
+                        }}>
+                          {t('specificationsPage.productViewer.premiumQuality')}
+                        </div>
+                        
+                        <h3 style={{ 
+                          fontSize: '32px', 
+                          fontWeight: '700', 
+                          color: '#333', 
+                          marginBottom: '20px' 
+                        }}>
+                          {currentSpecs.title}
+                        </h3>
+                        
+                        <p style={{ 
+                          fontSize: '16px', 
+                          lineHeight: '1.8', 
+                          color: '#666',
+                          marginBottom: '30px'
+                        }}>
+                          {currentSpecs.description}
+                        </p>
+                        
+                        <div className="product-features">
+                          {[
+                            { icon: 'fa-certificate', text: t('specificationsPage.productViewer.features.qualityStandards') },
+                            { icon: 'fa-shipping-fast', text: t('specificationsPage.productViewer.features.readyForExport') },
+                            { icon: 'fa-box', text: t('specificationsPage.productViewer.features.multipleSizes') },
+                            { icon: 'fa-leaf', text: t('specificationsPage.productViewer.features.foodGrade') }
+                          ].map((feature, idx) => (
+                            <div 
+                              key={idx}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginBottom: '15px',
+                                padding: '12px 15px',
+                                background: 'white',
+                                borderRadius: '12px',
+                                boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
+                                transition: 'all 0.3s ease'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = 'translateX(10px)';
+                                e.currentTarget.style.boxShadow = '0 6px 20px rgba(90, 114, 73, 0.15)';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'translateX(0)';
+                                e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.05)';
+                              }}
+                            >
+                              <div style={{
+                                width: '40px',
+                                height: '40px',
+                                borderRadius: '50%',
+                                background: 'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                marginRight: '15px',
+                                flexShrink: 0
+                              }}>
+                                <i className={`fas ${feature.icon}`} style={{ color: 'white', fontSize: '16px' }} />
+                              </div>
+                              <span style={{ fontSize: '15px', color: '#555', fontWeight: '500' }}>
+                                {feature.text}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Specifications Table */}
                 <div className="specs-table-wrapper">
                   <table className="specs-table">

@@ -465,7 +465,8 @@
     "ourProducts": "Our Products",
     "aboutUs": "About Us",
     "home": "Home",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "back": "Back"
   },
   "catalog": {
     "title": "Download Our Product Catalog",
@@ -523,6 +524,15 @@
       "title": "Need Custom Specifications?",
       "description": "Contact us for custom packaging solutions tailored to your needs.",
       "button": "Contact Us"
+    },
+    "productViewer": {
+      "premiumQuality": "Premium Quality",
+      "features": {
+        "qualityStandards": "International Quality Standards",
+        "readyForExport": "Ready for Export",
+        "multipleSizes": "Multiple Size Options",
+        "foodGrade": "Food-Grade Materials"
+      }
     }
   },
   "newsletter": {

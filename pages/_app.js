@@ -57,7 +57,11 @@ const App = ({ Component, pageProps }) => {
           href="/assets/images/favicon.ico"
           type="image/png"
         />
-
+        {/*====== Social Media Footer CSS ======*/}
+        <link
+          rel="stylesheet"
+          href="/assets/css/social-media-footer.css"
+        />
 
       </Head>
       {loading && <Preloader />}

@@ -432,7 +432,8 @@
     "ourProducts": "منتجاتنا",
     "aboutUs": "عن الشركة",
     "home": "الرئيسية",
-    "backToHome": "العودة للرئيسية"
+    "backToHome": "العودة للرئيسية",
+    "back": "رجوع"
   },
   "catalog": {
     "title": "حمّل كتالوج منتجاتنا",
@@ -490,6 +491,15 @@
       "title": "تحتاج مواصفات مخصصة؟",
       "description": "تواصل معنا للحصول على حلول تعبئة مخصصة تناسب احتياجاتك.",
       "button": "تواصل معنا"
+    },
+    "productViewer": {
+      "premiumQuality": "جودة فاخرة",
+      "features": {
+        "qualityStandards": "معايير جودة عالمية",
+        "readyForExport": "جاهز للتصدير",
+        "multipleSizes": "خيارات متعددة للأحجام",
+        "foodGrade": "مواد صالحة للطعام"
+      }
     }
   },
   "newsletter": {
