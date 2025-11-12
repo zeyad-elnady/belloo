@@ -1247,6 +1247,15 @@ export default function Admin() {
               </li>
               <li className="admin-tab-item">
                 <button 
+                  className={`admin-tab-button`}
+                  onClick={() => router.push('/admin/content-manager')}
+                >
+                  <i className="fas fa-language"></i>
+                  <span>Content Manager</span>
+                </button>
+              </li>
+              <li className="admin-tab-item">
+                <button 
                   className={`admin-tab-button ${activeTab === 'profile' ? 'active' : ''}`}
                   onClick={() => setActiveTab('profile')}
                 >

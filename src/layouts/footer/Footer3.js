@@ -115,7 +115,7 @@ const Footer3 = () => {
               </div>
               <div className="col-lg-3 col-md-6 col-sm-6">
                 {/*====== Footer Widget - Social Media ======*/}
-                <div className="footer-widget footer-social-widget float-lg-right mb-40 wow fadeInUp">
+                <div className="footer-widget footer-social-widget float-lg-right mb-30 wow fadeInUp">
                   <h4 className="widget-title">{t('footer.followUs')}</h4>
                   <div className="widget-content">
                     <ul className="social-icons-list">
@@ -140,6 +140,109 @@ const Footer3 = () => {
                         </div>
                       </li>
                     </ul>
+                  </div>
+                  
+                  {/*====== Newsletter Form ======*/}
+                  <div className="footer-newsletter mt-25 wow fadeInUp" data-wow-delay=".3s">
+                    <h5 style={{
+                      color: 'white',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      marginBottom: '12px',
+                      letterSpacing: '0.5px'
+                    }}>
+                      Subscribe to Newsletter
+                    </h5>
+                    <form 
+                      onSubmit={async (e) => {
+                        e.preventDefault();
+                        
+                        const email = e.target.email.value;
+                        if (!email || !email.trim()) {
+                          alert('Please enter a valid email address.');
+                          return;
+                        }
+
+                        const submitButton = e.target.querySelector('button[type="submit"]');
+                        const originalHTML = submitButton.innerHTML;
+                        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                        submitButton.disabled = true;
+
+                        try {
+                          const response = await fetch('/api/newsletter/subscribe', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              email: email.trim(),
+                              source: 'Footer',
+                              language: 'en'
+                            })
+                          });
+
+                          const result = await response.json();
+                          if (result.success) {
+                            alert('✓ Successfully subscribed to newsletter!');
+                            e.target.reset();
+                          } else {
+                            alert(result.error || 'Failed to subscribe');
+                          }
+                        } catch (error) {
+                          alert('An error occurred. Please try again.');
+                        } finally {
+                          submitButton.innerHTML = originalHTML;
+                          submitButton.disabled = false;
+                        }
+                      }}
+                      style={{
+                        display: 'flex',
+                        gap: '8px'
+                      }}
+                    >
+                      <input 
+                        type="email" 
+                        name="email"
+                        placeholder="Enter your email address"
+                        required
+                        style={{
+                          flex: 1,
+                          height: '42px',
+                          padding: '0 15px',
+                          borderRadius: '6px',
+                          border: '1px solid rgba(255,255,255,0.3)',
+                          backgroundColor: 'rgba(255,255,255,0.15)',
+                          color: 'white',
+                          fontSize: '13px',
+                          outline: 'none'
+                        }}
+                        className="footer-newsletter-input"
+                      />
+                      <button 
+                        type="submit"
+                        style={{
+                          height: '42px',
+                          padding: '0 20px',
+                          borderRadius: '6px',
+                          border: 'none',
+                          backgroundColor: 'white',
+                          color: '#4D602C',
+                          fontSize: '14px',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          whiteSpace: 'nowrap',
+                          transition: 'all 0.3s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.backgroundColor = '#f0f0f0';
+                          e.target.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.backgroundColor = 'white';
+                          e.target.style.transform = 'scale(1)';
+                        }}
+                      >
+                        <i className="far fa-envelope"></i>
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>
