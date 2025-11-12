@@ -1,4 +1,5 @@
 import Preloader from "@/src/layouts/Preloader";
+import AdPopup from "@/components/AdPopup";
 import Head from "next/head";
 import Script from "next/script";
 import { Fragment, useEffect, useState } from "react";
@@ -65,7 +66,12 @@ const App = ({ Component, pageProps }) => {
 
       </Head>
       {loading && <Preloader />}
-      {!loading && <Component {...pageProps} />}
+      {!loading && (
+        <>
+          <AdPopup />
+          <Component {...pageProps} />
+        </>
+      )}
       
       {/* Call Button */}
       <div 
