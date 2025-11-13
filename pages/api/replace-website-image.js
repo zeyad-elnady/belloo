@@ -41,6 +41,13 @@ const IMAGE_CONFIG = {
   'bg-about': { bucket: 'website', folder: 'bg', filename: 'about-bg-1.jpg' },
   'bg-page': { bucket: 'website', folder: 'bg', filename: 'page-bg-1.jpg' },
   'bg-features': { bucket: 'website', folder: 'bg', filename: 'features-bg-1.jpg' },
+  
+  // Product Categories
+  'category-all': { bucket: 'website', folder: 'categories', filename: 'category-all-products.png' },
+  'category-green-olives': { bucket: 'website', folder: 'categories', filename: 'category-green-olives.png' },
+  'category-black-olives': { bucket: 'website', folder: 'categories', filename: 'category-black-olives.png' },
+  'category-peppers': { bucket: 'website', folder: 'categories', filename: 'category-peppers.png' },
+  'category-pickles': { bucket: 'website', folder: 'categories', filename: 'category-pickles.png' },
 };
 
 export default async function handler(req, res) {

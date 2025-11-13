@@ -20,6 +20,10 @@ const Products = () => {
   const [dbProducts, setDbProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // State for category images
+  const [categoryImages, setCategoryImages] = useState({});
+  const [imageRefreshKey, setImageRefreshKey] = useState(0);
+
   // Fetch products from database
   useEffect(() => {
     const fetchProducts = async () => {
@@ -39,13 +43,77 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  // Category data - updated to match database categories
+  // Fetch category images from website-images API
+  useEffect(() => {
+    const fetchCategoryImages = async () => {
+      try {
+        // Add cache-busting to ensure fresh images
+        const response = await fetch(`/api/website-images/config?t=${Date.now()}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        });
+        const data = await response.json();
+        if (data.success && data.images) {
+          console.log('✅ Loaded category images:', {
+            'category-all': data.images['category-all'],
+            'category-green-olives': data.images['category-green-olives'],
+            'category-black-olives': data.images['category-black-olives']
+          });
+          
+          // Add timestamp to each image URL to force browser reload
+          const timestamp = Date.now();
+          const addCacheBuster = (url) => {
+            if (!url) return url;
+            const separator = url.includes('?') ? '&' : '?';
+            return `${url}${separator}_refresh=${timestamp}`;
+          };
+          
+          const newCategoryImages = {
+            'all': addCacheBuster(data.images['category-all'] || '/assets/images/products/GLASS JARS/Whole Green Olives .png'),
+            'green-olives': addCacheBuster(data.images['category-green-olives'] || '/assets/images/products/GLASS JARS/Whole Green Olives .png'),
+            'black-olives': addCacheBuster(data.images['category-black-olives'] || '/assets/images/products/GLASS JARS/Whole Black Olives.png'),
+            'peppers': addCacheBuster(data.images['category-peppers'] || '/assets/images/products/GLASS JARS/pepperoncini Pepper.png'),
+            'artichokes': addCacheBuster(data.images['category-pickles'] || '/assets/images/products/GLASS JARS/Artichoke Hearts .png')
+          };
+          
+          setCategoryImages(newCategoryImages);
+          
+          // Force image refresh by updating key
+          setImageRefreshKey(prev => prev + 1);
+          
+          console.log('🔄 Updated category images with cache-busting:', newCategoryImages);
+        }
+      } catch (error) {
+        console.error('Error fetching category images:', error);
+        // Use default images if fetch fails
+        setCategoryImages({
+          'all': '/assets/images/products/GLASS JARS/Whole Green Olives .png',
+          'green-olives': '/assets/images/products/GLASS JARS/Whole Green Olives .png',
+          'black-olives': '/assets/images/products/GLASS JARS/Whole Black Olives.png',
+          'peppers': '/assets/images/products/GLASS JARS/pepperoncini Pepper.png',
+          'artichokes': '/assets/images/products/GLASS JARS/Artichoke Hearts .png'
+        });
+      }
+    };
+
+    fetchCategoryImages();
+    
+    // Refresh images every 30 seconds to catch updates
+    const refreshInterval = setInterval(fetchCategoryImages, 30000);
+    
+    return () => clearInterval(refreshInterval);
+  }, []);
+
+  // Category data - updated to match database categories with dynamic images
   const categories = [
-    { id: 'all', name: 'All Products', icon: '' },
-    { id: 'green-olives', name: t('productsPage.categories.greenOlives'), icon: '' },
-    { id: 'black-olives', name: t('productsPage.categories.blackOlives'), icon: '' },
-    { id: 'peppers', name: t('productsPage.categories.peppers'), icon: '' },
-    { id: 'artichokes', name: t('productsPage.categories.picklesVegetables'), icon: '' }
+    { id: 'all', name: 'All Products', image: categoryImages['all'] || '/assets/images/products/GLASS JARS/Whole Green Olives .png' },
+    { id: 'green-olives', name: t('productsPage.categories.greenOlives'), image: categoryImages['green-olives'] || '/assets/images/products/GLASS JARS/Whole Green Olives .png' },
+    { id: 'black-olives', name: t('productsPage.categories.blackOlives'), image: categoryImages['black-olives'] || '/assets/images/products/GLASS JARS/Whole Black Olives.png' },
+    { id: 'peppers', name: t('productsPage.categories.peppers'), image: categoryImages['peppers'] || '/assets/images/products/GLASS JARS/pepperoncini Pepper.png' },
+    { id: 'artichokes', name: t('productsPage.categories.picklesVegetables'), image: categoryImages['artichokes'] || '/assets/images/products/GLASS JARS/Artichoke Hearts .png' }
   ];
 
   // Helper function to get current view for a specific product
@@ -403,6 +471,11 @@ const Products = () => {
     );
   };
 
+  // State for PDF viewer
+  const [showPDFViewer, setShowPDFViewer] = useState(false);
+  const [currentPDF, setCurrentPDF] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
+
   // Render a single product card (SAME STYLE for all products)
   const renderProductCard = (product, index) => {
     const productKey = product.key;
@@ -438,12 +511,123 @@ const Products = () => {
     </div>
   );
   };
-  
+
   return (
     <Layout header={3} footer={3}>
       <PageBanner pageName={t('productsPage.pageTitle')} />
+      
+      {/*====== Start Catalog Section (Moved to Top) ======*/}
+      <section className="catalog-section pt-80 pb-60">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-xl-10 col-lg-12">
+              <div className="catalog-wrapper">
+                <div className="section-title text-center mb-40 wow fadeInDown">
+                  <span className="sub-title">
+                    <i className="flaticon-plant" />
+                    {t('catalog.title', 'Download Our Product Catalog')}
+                  </span>
+                  <h2 style={{ fontSize: '28px', marginTop: '10px' }}>
+                    {t('catalog.heading', 'Premium Egyptian Olives & Pickles')}
+                  </h2>
+                </div>
+                
+                <div className="catalog-cards-wrapper wow fadeInUp">
+                  <div className="row justify-content-center">
+                    <div className="col-lg-6 col-md-8">
+                      <div className="catalog-card unified-card">
+                        {/* Language Selector */}
+                        <div className="language-selector">
+                          <button 
+                            className={`language-btn ${selectedLanguage === 'en' ? 'active' : ''}`}
+                            onClick={() => setSelectedLanguage('en')}
+                          >
+                            <span>English</span>
+                          </button>
+                          <button 
+                            className={`language-btn ${selectedLanguage === 'ru' ? 'active' : ''}`}
+                            onClick={() => setSelectedLanguage('ru')}
+                          >
+                            <span>Russian</span>
+                          </button>
+                        </div>
+                        
+                        <h4 className="catalog-card-title">
+                          {selectedLanguage === 'en' 
+                            ? t('catalog.english', 'English Catalog')
+                            : t('catalog.russian', 'Russian Catalog')
+                          }
+                        </h4>
+                        
+                        <p className="catalog-card-desc">
+                          {selectedLanguage === 'en'
+                            ? 'Complete product specifications and details'
+                            : 'Полная спецификация и детали продукции'
+                          }
+                        </p>
+                        
+                        <div className="catalog-card-info">
+                          <span><i className="far fa-file-pdf"></i> PDF Format</span>
+                          <span><i className="far fa-hdd"></i> {selectedLanguage === 'en' ? '45 MB' : '25 MB'}</span>
+                        </div>
+                        
+                        <div className="catalog-card-actions">
+                          <button 
+                            className="catalog-btn catalog-btn-view"
+                            onClick={() => {
+                              const pdfPath = selectedLanguage === 'en' 
+                                ? '/assets/pdf/Olive profile (25 x 15 cm)  EN-HD.pdf'
+                                : '/assets/pdf/Olive profile (25 x 15 cm)  RU-HD.pdf';
+                              setCurrentPDF(pdfPath);
+                              setShowPDFViewer(true);
+                            }}
+                          >
+                            <i className="far fa-eye"></i> 
+                            {selectedLanguage === 'en' ? 'View Catalog' : 'Просмотр каталога'}
+                          </button>
+                          <button 
+                            className="catalog-btn catalog-btn-download"
+                            onClick={async () => {
+                              const pdfPath = selectedLanguage === 'en'
+                                ? '/assets/pdf/Olive profile (25 x 15 cm)  EN-HD.pdf'
+                                : '/assets/pdf/Olive profile (25 x 15 cm)  RU-HD.pdf';
+                              const fileName = selectedLanguage === 'en'
+                                ? 'Bello-Food-Catalog-English.pdf'
+                                : 'Bello-Food-Catalog-Russian.pdf';
+                              
+                              try {
+                                const response = await fetch(pdfPath);
+                                const blob = await response.blob();
+                                const url = window.URL.createObjectURL(blob);
+                                const link = document.createElement('a');
+                                link.href = url;
+                                link.download = fileName;
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                                window.URL.revokeObjectURL(url);
+                              } catch (error) {
+                                window.open(pdfPath, '_blank');
+                              }
+                            }}
+                          >
+                            <i className="far fa-download"></i> 
+                            {selectedLanguage === 'en' ? 'Download' : 'Скачать'}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*====== End Catalog Section ======*/}
+
       {/* Main Title Section */}
-      <section className="service-section pt-100 pb-40">
+      <section className="service-section pt-50 pb-40">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10">
@@ -484,7 +668,7 @@ const Products = () => {
 
           {/* Category Tabs */}
           <div className="row justify-content-center mb-60">
-            <div className="col-lg-10">
+            <div className="col-lg-12">
               <div className="category-tabs-wrapper">
                 <div className="category-tabs">
                   {categories.map((category, index) => (
@@ -497,6 +681,30 @@ const Products = () => {
                       }}
                       data-wow-delay={`${0.1 + index * 0.1}s`}
                     >
+                      <div className="category-tab-image">
+                        <img 
+                          key={`${category.id}-${imageRefreshKey}-${category.image}`}
+                          src={category.image} 
+                          alt={category.name}
+                          style={{
+                            display: 'block',
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover'
+                          }}
+                          onLoad={() => {
+                            console.log(`✅ Image loaded: ${category.id} - ${category.image}`);
+                          }}
+                          onError={(e) => {
+                            console.error(`❌ Image failed to load: ${category.id} - ${category.image}`);
+                            // Fallback to default if Supabase image fails
+                            const fallback = category.image.split('?')[0];
+                            if (e.target.src !== fallback) {
+                              e.target.src = fallback;
+                            }
+                          }}
+                        />
+                      </div>
                       <span className="tab-name">{category.name}</span>
                     </button>
                   ))}
@@ -536,140 +744,406 @@ const Products = () => {
         </div>
       </section>
 
-      {/*====== Start Catalog Download Section  ======*/}
-      <section className="catalog-section pt-100 pb-100">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-xl-8 col-lg-10">
-              <div className="catalog-wrapper text-center">
-                <div className="section-title mb-50 wow fadeInDown">
-                  <span className="sub-title">
-                    <i className="flaticon-plant" />
-                    {t('catalog.title')}
-                  </span>
-                  <p className="catalog-description">
-                    {t('catalog.description')}
-                  </p>
-                </div>
-                
-                <div className="catalog-download-box wow fadeInUp">
-                  <button 
-                    className="main-catalog-btn"
-                    onClick={() => document.getElementById('catalogModal').style.display = 'block'}
-                  >
-                    <i className="far fa-download" />
-                    {t('catalog.downloadButton')}
-                  </button>
-                </div>
-                
-                {/* Catalog Language Selection Modal */}
-                <div 
-                  id="catalogModal" 
-                  className="catalog-modal"
-                  onClick={(e) => {
-                    if (e.target.id === 'catalogModal') {
-                      document.getElementById('catalogModal').style.display = 'none';
-                    }
-                  }}
-                >
-                  <div className="catalog-modal-content">
-                    <div className="catalog-modal-header">
-                      <h3>{t('catalog.selectLanguage')}</h3>
-                      <span 
-                        className="catalog-close"
-                        onClick={() => document.getElementById('catalogModal').style.display = 'none'}
-                      >
-                        &times;
-                      </span>
-                    </div>
-                    <div className="catalog-modal-body">
-                      <p>{t('catalog.description')}</p>
-                      <div className="catalog-language-options">
-                        <button 
-                          className="catalog-language-btn english-option"
-                          onClick={async () => {
-                            try {
-                              // Fetch the PDF file as blob
-                              const response = await fetch('/assets/pdf/Olive profile (25 x 15 cm)  EN-HD.pdf');
-                              if (!response.ok) throw new Error('Network response was not ok');
-                              
-                              const blob = await response.blob();
-                              const url = window.URL.createObjectURL(blob);
-                              
-                              // Create download link
-                              const link = document.createElement('a');
-                              link.href = url;
-                              link.download = 'Bello-Food-Catalog-English.pdf';
-                              document.body.appendChild(link);
-                              link.click();
-                              
-                              // Cleanup
-                              document.body.removeChild(link);
-                              window.URL.revokeObjectURL(url);
-                              document.getElementById('catalogModal').style.display = 'none';
-                            } catch (error) {
-                              console.error('Download failed:', error);
-                              // Fallback: Open in new tab
-                              window.open('/assets/pdf/Olive profile (25 x 15 cm)  EN-HD.pdf', '_blank');
-                              document.getElementById('catalogModal').style.display = 'none';
-                            }
-                          }}
-                        >
-                          <div className="flag-icon">🇺🇸</div>
-                          <div className="language-info">
-                            <span className="language-name">{t('catalog.english')}</span>
-                            <small>PDF • 45MB</small>
-                          </div>
-                          <i className="far fa-download" />
-                        </button>
-                        
-                        <button 
-                          className="catalog-language-btn russian-option"
-                          onClick={async () => {
-                            try {
-                              // Fetch the PDF file as blob
-                              const response = await fetch('/assets/pdf/Olive profile (25 x 15 cm)  RU-HD.pdf');
-                              if (!response.ok) throw new Error('Network response was not ok');
-                              
-                              const blob = await response.blob();
-                              const url = window.URL.createObjectURL(blob);
-                              
-                              // Create download link
-                              const link = document.createElement('a');
-                              link.href = url;
-                              link.download = 'Bello-Food-Catalog-Russian.pdf';
-                              document.body.appendChild(link);
-                              link.click();
-                              
-                              // Cleanup
-                              document.body.removeChild(link);
-                              window.URL.revokeObjectURL(url);
-                              document.getElementById('catalogModal').style.display = 'none';
-                            } catch (error) {
-                              console.error('Download failed:', error);
-                              // Fallback: Open in new tab
-                              window.open('/assets/pdf/Olive profile (25 x 15 cm)  RU-HD.pdf', '_blank');
-                              document.getElementById('catalogModal').style.display = 'none';
-                            }
-                          }}
-                        >
-                          <div className="flag-icon">🇷🇺</div>
-                          <div className="language-info">
-                            <span className="language-name">{t('catalog.russian')}</span>
-                            <small>PDF • 25MB</small>
-                          </div>
-                          <i className="far fa-download" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      {/* PDF Viewer Modal */}
+      {showPDFViewer && (
+        <div className="pdf-viewer-modal" onClick={() => setShowPDFViewer(false)}>
+          <div className="pdf-viewer-content" onClick={(e) => e.stopPropagation()}>
+            <div className="pdf-viewer-header">
+              <h3><i className="far fa-file-pdf"></i> Product Catalog</h3>
+              <button className="pdf-close-btn" onClick={() => setShowPDFViewer(false)}>
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
+            <div className="pdf-viewer-body">
+              <iframe
+                src={currentPDF}
+                width="100%"
+                height="100%"
+                style={{ border: 'none' }}
+                title="PDF Viewer"
+              />
             </div>
           </div>
         </div>
-      </section>
-      {/*====== End Catalog Download Section  ======*/}
+      )}
+
+      <style jsx>{`
+        .catalog-card {
+          background: white;
+          border-radius: 16px;
+          padding: 35px 30px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+          transition: all 0.3s ease;
+          text-align: center;
+          height: 100%;
+          border: 2px solid transparent;
+        }
+
+        .catalog-card.unified-card {
+          padding: 25px 25px;
+        }
+
+        .catalog-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 25px rgba(90, 114, 73, 0.12);
+          border-color: #5a7249;
+        }
+
+        .language-selector {
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          margin-bottom: 20px;
+          padding-bottom: 15px;
+          border-bottom: 2px solid #f0f0f0;
+        }
+
+        .language-btn {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 20px;
+          background: #f8f9fa;
+          border: 2px solid #e0e0e0;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          font-size: 14px;
+          font-weight: 600;
+          color: #666;
+        }
+
+        .language-btn:hover {
+          background: #e9ecef;
+          border-color: #5a7249;
+          transform: translateY(-2px);
+        }
+
+        .language-btn.active {
+          background: linear-gradient(135deg, #5a7249 0%, #4a6039 100%);
+          border-color: #5a7249;
+          color: white;
+          box-shadow: 0 3px 10px rgba(90, 114, 73, 0.25);
+        }
+
+
+        .catalog-card-title {
+          font-size: 18px;
+          font-weight: 700;
+          color: #1a1a1a;
+          margin-bottom: 8px;
+        }
+
+        .catalog-card-desc {
+          font-size: 13px;
+          color: #666;
+          margin-bottom: 15px;
+          min-height: 35px;
+        }
+
+        .catalog-card-info {
+          display: flex;
+          justify-content: center;
+          gap: 15px;
+          margin-bottom: 18px;
+          padding: 12px 0;
+          border-top: 1px solid #f0f0f0;
+          border-bottom: 1px solid #f0f0f0;
+        }
+
+        .catalog-card-info span {
+          font-size: 12px;
+          color: #888;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+
+        .catalog-card-info i {
+          color: #5a7249;
+          font-size: 14px;
+        }
+
+        .catalog-card-actions {
+          display: flex;
+          gap: 8px;
+          justify-content: center;
+        }
+
+        .catalog-btn {
+          flex: 1;
+          padding: 10px 16px;
+          border: none;
+          border-radius: 6px;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+        }
+
+        .catalog-btn-view {
+          background: #5a7249;
+          color: white;
+        }
+
+        .catalog-btn-view:hover {
+          background: #4a6039;
+          transform: scale(1.05);
+        }
+
+        .catalog-btn-download {
+          background: #f8f9fa;
+          color: #5a7249;
+          border: 2px solid #5a7249;
+        }
+
+        .catalog-btn-download:hover {
+          background: #5a7249;
+          color: white;
+          transform: scale(1.05);
+        }
+
+        /* PDF Viewer Modal */
+        .pdf-viewer-modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.9);
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .pdf-viewer-content {
+          background: white;
+          border-radius: 12px;
+          width: 100%;
+          max-width: 1200px;
+          height: 90vh;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+          animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .pdf-viewer-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 20px 25px;
+          border-bottom: 2px solid #f0f0f0;
+          background: linear-gradient(135deg, #5a7249 0%, #4a6039 100%);
+          border-radius: 12px 12px 0 0;
+        }
+
+        .pdf-viewer-header h3 {
+          margin: 0;
+          font-size: 20px;
+          font-weight: 700;
+          color: white;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .pdf-close-btn {
+          background: rgba(255,255,255,0.2);
+          border: none;
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 18px;
+          transition: all 0.3s ease;
+        }
+
+        .pdf-close-btn:hover {
+          background: rgba(255,255,255,0.3);
+          transform: rotate(90deg);
+        }
+
+        .pdf-viewer-body {
+          flex: 1;
+          padding: 0;
+          overflow: hidden;
+        }
+
+        .pdf-viewer-body iframe {
+          width: 100%;
+          height: 100%;
+        }
+
+        .category-tabs {
+          display: flex;
+          justify-content: center;
+          gap: 15px;
+          flex-wrap: nowrap;
+        }
+
+        .category-tab {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+          padding: 20px;
+          background: white;
+          border: 2px solid #e0e0e0;
+          border-radius: 16px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          min-width: 180px;
+          flex-shrink: 0;
+        }
+
+        .category-tab:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 20px rgba(90, 114, 73, 0.15);
+          border-color: #5a7249;
+        }
+
+        .category-tab.active {
+          background: linear-gradient(135deg, #5a7249 0%, #4a6039 100%);
+          border-color: #5a7249;
+          box-shadow: 0 8px 25px rgba(90, 114, 73, 0.3);
+        }
+
+        .category-tab.active .tab-name {
+          color: white;
+        }
+
+        .category-tab-image {
+          width: 120px;
+          height: 120px;
+          border-radius: 12px;
+          overflow: hidden;
+          background: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+          transition: all 0.3s ease;
+        }
+
+        .category-tab.active .category-tab-image {
+          box-shadow: 0 8px 20px rgba(255,255,255,0.4);
+          transform: scale(1.05);
+        }
+
+        .category-tab-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .tab-name {
+          font-size: 15px;
+          font-weight: 600;
+          color: #333;
+          transition: color 0.3s ease;
+          text-align: center;
+        }
+
+        @media (max-width: 768px) {
+          .catalog-card {
+            padding: 20px 15px;
+          }
+
+          .catalog-card.unified-card {
+            padding: 20px 15px;
+          }
+
+          .language-selector {
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+          }
+
+          .language-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 8px 16px;
+            font-size: 13px;
+          }
+
+          .catalog-card-actions {
+            flex-direction: column;
+          }
+
+          .catalog-btn {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 12px;
+          }
+
+          .catalog-card-title {
+            font-size: 16px;
+          }
+
+          .catalog-card-desc {
+            font-size: 12px;
+          }
+
+          .pdf-viewer-content {
+            height: 85vh;
+          }
+
+          .pdf-viewer-header h3 {
+            font-size: 16px;
+          }
+
+          .category-tabs {
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+
+          .category-tab {
+            min-width: 140px;
+            padding: 15px;
+            flex-shrink: 0;
+          }
+
+          .category-tab-image {
+            width: 90px;
+            height: 90px;
+            border-radius: 10px;
+          }
+
+          .tab-name {
+            font-size: 13px;
+          }
+        }
+      `}</style>
 
     </Layout>
   );

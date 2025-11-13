@@ -796,86 +796,265 @@ const Index = () => {
           </div>
           <div className="row justify-content-center">
             {blogPosts.length > 0 ? (
-              blogPosts.map((post, index) => (
-                <div className="col-xl-4 col-md-6 col-sm-12" key={post.id}>
-                  {/*====== Single Blog Post  ======*/}
-                  <div
-                    className="single-blog-post-two mb-40 wow fadeInUp"
-                    data-wow-delay={`.${2 + index}s`}
-                  >
-                    <div className="entry-content">
-                      <div className="post-meta">
-                        <span className="date">
-                          <span>{new Date(post.published_at).toLocaleDateString(router.locale, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                        </span>
-                        {post.category && (
-                          <span className="comment">
-                            <span>{post.category}</span>
-                          </span>
+              blogPosts.map((post, index) => {
+                const excerpt = router.locale === 'ar' ? post.excerpt_ar : 
+                               router.locale === 'ru' ? post.excerpt_ru : 
+                               post.excerpt_en;
+                const featuredImage = post.featured_image || '/assets/images/blog/blog-placeholder.jpg';
+                
+                return (
+                  <div className="col-xl-4 col-md-6 col-sm-12" key={post.id}>
+                    {/*====== Single Blog Post  ======*/}
+                    <div
+                      className="single-blog-post-card mb-40 wow fadeInUp"
+                      data-wow-delay={`.${2 + index}s`}
+                    >
+                      {/* Featured Image */}
+                      <Link href={`/news/${post.slug}`}>
+                        <div className="post-thumbnail" style={{ cursor: 'pointer' }}>
+                          <img 
+                            src={featuredImage} 
+                            alt={getTitle(post)}
+                            style={{
+                              width: '100%',
+                              height: '250px',
+                              objectFit: 'cover',
+                              borderRadius: '8px 8px 0 0'
+                            }}
+                            onError={(e) => {
+                              e.target.src = '/assets/images/blog/blog-placeholder.jpg';
+                            }}
+                          />
+                        </div>
+                      </Link>
+                      
+                      {/* Post Content */}
+                      <div className="post-content-wrapper">
+                        {/* Date and Author Meta */}
+                        <div className="post-meta-info">
+                          <div className="meta-item">
+                            <i className="far fa-calendar-alt"></i>
+                            <span>{new Date(post.published_at).toLocaleDateString(router.locale, { 
+                              year: 'numeric', 
+                              month: 'short', 
+                              day: 'numeric' 
+                            })}</span>
+                          </div>
+                          <div className="meta-item">
+                            <i className="far fa-user"></i>
+                            <span>{post.author_name || t('blog.author')}</span>
+                          </div>
+                        </div>
+                        
+                        {/* Title */}
+                        <Link href={`/news/${post.slug}`}>
+                          <h3 className="post-title" style={{ cursor: 'pointer' }}>
+                            {getTitle(post)}
+                          </h3>
+                        </Link>
+                        
+                        {/* Excerpt */}
+                        {excerpt && (
+                          <p className="post-excerpt">
+                            {excerpt}
+                          </p>
                         )}
-                      </div>
-                      <h4 className="entry-title">
-                        <span>{getTitle(post)}</span>
-                      </h4>
-                      <div className="author">
-                        <h6>
-                          <span>{t('blog.by')}</span>
-                          <span>{post.author_name || t('blog.author')}</span>
-                        </h6>
+                        
+                        {/* Read More Button */}
+                        <div className="post-actions mt-20">
+                          <Link href={`/news/${post.slug}`} className="read-more-btn">
+                            {t('blog.readMore', 'Read More')}
+                            <i className={`fas fa-arrow-${isRTL ? 'left' : 'right'} ml-2`}></i>
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             ) : (
               // Fallback to hardcoded posts if no data from database
               <>
-                <div className="col-xl-4 col-md-6 col-sm-12">
-                  <div className="single-blog-post-two mb-40 wow fadeInUp" data-wow-delay=".2s">
-                    <div className="entry-content">
-                      <div className="post-meta">
-                        <span className="date"><span>{t('blog.date')}</span></span>
-                        <span className="comment"><span>{t('blog.comments')}</span></span>
+                {[0, 1, 2].map((index) => (
+                  <div className="col-xl-4 col-md-6 col-sm-12" key={index}>
+                    <div className="single-blog-post-card mb-40 wow fadeInUp" data-wow-delay={`.${2 + index}s`}>
+                      {/* Featured Image */}
+                      <div className="post-thumbnail">
+                        <img 
+                          src="/assets/images/blog/blog-placeholder.jpg"
+                          alt={t(`blog.posts.${index}`)}
+                          style={{
+                            width: '100%',
+                            height: '250px',
+                            objectFit: 'cover',
+                            borderRadius: '8px 8px 0 0'
+                          }}
+                        />
                       </div>
-                      <h4 className="entry-title"><span>{t('blog.posts.0')}</span></h4>
-                      <div className="author">
-                        <h6><span>{t('blog.by')}</span><span>{t('blog.author')}</span></h6>
+                      
+                      {/* Post Content */}
+                      <div className="post-content-wrapper">
+                        {/* Date and Category Meta */}
+                        <div className="post-meta-info">
+                          <div className="meta-item">
+                            <i className="far fa-calendar-alt"></i>
+                            <span>{t('blog.date')}</span>
+                          </div>
+                          <div className="meta-item">
+                            <i className="far fa-user"></i>
+                            <span>{t('blog.author')}</span>
+                          </div>
+                        </div>
+                        
+                        {/* Title */}
+                        <h3 className="post-title">
+                          {t(`blog.posts.${index}`)}
+                        </h3>
+                        
+                        {/* Excerpt */}
+                        <p className="post-excerpt">
+                          {t('blog.defaultExcerpt')}
+                        </p>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-xl-4 col-md-6 col-sm-12">
-                  <div className="single-blog-post-two mb-40 wow fadeInDown" data-wow-delay=".25s">
-                    <div className="entry-content">
-                      <div className="post-meta">
-                        <span className="date"><span>{t('blog.date')}</span></span>
-                        <span className="comment"><span>{t('blog.comments')}</span></span>
-                      </div>
-                      <h4 className="entry-title"><span>{t('blog.posts.1')}</span></h4>
-                      <div className="author">
-                        <h6><span>{t('blog.by')}</span><span>{t('blog.author')}</span></h6>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xl-4 col-md-6 col-sm-12">
-                  <div className="single-blog-post-two mb-40 wow fadeInUp" data-wow-delay=".3s">
-                    <div className="entry-content">
-                      <div className="post-meta">
-                        <span className="date"><span>{t('blog.date')}</span></span>
-                        <span className="comment"><span>{t('blog.comments')}</span></span>
-                      </div>
-                      <h4 className="entry-title"><span>{t('blog.posts.2')}</span></h4>
-                      <div className="author">
-                        <h6><span>{t('blog.by')}</span><span>{t('blog.author')}</span></h6>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </>
             )}
           </div>
         </div>
+        
+        <style jsx>{`
+          .single-blog-post-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+          }
+          
+          .single-blog-post-card:hover {
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+          }
+          
+          .post-thumbnail {
+            position: relative;
+            overflow: hidden;
+          }
+          
+          .post-thumbnail img {
+            transition: transform 0.3s ease;
+          }
+          
+          .single-blog-post-card:hover .post-thumbnail img {
+            transform: scale(1.05);
+          }
+          
+          .post-content-wrapper {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+          }
+          
+          .post-meta-info {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+          }
+          
+          .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+          }
+          
+          .meta-item i {
+            color: #5a7249;
+            font-size: 14px;
+          }
+          
+          .post-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            min-height: 50px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: color 0.3s ease;
+          }
+          
+          .post-title:hover {
+            color: #5a7249;
+          }
+          
+          .post-excerpt {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+          
+          .post-actions {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+          }
+          
+          .post-actions :global(.read-more-btn) {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #5a7249;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+          }
+          
+          .post-actions :global(.read-more-btn:hover) {
+            color: #3d5032;
+            gap: 12px;
+          }
+          
+          .post-actions :global(.read-more-btn i) {
+            transition: transform 0.3s ease;
+          }
+          
+          .post-actions :global(.read-more-btn:hover i) {
+            transform: translateX(5px);
+          }
+          
+          @media (max-width: 768px) {
+            .post-content-wrapper {
+              padding: 20px;
+            }
+            
+            .post-title {
+              font-size: 16px;
+              min-height: auto;
+            }
+            
+            .post-meta-info {
+              gap: 15px;
+            }
+          }
+        `}</style>
       </section>
       {/*====== End Blog Section  ======*/}
       

@@ -1233,25 +1233,7 @@ export default function Admin() {
                   onClick={() => router.push('/website-editor')}
                 >
                   <i className="fas fa-edit"></i>
-                  <span>Website Editor</span>
-                </button>
-              </li>
-              <li className="admin-tab-item">
-                <button 
-                  className={`admin-tab-button`}
-                  onClick={() => router.push('/admin/ad-management')}
-                >
-                  <i className="fas fa-ad"></i>
-                  <span>Advertisement</span>
-                </button>
-              </li>
-              <li className="admin-tab-item">
-                <button 
-                  className={`admin-tab-button`}
-                  onClick={() => router.push('/admin/content-manager')}
-                >
-                  <i className="fas fa-language"></i>
-                  <span>Content Manager</span>
+                  <span>Website Customizer</span>
                 </button>
               </li>
               <li className="admin-tab-item">

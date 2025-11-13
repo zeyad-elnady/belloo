@@ -89,7 +89,12 @@ const App = ({ Component, pageProps }) => {
       {loading && <Preloader />}
       {!loading && (
         <>
-          <AdPopup />
+          {/* Don't show AdPopup on admin pages */}
+          {!router.pathname.startsWith('/admin') && 
+           !router.pathname.startsWith('/website-editor') && 
+           !router.pathname.startsWith('/login') && (
+            <AdPopup />
+          )}
           <Component {...pageProps} />
         </>
       )}

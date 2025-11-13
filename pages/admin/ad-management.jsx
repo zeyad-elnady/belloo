@@ -161,7 +161,7 @@ export default function AdManagement() {
         <h1 style={{ margin: 0, fontSize: '28px', fontWeight: '700' }}>Advertisement Management</h1>
         <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
           <button
-            onClick={() => router.push('/admin')}
+            onClick={() => router.push('/website-editor')}
             style={{
               padding: '10px 20px',
               background: 'rgba(255,255,255,0.2)',
@@ -176,7 +176,7 @@ export default function AdManagement() {
             onMouseEnter={(e) => e.target.style.background = 'rgba(255,255,255,0.3)'}
             onMouseLeave={(e) => e.target.style.background = 'rgba(255,255,255,0.2)'}
           >
-            ← Dashboard
+            ← Website Customizer
           </button>
           <button
             onClick={handleLogout}

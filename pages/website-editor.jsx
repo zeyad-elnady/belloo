@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+
+// Module-level cache to prevent multiple fetches and preserve data across component recreations
+let imageConfigFetched = false;
+let cachedImageUrls = {};
+let featuredProductsFetched = false;
+let cachedFeaturedProducts = [null, null, null, null, null, null];
 
 export default function WebsiteEditor() {
   const [activeSection, setActiveSection] = useState('products');
@@ -629,11 +635,142 @@ export default function WebsiteEditor() {
 
               {/* Hidden slug field - auto-generated from title */}
               <input type="hidden" name="slug" defaultValue={editingNews?.slug || editingNews?.title_en?.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || 'new-article'} />
+              <input type="hidden" name="featured_image" value={editingNews?.featured_image || ''} />
+
+              {/* Featured Image Upload */}
+              <div className="form-section" style={{ background: '#f8fafc', padding: '20px', marginBottom: '20px', borderRadius: '8px' }}>
+                <h3 style={{ marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <i className="fas fa-image" style={{ color: '#5a7249' }}></i> Featured Image
+                </h3>
+                
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'start' }}>
+                  {/* Current Image Preview */}
+                  <div style={{ flex: '0 0 200px' }}>
+                    {editingNews?.featured_image ? (
+                      <div style={{ position: 'relative' }}>
+                        <img 
+                          src={editingNews.featured_image} 
+                          alt="Featured"
+                          style={{
+                            width: '100%',
+                            height: '150px',
+                            objectFit: 'cover',
+                            borderRadius: '8px',
+                            border: '2px solid #e2e8f0'
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setEditingNews({ ...editingNews, featured_image: '' });
+                          }}
+                          style={{
+                            position: 'absolute',
+                            top: '5px',
+                            right: '5px',
+                            background: '#ef4444',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '50%',
+                            width: '28px',
+                            height: '28px',
+                            cursor: 'pointer',
+                            fontSize: '14px'
+                          }}
+                        >
+                          <i className="fas fa-times"></i>
+                        </button>
+                      </div>
+                    ) : (
+                      <div style={{
+                        width: '100%',
+                        height: '150px',
+                        background: '#e2e8f0',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#64748b'
+                      }}>
+                        <i className="fas fa-image" style={{ fontSize: '40px' }}></i>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Upload Button */}
+                  <div style={{ flex: 1 }}>
+                    <label htmlFor="blog-image-upload" style={{
+                      display: 'inline-block',
+                      padding: '12px 24px',
+                      background: '#5a7249',
+                      color: 'white',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      transition: 'background 0.3s'
+                    }}
+                    onMouseOver={(e) => e.target.style.background = '#4a5f3a'}
+                    onMouseOut={(e) => e.target.style.background = '#5a7249'}
+                    >
+                      <i className="fas fa-upload"></i> Choose Image from Device
+                    </label>
+                    <input
+                      id="blog-image-upload"
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          // Show loading state
+                          const uploadBtn = e.target.previousElementSibling;
+                          const originalText = uploadBtn.innerHTML;
+                          uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+                          uploadBtn.style.pointerEvents = 'none';
+
+                          try {
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            formData.append('folder', 'news');
+                            
+                            const response = await fetch('/api/media/upload', {
+                              method: 'POST',
+                              body: formData
+                            });
+                            
+                            const result = await response.json();
+                            
+                            if (result.success) {
+                              setEditingNews({ ...editingNews, featured_image: result.data.public_url });
+                              alert('Image uploaded successfully!');
+                            } else {
+                              alert('Upload failed: ' + result.error);
+                            }
+                          } catch (error) {
+                            console.error('Upload error:', error);
+                            alert('Failed to upload image');
+                          } finally {
+                            uploadBtn.innerHTML = originalText;
+                            uploadBtn.style.pointerEvents = 'auto';
+                            e.target.value = ''; // Reset file input
+                          }
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                    <p style={{ marginTop: '10px', fontSize: '13px', color: '#64748b' }}>
+                      Recommended size: 370x250px or larger. Max file size: 10MB.
+                      <br />
+                      Supported formats: JPG, PNG, WebP, GIF
+                    </p>
+                  </div>
+                </div>
+              </div>
 
               {/* Main Content - English */}
               <div className="form-section">
                 <h3 style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '2px solid #e2e8f0' }}>
-                  <i className="fas fa-newspaper"></i> Article Title
+                  <i className="fas fa-newspaper"></i> Article Content (English)
                 </h3>
                 
                 <div className="form-group">
@@ -646,6 +783,33 @@ export default function WebsiteEditor() {
                     required
                     style={{ fontSize: '16px', padding: '12px' }}
                   />
+                </div>
+
+                <div className="form-group">
+                  <label style={{ fontSize: '15px', fontWeight: '600', color: '#1e293b' }}>Description (English)</label>
+                  <textarea
+                    name="excerpt_en"
+                    defaultValue={editingNews?.excerpt_en}
+                    placeholder="Enter a brief description of the article (will be shown on homepage)..."
+                    rows="3"
+                    style={{ fontSize: '14px', padding: '12px', resize: 'vertical' }}
+                  />
+                  <small style={{ color: '#64748b', fontSize: '12px' }}>This description will appear on the blog cards</small>
+                </div>
+
+                <div className="form-group">
+                  <label style={{ fontSize: '15px', fontWeight: '600', color: '#1e293b' }}>Full Article Content (English) *</label>
+                  <textarea
+                    name="content_en"
+                    defaultValue={editingNews?.content_en}
+                    placeholder="Enter the full article content... You can use HTML for formatting (h2, h3, p, strong, em, ul, ol, li, blockquote, etc.)"
+                    rows="15"
+                    required
+                    style={{ fontSize: '14px', padding: '12px', resize: 'vertical', fontFamily: 'monospace' }}
+                  />
+                  <small style={{ color: '#64748b', fontSize: '12px' }}>
+                    Tip: You can use HTML tags for formatting. Example: &lt;h2&gt;Heading&lt;/h2&gt;, &lt;p&gt;Paragraph&lt;/p&gt;, &lt;strong&gt;Bold&lt;/strong&gt;
+                  </small>
                 </div>
               </div>
 
@@ -665,6 +829,32 @@ export default function WebsiteEditor() {
                       dir="rtl"
                     />
                   </div>
+                  <div className="form-group">
+                    <label>Description (Arabic)</label>
+                    <textarea
+                      name="excerpt_ar"
+                      defaultValue={editingNews?.excerpt_ar}
+                      placeholder="أدخل وصفًا مختصرًا للمقال..."
+                      rows="3"
+                      dir="rtl"
+                      style={{ fontSize: '14px', padding: '12px', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Full Article Content (Arabic)</label>
+                    <textarea
+                      name="content_ar"
+                      defaultValue={editingNews?.content_ar}
+                      placeholder="أدخل محتوى المقال الكامل بالعربية... يمكنك استخدام HTML للتنسيق"
+                      rows="15"
+                      dir="rtl"
+                      style={{ fontSize: '14px', padding: '12px', resize: 'vertical', fontFamily: 'monospace' }}
+                    />
+                    <small style={{ color: '#64748b', fontSize: '12px' }}>
+                      يمكنك استخدام وسوم HTML للتنسيق
+                    </small>
+                  </div>
                 </div>
               </details>
 
@@ -682,6 +872,30 @@ export default function WebsiteEditor() {
                       defaultValue={editingNews?.title_ru}
                       placeholder="Заголовок статьи..."
                     />
+                  </div>
+                  <div className="form-group">
+                    <label>Description (Russian)</label>
+                    <textarea
+                      name="excerpt_ru"
+                      defaultValue={editingNews?.excerpt_ru}
+                      placeholder="Введите краткое описание статьи..."
+                      rows="3"
+                      style={{ fontSize: '14px', padding: '12px', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Full Article Content (Russian)</label>
+                    <textarea
+                      name="content_ru"
+                      defaultValue={editingNews?.content_ru}
+                      placeholder="Введите полное содержание статьи... Вы можете использовать HTML для форматирования"
+                      rows="15"
+                      style={{ fontSize: '14px', padding: '12px', resize: 'vertical', fontFamily: 'monospace' }}
+                    />
+                    <small style={{ color: '#64748b', fontSize: '12px' }}>
+                      Вы можете использовать HTML-теги для форматирования
+                    </small>
                   </div>
                 </div>
               </details>
@@ -704,20 +918,35 @@ export default function WebsiteEditor() {
 
   // Homepage Section Component
   const HomepageSection = () => {
-    const [selectedProducts, setSelectedProducts] = useState([null, null, null, null, null, null]);
+    // Initialize state from cache if available
+    const [selectedProducts, setSelectedProducts] = useState(cachedFeaturedProducts);
     const [saving, setSaving] = useState(false);
 
-    // Fetch current featured products on mount
+    // Fetch current featured products on mount and restore from cache on re-render
     useEffect(() => {
+      // Always restore from cache first (in case component was recreated)
+      if (cachedFeaturedProducts.some(p => p !== null)) {
+        setSelectedProducts([...cachedFeaturedProducts]);
+      }
+      
+      // Only fetch from API if we haven't fetched yet
+      if (featuredProductsFetched) {
+        return;
+      }
+      
       const fetchFeaturedProducts = async () => {
         try {
+          featuredProductsFetched = true;
           const response = await fetch('/api/homepage/featured-products');
           const result = await response.json();
           if (result.success && result.data) {
-            setSelectedProducts(result.data);
+            // Update both cache and state
+            cachedFeaturedProducts = [...result.data];
+            setSelectedProducts([...result.data]);
           }
         } catch (error) {
           console.error('Error fetching featured products:', error);
+          featuredProductsFetched = false; // Reset on error to allow retry
         }
       };
       fetchFeaturedProducts();
@@ -726,6 +955,8 @@ export default function WebsiteEditor() {
     const handleProductSelect = (index, productId) => {
       const newSelected = [...selectedProducts];
       newSelected[index] = productId;
+      // Update both cache and state (create new array to avoid reference issues)
+      cachedFeaturedProducts = [...newSelected];
       setSelectedProducts(newSelected);
     };
 
@@ -897,8 +1128,9 @@ export default function WebsiteEditor() {
 
   // Image Replacer Section Component
   const ImageReplacerSection = () => {
-    const [currentImageUrls, setCurrentImageUrls] = useState({});
-    const [imagesLoading, setImagesLoading] = useState(true);
+    // Initialize with cached images if available
+    const [currentImageUrls, setCurrentImageUrls] = useState(cachedImageUrls);
+    const [imagesLoading, setImagesLoading] = useState(!imageConfigFetched);
     
     // Function to fetch current image URLs from Supabase
     const fetchCurrentImages = async (showLoading = true) => {
@@ -916,6 +1148,8 @@ export default function WebsiteEditor() {
         });
         const data = await response.json();
         if (data.success && data.images) {
+          // Update both state and cache
+          cachedImageUrls = data.images;
           setCurrentImageUrls(data.images);
         }
       } catch (error) {
@@ -927,12 +1161,19 @@ export default function WebsiteEditor() {
       }
     };
     
-    // Fetch on mount
+    // Fetch on mount - only once (using module-level flag to persist across recreations)
     useEffect(() => {
-      fetchCurrentImages();
+      if (!imageConfigFetched) {
+        imageConfigFetched = true;
+        fetchCurrentImages();
+      } else if (Object.keys(cachedImageUrls).length > 0) {
+        // Use cached images if available
+        setCurrentImageUrls(cachedImageUrls);
+        setImagesLoading(false);
+      }
     }, []);
     
-    const websiteImages = [
+    const websiteImages = useMemo(() => [
       // Hero Section
       { 
         id: 'hero-1',
@@ -1093,8 +1334,50 @@ export default function WebsiteEditor() {
         currentPath: currentImageUrls['bg-features'] || '/assets/images/bg/features-bg-1.jpg',
         usage: 'Features section background',
         category: 'Backgrounds'
+      },
+      
+      // Product Categories
+      { 
+        id: 'category-all',
+        name: 'Category - All Products',
+        path: '/assets/images/products/GLASS JARS/Whole Green Olives .png',
+        currentPath: currentImageUrls['category-all'] || '/assets/images/products/GLASS JARS/Whole Green Olives .png',
+        usage: 'Products page - All Products category button',
+        category: 'Product Categories'
+      },
+      { 
+        id: 'category-green-olives',
+        name: 'Category - Green Olives',
+        path: '/assets/images/products/GLASS JARS/Whole Green Olives .png',
+        currentPath: currentImageUrls['category-green-olives'] || '/assets/images/products/GLASS JARS/Whole Green Olives .png',
+        usage: 'Products page - Green Olives category button',
+        category: 'Product Categories'
+      },
+      { 
+        id: 'category-black-olives',
+        name: 'Category - Black Olives',
+        path: '/assets/images/products/GLASS JARS/Whole Black Olives.png',
+        currentPath: currentImageUrls['category-black-olives'] || '/assets/images/products/GLASS JARS/Whole Black Olives.png',
+        usage: 'Products page - Black Olives category button',
+        category: 'Product Categories'
+      },
+      { 
+        id: 'category-peppers',
+        name: 'Category - Peppers',
+        path: '/assets/images/products/GLASS JARS/pepperoncini Pepper.png',
+        currentPath: currentImageUrls['category-peppers'] || '/assets/images/products/GLASS JARS/pepperoncini Pepper.png',
+        usage: 'Products page - Peppers category button',
+        category: 'Product Categories'
+      },
+      { 
+        id: 'category-pickles',
+        name: 'Category - Pickles & Vegetables',
+        path: '/assets/images/products/GLASS JARS/Artichoke Hearts .png',
+        currentPath: currentImageUrls['category-pickles'] || '/assets/images/products/GLASS JARS/Artichoke Hearts .png',
+        usage: 'Products page - Pickles & Vegetables category button',
+        category: 'Product Categories'
       }
-    ];
+    ], [currentImageUrls]);
 
     const handleReplaceClick = (imageId) => {
       setSelectedImage(imageId);
@@ -1147,15 +1430,35 @@ export default function WebsiteEditor() {
           throw new Error(data.error || 'Upload failed');
         }
 
-        alert('✅ Image replaced successfully in Supabase Storage!\n\n' + 
-              'The website now shows the new image.\n' +
-              'The dashboard preview will update automatically.');
+        // Immediately update the cache and state with the new image URL
+        if (data.data && data.data.publicUrl) {
+          // Add strong cache-busting
+          const timestamp = Date.now();
+          const newUrl = `${data.data.publicUrl}?v=${timestamp}&t=${timestamp}`;
+          
+          // Update module-level cache
+          cachedImageUrls[imageId] = newUrl;
+          
+          // Update component state immediately
+          setCurrentImageUrls(prev => ({
+            ...prev,
+            [imageId]: newUrl
+          }));
+          
+          console.log(`✅ Updated image ${imageId} to: ${newUrl}`);
+        }
+
+        alert('✅ Image replaced successfully!\n\n' + 
+              'The new image is now live on your website.\n' +
+              'Refreshing the page will show the updated image.');
         
-        // Wait 2 seconds for Supabase CDN to purge and refresh
+        // Wait 2 seconds for Supabase CDN to propagate
         await new Promise(resolve => setTimeout(resolve, 2000));
         
-        // Reload the image URLs from Supabase (without showing loading spinner)
-        await fetchCurrentImages(false);
+        // Force refresh from API to get the latest with proper cache-busting
+        // Reset the fetch flag to allow fresh fetch
+        imageConfigFetched = false;
+        await fetchCurrentImages(true);
         
         setReplacePreview('');
         setSelectedImage('');
@@ -1199,7 +1502,7 @@ export default function WebsiteEditor() {
               >
                 All Images ({websiteImages.length})
               </button>
-              {['Hero Section', 'Skills Section', 'About Section', 'Gallery', 'Backgrounds'].map((cat) => {
+              {['Hero Section', 'Skills Section', 'About Section', 'Gallery', 'Backgrounds', 'Product Categories'].map((cat) => {
                 const count = websiteImages.filter(img => img.category === cat).length;
                 if (count === 0) return null;
                 return (
@@ -1558,14 +1861,14 @@ export default function WebsiteEditor() {
       title_en: formData.get('title_en'),
       title_ar: formData.get('title_ar'),
       title_ru: formData.get('title_ru'),
-      content_en: '',
-      content_ar: '',
-      content_ru: '',
-      excerpt_en: '',
-      excerpt_ar: '',
-      excerpt_ru: '',
+      content_en: formData.get('content_en') || '',
+      content_ar: formData.get('content_ar') || '',
+      content_ru: formData.get('content_ru') || '',
+      excerpt_en: formData.get('excerpt_en') || '',
+      excerpt_ar: formData.get('excerpt_ar') || '',
+      excerpt_ru: formData.get('excerpt_ru') || '',
       category: formData.get('category'),
-      featured_image: '',
+      featured_image: formData.get('featured_image') || editingNews?.featured_image || '',
       author_name: formData.get('author_name'),
       is_published: formData.get('is_published') === 'on',
       published_at: formData.get('published_at') || new Date().toISOString(),
@@ -1614,7 +1917,7 @@ export default function WebsiteEditor() {
   return (
     <>
       <Head>
-        <title>Website Editor - Belloo CMS</title>
+        <title>Website Customizer - Belloo CMS</title>
         <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/assets/fonts/fontawesome/css/all.min.css" />
         <link rel="stylesheet" href="/assets/css/admin-modern.css" />
@@ -1638,7 +1941,7 @@ export default function WebsiteEditor() {
                   }}
                 />
                 <h1 className="admin-title" style={{ margin: 0 }}>
-                  Website Editor
+                  Website Customizer
                 </h1>
               </div>
               <div className="admin-user-info" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -1730,6 +2033,24 @@ export default function WebsiteEditor() {
                 >
                   <i className="fas fa-exchange-alt"></i>
                   <span>Replace Images</span>
+                </button>
+              </li>
+              <li className="admin-tab-item">
+                <button 
+                  className={`admin-tab-button`}
+                  onClick={() => router.push('/admin/ad-management')}
+                >
+                  <i className="fas fa-ad"></i>
+                  <span>Advertisement</span>
+                </button>
+              </li>
+              <li className="admin-tab-item">
+                <button 
+                  className={`admin-tab-button`}
+                  onClick={() => router.push('/admin/content-manager')}
+                >
+                  <i className="fas fa-language"></i>
+                  <span>Content Manager</span>
                 </button>
               </li>
             </ul>

@@ -5,13 +5,21 @@ export default async function handler(req, res) {
   // GET - Fetch all news/blog posts
   if (req.method === 'GET') {
     try {
-      const { published_only, category, limit } = req.query;
+      const { published_only, category, limit, slug } = req.query;
       
       let query = supabaseAdmin
         .from('news')
-        .select('*')
-        .order('published_at', { ascending: false, nullsFirst: false })
-        .order('created_at', { ascending: false });
+        .select('*');
+      
+      // If slug is provided, fetch specific post
+      if (slug) {
+        query = query.eq('slug', slug);
+      } else {
+        // Otherwise, fetch list with ordering
+        query = query
+          .order('published_at', { ascending: false, nullsFirst: false })
+          .order('created_at', { ascending: false });
+      }
       
       if (published_only === 'true') {
         query = query.eq('is_published', true);
@@ -21,7 +29,7 @@ export default async function handler(req, res) {
         query = query.eq('category', category);
       }
       
-      if (limit) {
+      if (limit && !slug) {
         query = query.limit(parseInt(limit));
       }
       

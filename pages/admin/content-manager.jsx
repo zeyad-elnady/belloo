@@ -430,7 +430,7 @@ export default function ContentManager() {
           </div>
           <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
             <button
-              onClick={() => router.push('/admin')}
+              onClick={() => router.push('/website-editor')}
               style={{
                 padding: '10px 20px',
                 background: 'rgba(255,255,255,0.2)',
@@ -442,7 +442,7 @@ export default function ContentManager() {
                 fontWeight: '500'
               }}
             >
-              ← Dashboard
+              ← Website Customizer
             </button>
             <button
               onClick={handleLogout}

@@ -50,7 +50,7 @@ const AdPopup = () => {
     sessionStorage.setItem('hasSeenAd', 'true');
   };
 
-  console.log('AdPopup render - isVisible:', isVisible);
+  // Removed console.log to prevent spam
 
   if (!isVisible) return null;
 

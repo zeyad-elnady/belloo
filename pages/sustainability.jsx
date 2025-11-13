@@ -265,19 +265,7 @@ const Sustainability = () => {
                           padding: '20px',
                           marginBottom: '15px',
                           borderRadius: '12px',
-                          background: '#f8f9fa',
-                          transition: 'all 0.3s ease',
-                          cursor: 'pointer'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = '#5a7249';
-                          e.currentTarget.style.transform = 'translateX(10px)';
-                          e.currentTarget.querySelector('p').style.color = 'white';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = '#f8f9fa';
-                          e.currentTarget.style.transform = 'translateX(0)';
-                          e.currentTarget.querySelector('p').style.color = '#333';
+                          background: '#f8f9fa'
                         }}
                       >
                         <div 
@@ -304,7 +292,7 @@ const Sustainability = () => {
                             }}
                           />
                         </div>
-                        <p style={{ margin: 0, fontSize: '15px', fontWeight: '500', color: '#333', transition: 'color 0.3s ease' }}>
+                        <p style={{ margin: 0, fontSize: '15px', fontWeight: '500', color: '#333' }}>
                           {t('sustainabilityPage.qualityAssurance.certifications.items', { returnObjects: true })[cert.index]}
                         </p>
                       </div>

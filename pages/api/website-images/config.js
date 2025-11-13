@@ -21,6 +21,11 @@ const DEFAULT_IMAGES = {
   'bg-about': '/assets/images/bg/about-bg-1.jpg',
   'bg-page': '/assets/images/bg/page-bg-1.jpg',
   'bg-features': '/assets/images/bg/features-bg-1.jpg',
+  'category-all': '/assets/images/products/GLASS JARS/Whole Green Olives .png',
+  'category-green-olives': '/assets/images/products/GLASS JARS/Whole Green Olives .png',
+  'category-black-olives': '/assets/images/products/GLASS JARS/Whole Black Olives.png',
+  'category-peppers': '/assets/images/products/GLASS JARS/pepperoncini Pepper.png',
+  'category-pickles': '/assets/images/products/GLASS JARS/Artichoke Hearts .png',
 };
 
 export default async function handler(req, res) {
@@ -32,46 +37,107 @@ export default async function handler(req, res) {
   try {
     const imageConfig = { ...DEFAULT_IMAGES };
 
-    // Check each image in Supabase Storage
-    for (const [imageId, defaultPath] of Object.entries(DEFAULT_IMAGES)) {
+    // Check Supabase Storage for uploaded images (with timeout to prevent hanging)
+    const checkPromises = Object.entries(DEFAULT_IMAGES).map(async ([imageId, defaultPath]) => {
       try {
-        // Parse the default path to get folder and filename
-        const pathParts = defaultPath.replace('/assets/images/', '').split('/');
-        const folder = pathParts[0];
-        const filename = pathParts[pathParts.length - 1];
+        let folder, filename;
         
-        // Check if file exists in Supabase Storage and get metadata
-        const { data } = await supabaseAdmin
-          .storage
-          .from('website')
-          .list(folder, {
-            limit: 100,
-            search: filename
-          });
-
-        if (data && data.length > 0) {
-          // File exists in Supabase, get the public URL
+        // Handle category images differently
+        if (imageId.startsWith('category-')) {
+          folder = 'categories';
+          // Map image IDs to actual filenames as stored in Supabase
+          const categoryFilenameMap = {
+            'category-all': 'category-all-products.png',
+            'category-green-olives': 'category-green-olives.png',
+            'category-black-olives': 'category-black-olives.png',
+            'category-peppers': 'category-peppers.png',
+            'category-pickles': 'category-pickles.png',
+          };
+          filename = categoryFilenameMap[imageId] || (imageId.replace('category-', '') + '.png');
+          
+          // For category images, always construct Supabase URL (files are uploaded there)
+          const storagePath = `${folder}/${filename}`;
           const { data: { publicUrl } } = supabaseAdmin
             .storage
             .from('website')
-            .getPublicUrl(`${folder}/${filename}`, {
-              download: false
-            });
+            .getPublicUrl(storagePath, { download: false });
           
-          // Use file's last modified timestamp as version (changes only when file changes)
-          const fileMetadata = data[0];
-          const lastModified = fileMetadata.updated_at || fileMetadata.created_at;
-          const version = new Date(lastModified).getTime();
-          
-          imageConfig[imageId] = `${publicUrl}?v=${version}`;
-          console.log(`✅ Using Supabase URL for ${imageId}: ${imageConfig[imageId]}`);
+          // Add strong cache-busting
+          const cacheBuster = Date.now();
+          imageConfig[imageId] = `${publicUrl}?v=${cacheBuster}&t=${cacheBuster}&cb=${Math.random()}`;
+          console.log(`✅ Using Supabase URL for ${imageId} (${filename}): ${imageConfig[imageId]}`);
+          return; // Skip the check below for category images
+        } else {
+          // Regular images - parse path
+          const pathParts = defaultPath.replace('/assets/images/', '').split('/');
+          folder = pathParts[0];
+          filename = pathParts[pathParts.length - 1];
+        }
+        
+        // Construct storage path and check if file exists
+        const storagePath = `${folder}/${filename}`;
+        
+        try {
+          // Try to download the file to verify it exists (lightweight check)
+          const { data: fileData, error: downloadError } = await Promise.race([
+            supabaseAdmin.storage.from('website').download(storagePath),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 1500))
+          ]);
+
+          // If download succeeds (even if we don't use the data), file exists
+          if (!downloadError && fileData) {
+            // Get public URL
+            const { data: { publicUrl } } = supabaseAdmin
+              .storage
+              .from('website')
+              .getPublicUrl(storagePath, { download: false });
+            
+            // Add strong cache-busting with current timestamp
+            const cacheBuster = Date.now();
+            
+            imageConfig[imageId] = `${publicUrl}?v=${cacheBuster}&t=${cacheBuster}&cb=${Math.random()}`;
+            console.log(`✅ Found Supabase image for ${imageId}: ${imageConfig[imageId]}`);
+          } else {
+            // File doesn't exist, try listing as fallback
+            const { data: fileList } = await Promise.race([
+              supabaseAdmin.storage.from('website').list(folder, { limit: 1000 }),
+              new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 1000))
+            ]);
+            
+            if (fileList) {
+              const file = fileList.find(f => 
+                f.name.toLowerCase() === filename.toLowerCase()
+              );
+              
+              if (file) {
+                const { data: { publicUrl } } = supabaseAdmin
+                  .storage
+                  .from('website')
+                  .getPublicUrl(storagePath, { download: false });
+                
+                const cacheBuster = Date.now();
+                imageConfig[imageId] = `${publicUrl}?v=${cacheBuster}&t=${cacheBuster}&cb=${Math.random()}`;
+                console.log(`✅ Found Supabase image for ${imageId} (via list): ${imageConfig[imageId]}`);
+              } else {
+                console.log(`❌ File ${filename} not in list (found ${fileList.length} files in ${folder})`);
+              }
+            }
+          }
+        } catch (checkError) {
+          // File doesn't exist or check failed, use default
+          console.log(`Using default for ${imageId}: ${checkError.message}`);
         }
       } catch (err) {
-        console.log(`Using default path for ${imageId}`);
-        // Keep default path if Supabase check fails
+        // Keep default path if Supabase check fails or times out
       }
-    }
+    });
 
+    // Wait for all checks with overall timeout
+    await Promise.race([
+      Promise.all(checkPromises),
+      new Promise((resolve) => setTimeout(resolve, 5000)) // Max 5 seconds total
+    ]);
+    
     return res.status(200).json({
       success: true,
       images: imageConfig
@@ -81,7 +147,7 @@ export default async function handler(req, res) {
     return res.status(500).json({
       success: false,
       error: 'Failed to get image configuration',
-      images: DEFAULT_IMAGES // Fallback to defaults
+      images: DEFAULT_IMAGES
     });
   }
 }
