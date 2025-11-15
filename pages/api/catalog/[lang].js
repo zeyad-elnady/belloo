@@ -65,16 +65,36 @@ export default async function handler(req, res) {
           
           console.log(`Fetching PDF from: ${publicUrl}`);
           
-          // Fetch the file from the public URL
-          const response = await fetch(publicUrl);
+          // Fetch the file from the public URL with timeout
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
           
-          if (response.ok) {
-            const arrayBuffer = await response.arrayBuffer();
-            fileBuffer = Buffer.from(arrayBuffer);
-            console.log(`✅ Successfully fetched PDF from public URL: ${fileName}`);
-            break;
-          } else {
-            console.log(`Failed to fetch ${fileName}: ${response.status}`);
+          try {
+            const response = await fetch(publicUrl, {
+              signal: controller.signal,
+              headers: {
+                'User-Agent': 'Mozilla/5.0',
+              }
+            });
+            
+            clearTimeout(timeoutId);
+            
+            if (response.ok) {
+              const arrayBuffer = await response.arrayBuffer();
+              fileBuffer = Buffer.from(arrayBuffer);
+              console.log(`✅ Successfully fetched PDF from public URL: ${fileName}`);
+              break;
+            } else {
+              console.log(`Failed to fetch ${fileName}: ${response.status} ${response.statusText}`);
+            }
+          } catch (fetchError) {
+            clearTimeout(timeoutId);
+            if (fetchError.name === 'AbortError') {
+              console.error(`Timeout fetching ${fileName}`);
+            } else {
+              console.error(`Error fetching ${fileName}:`, fetchError.message);
+            }
+            continue;
           }
         } catch (fetchError) {
           console.error(`Error fetching ${fileName}:`, fetchError);
@@ -84,9 +104,20 @@ export default async function handler(req, res) {
     }
 
     if (!fileBuffer) {
+      // Provide detailed error information
+      const protocol = req.headers['x-forwarded-proto'] || 'https';
+      const host = req.headers.host || req.headers['x-forwarded-host'];
+      const baseUrl = `${protocol}://${host}`;
+      const testUrl = `${baseUrl}/assets/pdf/${pdfFileName}`;
+      
       return res.status(404).json({ 
         success: false, 
-        error: 'PDF file not found'
+        error: 'PDF file not found',
+        details: {
+          triedFilenames: fileNamesToTry,
+          testUrl: testUrl,
+          message: 'Please ensure the PDF files are committed and deployed to Vercel. The files should be at: public/assets/pdf/'
+        }
       });
     }
 
