@@ -474,7 +474,17 @@ const Products = () => {
   // State for PDF viewer
   const [showPDFViewer, setShowPDFViewer] = useState(false);
   const [currentPDF, setCurrentPDF] = useState(null);
+  const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
+
+  // Cleanup blob URL on unmount
+  useEffect(() => {
+    return () => {
+      if (pdfBlobUrl) {
+        window.URL.revokeObjectURL(pdfBlobUrl);
+      }
+    };
+  }, [pdfBlobUrl]);
 
   // Render a single product card (SAME STYLE for all products)
   const renderProductCard = (product, index) => {
@@ -574,12 +584,32 @@ const Products = () => {
                         <div className="catalog-card-actions">
                           <button 
                             className="catalog-btn catalog-btn-view"
-                            onClick={() => {
+                            onClick={async () => {
                               const pdfPath = selectedLanguage === 'en' 
                                 ? '/assets/pdf/Olive profile (25 x 15 cm)  EN-HD.pdf'
                                 : '/assets/pdf/Olive profile (25 x 15 cm)  RU-HD.pdf';
-                              setCurrentPDF(pdfPath);
-                              setShowPDFViewer(true);
+                              // Encode the URL for proper handling
+                              const encodedPath = encodeURI(pdfPath);
+                              
+                              try {
+                                // Fetch PDF as blob for reliable iframe display
+                                const response = await fetch(encodedPath);
+                                if (!response.ok) {
+                                  throw new Error('Failed to fetch PDF');
+                                }
+                                const blob = await response.blob();
+                                const blobUrl = window.URL.createObjectURL(blob);
+                                
+                                setCurrentPDF(encodedPath);
+                                setPdfBlobUrl(blobUrl);
+                                setShowPDFViewer(true);
+                              } catch (error) {
+                                console.error('Error loading PDF:', error);
+                                // Fallback: use direct URL
+                                setCurrentPDF(encodedPath);
+                                setPdfBlobUrl(null);
+                                setShowPDFViewer(true);
+                              }
                             }}
                           >
                             <i className="far fa-eye"></i> 
@@ -595,8 +625,14 @@ const Products = () => {
                                 ? 'Bello-Food-Catalog-English.pdf'
                                 : 'Bello-Food-Catalog-Russian.pdf';
                               
+                              // Encode the URL for fetch
+                              const encodedPath = encodeURI(pdfPath);
+                              
                               try {
-                                const response = await fetch(pdfPath);
+                                const response = await fetch(encodedPath);
+                                if (!response.ok) {
+                                  throw new Error('Failed to fetch PDF');
+                                }
                                 const blob = await response.blob();
                                 const url = window.URL.createObjectURL(blob);
                                 const link = document.createElement('a');
@@ -607,7 +643,9 @@ const Products = () => {
                                 document.body.removeChild(link);
                                 window.URL.revokeObjectURL(url);
                               } catch (error) {
-                                window.open(pdfPath, '_blank');
+                                console.error('Error downloading PDF:', error);
+                                // Fallback: open in new tab with encoded URL
+                                window.open(encodedPath, '_blank');
                               }
                             }}
                           >
@@ -746,17 +784,31 @@ const Products = () => {
 
       {/* PDF Viewer Modal */}
       {showPDFViewer && (
-        <div className="pdf-viewer-modal" onClick={() => setShowPDFViewer(false)}>
+        <div className="pdf-viewer-modal" onClick={() => {
+          // Clean up blob URL when closing
+          if (pdfBlobUrl) {
+            window.URL.revokeObjectURL(pdfBlobUrl);
+            setPdfBlobUrl(null);
+          }
+          setShowPDFViewer(false);
+        }}>
           <div className="pdf-viewer-content" onClick={(e) => e.stopPropagation()}>
             <div className="pdf-viewer-header">
               <h3><i className="far fa-file-pdf"></i> Product Catalog</h3>
-              <button className="pdf-close-btn" onClick={() => setShowPDFViewer(false)}>
+              <button className="pdf-close-btn" onClick={() => {
+                // Clean up blob URL when closing
+                if (pdfBlobUrl) {
+                  window.URL.revokeObjectURL(pdfBlobUrl);
+                  setPdfBlobUrl(null);
+                }
+                setShowPDFViewer(false);
+              }}>
                 <i className="fas fa-times"></i>
               </button>
             </div>
             <div className="pdf-viewer-body">
               <iframe
-                src={currentPDF}
+                src={pdfBlobUrl || currentPDF}
                 width="100%"
                 height="100%"
                 style={{ border: 'none' }}

@@ -180,6 +180,7 @@ const App = ({ Component, pageProps }) => {
       {/* Scroll to Top Button */}
       {showScrollTop && (
         <div 
+          id="scroll-to-top-button"
           onClick={scrollToTop}
           style={{
             position: 'fixed',
@@ -227,6 +228,24 @@ const App = ({ Component, pageProps }) => {
           to {
             opacity: 1;
             transform: translateY(0);
+          }
+        }
+        
+        /* RTL Support for Scroll to Top Button */
+        html[dir="rtl"] #scroll-to-top-button {
+          right: auto !important;
+          left: 30px !important;
+        }
+        
+        @media (max-width: 768px) {
+          html[dir="rtl"] #scroll-to-top-button {
+            left: 20px !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          html[dir="rtl"] #scroll-to-top-button {
+            left: 15px !important;
           }
         }
       `}</style>
