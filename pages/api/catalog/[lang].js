@@ -48,63 +48,24 @@ export default async function handler(req, res) {
       }
     }
 
-    // If file system access failed (Vercel serverless), fetch from public URL
+    // If file system access failed (Vercel serverless), redirect to public URL
+    // This is simpler and more reliable - let Next.js/Vercel serve the static file directly
     if (!fileBuffer) {
-      for (const fileName of fileNamesToTry) {
-        try {
-          // Construct the public URL
-          const protocol = req.headers['x-forwarded-proto'] || 'https';
-          const host = req.headers.host || req.headers['x-forwarded-host'];
-          const baseUrl = `${protocol}://${host}`;
-          
-          // For new filename (no spaces), use direct path
-          // For old filename (with spaces), use encoded path
-          const publicUrl = fileName.includes(' ')
-            ? `${baseUrl}/assets/pdf/${encodeURIComponent(fileName)}`
-            : `${baseUrl}/assets/pdf/${fileName}`;
-          
-          console.log(`Fetching PDF from: ${publicUrl}`);
-          
-          // Fetch the file from the public URL with timeout
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-          
-          try {
-            const response = await fetch(publicUrl, {
-              signal: controller.signal,
-              headers: {
-                'User-Agent': 'Mozilla/5.0',
-              }
-            });
-            
-            clearTimeout(timeoutId);
-            
-            if (response.ok) {
-              const arrayBuffer = await response.arrayBuffer();
-              fileBuffer = Buffer.from(arrayBuffer);
-              console.log(`✅ Successfully fetched PDF from public URL: ${fileName}`);
-              break;
-            } else {
-              console.log(`Failed to fetch ${fileName}: ${response.status} ${response.statusText}`);
-            }
-          } catch (fetchError) {
-            clearTimeout(timeoutId);
-            if (fetchError.name === 'AbortError') {
-              console.error(`Timeout fetching ${fileName}`);
-            } else {
-              console.error(`Error fetching ${fileName}:`, fetchError.message);
-            }
-            continue;
-          }
-        } catch (fetchError) {
-          console.error(`Error fetching ${fileName}:`, fetchError);
-          continue;
-        }
-      }
+      const protocol = req.headers['x-forwarded-proto'] || 'https';
+      const host = req.headers.host || req.headers['x-forwarded-host'];
+      const baseUrl = `${protocol}://${host}`;
+      
+      // Use the new filename (URL-friendly, no spaces)
+      const publicUrl = `${baseUrl}/assets/pdf/${pdfFileName}`;
+      
+      console.log(`Redirecting to public URL: ${publicUrl}`);
+      // Redirect to let Next.js serve the static file directly
+      return res.redirect(302, publicUrl);
     }
 
+    // This should never be reached since we redirect if fileBuffer is null
+    // But keeping it as a safety check
     if (!fileBuffer) {
-      // Provide detailed error information
       const protocol = req.headers['x-forwarded-proto'] || 'https';
       const host = req.headers.host || req.headers['x-forwarded-host'];
       const baseUrl = `${protocol}://${host}`;
@@ -116,7 +77,7 @@ export default async function handler(req, res) {
         details: {
           triedFilenames: fileNamesToTry,
           testUrl: testUrl,
-          message: 'Please ensure the PDF files are committed and deployed to Vercel. The files should be at: public/assets/pdf/'
+          message: 'Please verify the PDF files are accessible at the public URL above. If not, ensure they are committed and deployed to Vercel.'
         }
       });
     }
