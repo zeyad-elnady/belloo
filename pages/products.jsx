@@ -585,27 +585,25 @@ const Products = () => {
                           <button 
                             className="catalog-btn catalog-btn-view"
                             onClick={async () => {
-                              // Use direct file paths from public folder
-                              const pdfPath = selectedLanguage === 'en' 
-                                ? '/assets/pdf/Olive profile (25 x 15 cm)  EN-HD.pdf'
-                                : '/assets/pdf/Olive profile (25 x 15 cm)  RU-HD.pdf';
+                              // Use API endpoint that serves files directly from public folder
+                              const apiPath = `/api/catalog/${selectedLanguage}`;
                               
                               try {
                                 // Fetch PDF as blob for reliable iframe display
-                                const response = await fetch(pdfPath);
+                                const response = await fetch(apiPath);
                                 if (!response.ok) {
                                   throw new Error('Failed to fetch PDF');
                                 }
                                 const blob = await response.blob();
                                 const blobUrl = window.URL.createObjectURL(blob);
                                 
-                                setCurrentPDF(pdfPath);
+                                setCurrentPDF(apiPath);
                                 setPdfBlobUrl(blobUrl);
                                 setShowPDFViewer(true);
                               } catch (error) {
                                 console.error('Error loading PDF:', error);
-                                // Fallback: use direct path (browser will handle encoding)
-                                setCurrentPDF(pdfPath);
+                                // Fallback: use API path directly
+                                setCurrentPDF(apiPath);
                                 setPdfBlobUrl(null);
                                 setShowPDFViewer(true);
                               }
@@ -617,16 +615,14 @@ const Products = () => {
                           <button 
                             className="catalog-btn catalog-btn-download"
                             onClick={async () => {
-                              // Use direct file paths from public folder
-                              const pdfPath = selectedLanguage === 'en'
-                                ? '/assets/pdf/Olive profile (25 x 15 cm)  EN-HD.pdf'
-                                : '/assets/pdf/Olive profile (25 x 15 cm)  RU-HD.pdf';
+                              // Use API endpoint that serves files directly from public folder
+                              const apiPath = `/api/catalog/${selectedLanguage}`;
                               const fileName = selectedLanguage === 'en'
                                 ? 'Bello-Food-Catalog-English.pdf'
                                 : 'Bello-Food-Catalog-Russian.pdf';
                               
                               try {
-                                const response = await fetch(pdfPath);
+                                const response = await fetch(apiPath);
                                 if (!response.ok) {
                                   throw new Error('Failed to fetch PDF');
                                 }
@@ -641,8 +637,8 @@ const Products = () => {
                                 window.URL.revokeObjectURL(url);
                               } catch (error) {
                                 console.error('Error downloading PDF:', error);
-                                // Fallback: open direct path in new tab
-                                window.open(pdfPath, '_blank');
+                                // Fallback: open API endpoint in new tab
+                                window.open(apiPath, '_blank');
                               }
                             }}
                           >
