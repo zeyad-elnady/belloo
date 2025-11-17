@@ -15,9 +15,6 @@ HOW_TO_*.md
 scripts/
 uploads/cvs/
 
-# PDF files (can be served from CDN)
-public/assets/pdf/
-
 # Source files not needed for build
 public/assets/scss/
 
