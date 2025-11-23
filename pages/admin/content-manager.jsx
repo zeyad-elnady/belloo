@@ -5,6 +5,7 @@ export default function ContentManager() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('translations');
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [translations, setTranslations] = useState({});
   const [allTranslations, setAllTranslations] = useState({});
@@ -14,6 +15,14 @@ export default function ContentManager() {
   const [editValue, setEditValue] = useState('');
   const [saveMessage, setSaveMessage] = useState({ type: '', text: '' });
   const [isSaving, setIsSaving] = useState(false);
+  
+  // Contact Info state
+  const [contactInfo, setContactInfo] = useState({
+    address: '',
+    email: '',
+    phone: ''
+  });
+  const [savingContact, setSavingContact] = useState(false);
 
   const languages = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -29,8 +38,76 @@ export default function ContentManager() {
   useEffect(() => {
     if (isAuthenticated) {
       fetchTranslations();
+      if (activeTab === 'contact') {
+        fetchContactInfo();
+      }
     }
-  }, [isAuthenticated, selectedLanguage]);
+  }, [isAuthenticated, selectedLanguage, activeTab]);
+
+  const fetchContactInfo = async () => {
+    try {
+      const response = await fetch('/api/site-settings');
+      const data = await response.json();
+      if (data.success) {
+        setContactInfo({
+          address: data.data.address || '',
+          email: data.data.email || '',
+          phone: data.data.phone || ''
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching contact info:', error);
+    }
+  };
+
+  const saveContactInfo = async () => {
+    setSavingContact(true);
+    setSaveMessage({ type: '', text: '' });
+
+    try {
+      // First, fetch current settings
+      const getResponse = await fetch('/api/site-settings');
+      const currentData = await getResponse.json();
+      
+      if (!currentData.success) {
+        throw new Error('Failed to fetch current settings');
+      }
+
+      // Merge with new contact info
+      const updatedSettings = {
+        ...currentData.data,
+        address: contactInfo.address,
+        email: contactInfo.email,
+        phone: contactInfo.phone
+      };
+
+      const response = await fetch('/api/site-settings', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedSettings)
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        setSaveMessage({ type: 'success', text: '✓ Contact information saved successfully!' });
+        
+        // Refresh the data to show updated values
+        await fetchContactInfo();
+        
+        setTimeout(() => setSaveMessage({ type: '', text: '' }), 3000);
+      } else {
+        setSaveMessage({ type: 'error', text: `Error: ${result.error}` });
+      }
+    } catch (error) {
+      console.error('Save error:', error);
+      setSaveMessage({ type: 'error', text: 'Failed to save contact information' });
+    } finally {
+      setSavingContact(false);
+    }
+  };
 
   const checkAuthentication = async () => {
     try {
@@ -425,7 +502,7 @@ export default function ContentManager() {
               <i className="fas fa-language"></i> Content Manager
             </h1>
             <p style={{ margin: '5px 0 0 0', fontSize: '14px', opacity: 0.9 }}>
-              Edit website content for all languages
+              Edit website content and contact information
             </p>
           </div>
           <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
@@ -481,7 +558,68 @@ export default function ContentManager() {
           </div>
         )}
 
-        {/* Controls Bar */}
+        {/* Tabs */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '10px', 
+          marginBottom: '20px',
+          background: 'white',
+          padding: '10px',
+          borderRadius: '12px',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
+        }}>
+          <button
+            onClick={() => setActiveTab('translations')}
+            style={{
+              flex: 1,
+              padding: '15px 20px',
+              background: activeTab === 'translations' 
+                ? 'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)'
+                : 'transparent',
+              color: activeTab === 'translations' ? 'white' : '#495057',
+              border: activeTab === 'translations' ? 'none' : '2px solid #dee2e6',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '15px',
+              fontWeight: '600',
+              transition: 'all 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px'
+            }}
+          >
+            <i className="fas fa-language"></i>
+            Translations
+          </button>
+          <button
+            onClick={() => setActiveTab('contact')}
+            style={{
+              flex: 1,
+              padding: '15px 20px',
+              background: activeTab === 'contact' 
+                ? 'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)'
+                : 'transparent',
+              color: activeTab === 'contact' ? 'white' : '#495057',
+              border: activeTab === 'contact' ? 'none' : '2px solid #dee2e6',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '15px',
+              fontWeight: '600',
+              transition: 'all 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px'
+            }}
+          >
+            <i className="fas fa-address-card"></i>
+            Contact Information
+          </button>
+        </div>
+
+        {/* Controls Bar - Only show for translations */}
+        {activeTab === 'translations' && (
         <div style={{
           background: 'white',
           padding: '20px',
@@ -601,30 +739,259 @@ export default function ContentManager() {
             </button>
           </div>
         </div>
+        )}
 
-        {/* Translation Tree */}
-        <div style={{
-          background: 'white',
-          padding: '20px',
-          borderRadius: '12px',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
-          minHeight: '400px'
-        }}>
-          <h3 style={{ marginTop: 0, marginBottom: '20px', color: '#495057' }}>
-            {languages.find(l => l.code === selectedLanguage)?.flag} {languages.find(l => l.code === selectedLanguage)?.name} Content
-          </h3>
-          
-          {isLoading ? (
-            <div style={{ textAlign: 'center', padding: '40px', color: '#6c757d' }}>
-              <i className="fas fa-spinner fa-spin" style={{ fontSize: '32px', marginBottom: '10px' }}></i>
-              <p>Loading translations...</p>
+        {/* Translation Tree - Only show for translations tab */}
+        {activeTab === 'translations' && (
+          <div style={{
+            background: 'white',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
+            minHeight: '400px'
+          }}>
+            <h3 style={{ marginTop: 0, marginBottom: '20px', color: '#495057' }}>
+              {languages.find(l => l.code === selectedLanguage)?.flag} {languages.find(l => l.code === selectedLanguage)?.name} Content
+            </h3>
+            
+            {isLoading ? (
+              <div style={{ textAlign: 'center', padding: '40px', color: '#6c757d' }}>
+                <i className="fas fa-spinner fa-spin" style={{ fontSize: '32px', marginBottom: '10px' }}></i>
+                <p>Loading translations...</p>
+              </div>
+            ) : (
+              <div>
+                {renderTranslationTree(translations)}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Contact Information Tab */}
+        {activeTab === 'contact' && (
+          <div style={{
+            background: 'white',
+            padding: '30px',
+            borderRadius: '12px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
+          }}>
+            <h3 style={{ 
+              marginTop: 0, 
+              marginBottom: '10px', 
+              color: '#495057',
+              fontSize: '24px',
+              fontWeight: '700'
+            }}>
+              <i className="fas fa-address-card"></i> Edit Contact Page Information
+            </h3>
+            <p style={{ color: '#6c757d', marginBottom: '30px', fontSize: '14px' }}>
+              Edit the information displayed in the three contact cards on your contact page.
+            </p>
+
+            {/* Contact Info Form */}
+            <div style={{ maxWidth: '800px' }}>
+              {/* Headquarters */}
+              <div style={{ marginBottom: '25px' }}>
+                <label style={{ 
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  marginBottom: '10px', 
+                  fontWeight: '600', 
+                  color: '#495057', 
+                  fontSize: '16px'
+                }}>
+                  <div style={{
+                    width: '40px',
+                    height: '40px',
+                    background: 'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white'
+                  }}>
+                    <i className="fas fa-map-marker-alt"></i>
+                  </div>
+                  Headquarters Address
+                </label>
+                <textarea
+                  value={contactInfo.address}
+                  onChange={(e) => setContactInfo({ ...contactInfo, address: e.target.value })}
+                  placeholder="10th of Ramadan City, Industrial Area, Egypt"
+                  rows="2"
+                  style={{
+                    width: '100%',
+                    padding: '12px 15px',
+                    border: '2px solid #dee2e6',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                    fontFamily: 'inherit',
+                    outline: 'none',
+                    resize: 'vertical'
+                  }}
+                />
+                <small style={{ color: '#6c757d', fontSize: '12px', marginTop: '5px', display: 'block' }}>
+                  This will be displayed in the "Headquarters" card on the contact page
+                </small>
+              </div>
+
+              {/* Email */}
+              <div style={{ marginBottom: '25px' }}>
+                <label style={{ 
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  marginBottom: '10px', 
+                  fontWeight: '600', 
+                  color: '#495057', 
+                  fontSize: '16px'
+                }}>
+                  <div style={{
+                    width: '40px',
+                    height: '40px',
+                    background: 'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white'
+                  }}>
+                    <i className="fas fa-envelope"></i>
+                  </div>
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  value={contactInfo.email}
+                  onChange={(e) => setContactInfo({ ...contactInfo, email: e.target.value })}
+                  placeholder="marketing@bello-food.com"
+                  style={{
+                    width: '100%',
+                    padding: '12px 15px',
+                    border: '2px solid #dee2e6',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                    outline: 'none'
+                  }}
+                />
+                <small style={{ color: '#6c757d', fontSize: '12px', marginTop: '5px', display: 'block' }}>
+                  This will be displayed in the "Email" card with a clickable mailto link
+                </small>
+              </div>
+
+              {/* Phone / WhatsApp */}
+              <div style={{ marginBottom: '30px' }}>
+                <label style={{ 
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  marginBottom: '10px', 
+                  fontWeight: '600', 
+                  color: '#495057', 
+                  fontSize: '16px'
+                }}>
+                  <div style={{
+                    width: '40px',
+                    height: '40px',
+                    background: 'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white'
+                  }}>
+                    <i className="fas fa-phone"></i>
+                  </div>
+                  Phone / WhatsApp Number
+                </label>
+                <input
+                  type="tel"
+                  value={contactInfo.phone}
+                  onChange={(e) => setContactInfo({ ...contactInfo, phone: e.target.value })}
+                  placeholder="+20 11 0 15 111 85"
+                  style={{
+                    width: '100%',
+                    padding: '12px 15px',
+                    border: '2px solid #dee2e6',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                    outline: 'none'
+                  }}
+                />
+                <small style={{ color: '#6c757d', fontSize: '12px', marginTop: '5px', display: 'block' }}>
+                  This will be displayed in the "Phone / WhatsApp" card with a clickable tel link
+                </small>
+              </div>
+
+              {/* Info Box */}
+              <div style={{
+                padding: '15px 20px',
+                background: '#e7f3ff',
+                border: '1px solid #b3d9ff',
+                borderRadius: '8px',
+                marginBottom: '25px',
+                display: 'flex',
+                alignItems: 'start',
+                gap: '12px'
+              }}>
+                <i className="fas fa-info-circle" style={{ color: '#0066cc', fontSize: '18px', marginTop: '2px' }}></i>
+                <div style={{ flex: 1 }}>
+                  <strong style={{ color: '#0066cc', display: 'block', marginBottom: '5px' }}>Note:</strong>
+                  <p style={{ margin: 0, fontSize: '13px', color: '#004d99', lineHeight: '1.5' }}>
+                    These changes will be reflected on the Contact page in the three information cards. 
+                    The information will also be updated in the footer across all pages.
+                  </p>
+                </div>
+              </div>
+
+              {/* Save Button */}
+              <button
+                onClick={saveContactInfo}
+                disabled={savingContact}
+                style={{
+                  padding: '14px 40px',
+                  background: savingContact ? '#95a5a6' : 'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: savingContact ? 'not-allowed' : 'pointer',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  boxShadow: '0 4px 12px rgba(90, 114, 73, 0.3)',
+                  transition: 'all 0.2s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
+                }}
+                onMouseEnter={(e) => {
+                  if (!savingContact) {
+                    e.target.style.transform = 'translateY(-2px)';
+                    e.target.style.boxShadow = '0 6px 16px rgba(90, 114, 73, 0.4)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!savingContact) {
+                    e.target.style.transform = 'translateY(0)';
+                    e.target.style.boxShadow = '0 4px 12px rgba(90, 114, 73, 0.3)';
+                  }
+                }}
+              >
+                {savingContact ? (
+                  <>
+                    <i className="fas fa-spinner fa-spin"></i>
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <i className="fas fa-save"></i>
+                    Save Contact Information
+                  </>
+                )}
+              </button>
             </div>
-          ) : (
-            <div>
-              {renderTranslationTree(translations)}
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,8 +1,30 @@
 import Link from "next/link";
 import { useTranslation } from 'next-i18next';
+import { useState, useEffect } from 'react';
+import { getSocialMediaLinks } from '@/lib/site-settings';
 
 const Footer3 = () => {
   const { t } = useTranslation('common');
+  const [siteSettings, setSiteSettings] = useState(null);
+  const [socialLinks, setSocialLinks] = useState([]);
+
+  useEffect(() => {
+    // Fetch site settings on component mount
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch('/api/site-settings');
+        const data = await response.json();
+        if (data.success) {
+          setSiteSettings(data.data);
+          setSocialLinks(getSocialMediaLinks(data.data));
+        }
+      } catch (error) {
+        console.error('Error fetching site settings:', error);
+      }
+    };
+    
+    fetchSettings();
+  }, []);
   
   return (
     <footer className="footer-area footer-wave pt-100 p-r z-1">
@@ -69,15 +91,25 @@ const Footer3 = () => {
                   <h4 className="widget-title">{t('footer.getInTouch')}</h4>
                   <div className="widget-content">
                     <ul className="info-list">
-                      <li>{t('footer.address')}</li>
+                      <li>{siteSettings?.address || t('footer.address')}</li>
                       <li>
-                        <a href={`mailto:${t('footer.email')}`}>{t('footer.email')}</a>
+                        <a href={`mailto:${siteSettings?.email || t('footer.email')}`}>
+                          {siteSettings?.email || t('footer.email')}
+                        </a>
                       </li>
                       <li>
-                        <a href={`tel:${t('footer.phone')}`}>{t('footer.phone')}</a>
+                        <a href={`tel:${siteSettings?.phone || t('footer.phone')}`}>
+                          {siteSettings?.phone || t('footer.phone')}
+                        </a>
                       </li>
                       <li>
-                        <a href={`https://${t('footer.website')}`} target="_blank" rel="noopener noreferrer">{t('footer.website')}</a>
+                        <a 
+                          href={`https://${siteSettings?.website || t('footer.website')}`} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          {siteSettings?.website || t('footer.website')}
+                        </a>
                       </li>
                     </ul>
                   </div>
@@ -118,28 +150,46 @@ const Footer3 = () => {
                 <div className="footer-widget footer-social-widget float-lg-right mb-30 wow fadeInUp">
                   <h4 className="widget-title">{t('footer.followUs')}</h4>
                   <div className="widget-content">
-                    <ul className="social-icons-list">
-                      <li>
-                        <div className="social-icon">
-                          <i className="fab fa-facebook-f" />
-                        </div>
-                      </li>
-                      <li>
-                        <div className="social-icon">
-                          <i className="fab fa-instagram" />
-                        </div>
-                      </li>
-                      <li>
-                        <div className="social-icon">
-                          <i className="fab fa-twitter" />
-                        </div>
-                      </li>
-                      <li>
-                        <div className="social-icon">
-                          <i className="fab fa-linkedin-in" />
-                        </div>
-                      </li>
-                    </ul>
+                    {socialLinks.length > 0 ? (
+                      <ul className="social-icons-list">
+                        {socialLinks.map((link, index) => (
+                          <li key={index}>
+                            <a 
+                              href={link.url} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="social-icon"
+                              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                              <i className={link.icon} />
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <ul className="social-icons-list">
+                        <li>
+                          <div className="social-icon">
+                            <i className="fab fa-facebook-f" />
+                          </div>
+                        </li>
+                        <li>
+                          <div className="social-icon">
+                            <i className="fab fa-instagram" />
+                          </div>
+                        </li>
+                        <li>
+                          <div className="social-icon">
+                            <i className="fab fa-twitter" />
+                          </div>
+                        </li>
+                        <li>
+                          <div className="social-icon">
+                            <i className="fab fa-linkedin-in" />
+                          </div>
+                        </li>
+                      </ul>
+                    )}
                   </div>
                   
                   {/*====== Newsletter Form ======*/}

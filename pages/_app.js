@@ -93,7 +93,7 @@ const App = ({ Component, pageProps }) => {
           {!router.pathname.startsWith('/admin') && 
            !router.pathname.startsWith('/website-editor') && 
            !router.pathname.startsWith('/login') && (
-            <AdPopup />
+          <AdPopup />
           )}
           <Component {...pageProps} />
         </>

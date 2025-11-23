@@ -3,8 +3,10 @@ import PageBanner from "@/src/components/PageBanner";
 import Layout from "@/src/layouts/Layout";
 import Link from "next/link";
 import { useTranslation } from 'next-i18next';
+import { getWhatsAppLink } from '@/lib/site-settings';
+import { supabaseAdmin } from '@/lib/supabase';
 
-const Contact = () => {
+const Contact = ({ siteSettings }) => {
   const { t } = useTranslation('common');
   
   return (
@@ -40,7 +42,7 @@ const Contact = () => {
                   </div>
                   <div className="info">
                     <h4 className="title">{t('contactPage.info.address')}</h4>
-                    <p className="address">{t('footer.address')}</p>
+                    <p className="address">{siteSettings?.address || t('footer.address')}</p>
                   </div>
                 </div>
               </div>
@@ -55,7 +57,9 @@ const Contact = () => {
                   <div className="info">
                     <h4 className="title">{t('contactPage.info.email')}</h4>
                     <p className="email">
-                      <a href="mailto:marketing@bello-food.com">{t('footer.email')}</a>
+                      <a href={`mailto:${siteSettings?.email || 'marketing@bello-food.com'}`}>
+                        {siteSettings?.email || t('footer.email')}
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -71,7 +75,9 @@ const Contact = () => {
                   <div className="info">
                     <h4 className="title">{t('contactPage.info.phone')}</h4>
                     <p className="phone">
-                      <a href="tel:+2+20 1101 5111 85">{t('footer.phoneNumber')}</a>
+                      <a href={`tel:${siteSettings?.phone || '+20 1101 5111 85'}`}>
+                        {siteSettings?.phone || t('footer.phoneNumber')}
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -105,7 +111,7 @@ const Contact = () => {
                     className="map-container"
                     onClick={() => {
                       // Open Google Maps in new tab with specific location
-                      window.open('https://maps.app.goo.gl/j7Qa6LR51jspaizn8?g_st=com.google.maps.preview.copy', '_blank', 'noopener,noreferrer');
+                      window.open(siteSettings?.google_maps_url || 'https://maps.app.goo.gl/j7Qa6LR51jspaizn8?g_st=com.google.maps.preview.copy', '_blank', 'noopener,noreferrer');
                     }}
                     style={{
                       position: 'relative',
@@ -179,7 +185,7 @@ const Contact = () => {
                         maxWidth: '300px',
                         margin: '0 auto 25px'
                       }}>
-                        {t('contactPage.map.description') || '10th of Ramadan City, Egypt'}
+                        {siteSettings?.address || t('contactPage.map.description') || '10th of Ramadan City, Egypt'}
                       </p>
                       
                       <div style={{
@@ -445,7 +451,7 @@ const Contact = () => {
                 {/* Button */}
                 <div>
                   <a
-                    href="https://wa.me/201101511185?text=Hello%20Bello%20Food%2C%20I%20would%20like%20to%20inquire%20about%20your%20products"
+                    href={getWhatsAppLink(siteSettings || {})}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
@@ -483,7 +489,7 @@ const Contact = () => {
                 <div style={{ marginTop: '30px', paddingTop: '30px', borderTop: '1px solid #e8e8e8' }}>
                   <p style={{ color: '#95a5a6', fontSize: '14px', margin: 0 }}>
                     <i className="far fa-clock" style={{ marginRight: '8px' }}></i>
-                    {t('contactPage.whatsapp.availability')}
+                    {siteSettings?.working_hours || t('contactPage.whatsapp.availability')}
                   </p>
                 </div>
               </div>
@@ -500,10 +506,48 @@ const Contact = () => {
 export async function getStaticProps({ locale }) {
   const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
   
+  // Fetch site settings directly from Supabase
+  let siteSettings = null;
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('site_settings')
+      .select('*')
+      .single();
+
+    if (data && !error) {
+      siteSettings = data;
+    } else {
+      // Return defaults if no settings found
+      siteSettings = {
+        address: '10th of Ramadan City, Industrial Area, Egypt',
+        email: 'marketing@bello-food.com',
+        phone: '+20 11 0 15 111 85',
+        whatsapp_number: '201101511185',
+        whatsapp_message: 'Hello Bello Food, I would like to inquire about your products',
+        working_hours: 'Sunday - Thursday: 9:00 AM - 6:00 PM',
+        google_maps_url: 'https://maps.app.goo.gl/j7Qa6LR51jspaizn8?g_st=com.google.maps.preview.copy'
+      };
+    }
+  } catch (error) {
+    console.error('Error fetching site settings:', error);
+    // Return defaults on error
+    siteSettings = {
+      address: '10th of Ramadan City, Industrial Area, Egypt',
+      email: 'marketing@bello-food.com',
+      phone: '+20 11 0 15 111 85',
+      whatsapp_number: '201101511185',
+      whatsapp_message: 'Hello Bello Food, I would like to inquire about your products',
+      working_hours: 'Sunday - Thursday: 9:00 AM - 6:00 PM',
+      google_maps_url: 'https://maps.app.goo.gl/j7Qa6LR51jspaizn8?g_st=com.google.maps.preview.copy'
+    };
+  }
+  
   return {
     props: {
       ...(await serverSideTranslations(locale, ['common'])),
+      siteSettings,
     },
+    revalidate: 10, // Revalidate every 10 seconds (changed from 60)
   }
 }
 

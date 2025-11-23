@@ -28,6 +28,12 @@ const IMAGE_CONFIG = {
   'about-4': { bucket: 'website', folder: 'about', filename: 'about-4.jpg' },
   'about-5': { bucket: 'website', folder: 'about', filename: 'about-5.jpg' },
   
+  // Sustainability Page
+  'sustainability-1': { bucket: 'website', folder: 'sustainability', filename: 'sus 1.jpg' },
+  'sustainability-2': { bucket: 'website', folder: 'sustainability', filename: 'sus 2.jpg' },
+  'sustainability-3': { bucket: 'website', folder: 'sustainability', filename: 'sus 3.jpg' },
+  'sustainability-4': { bucket: 'website', folder: 'sustainability', filename: 'sus 4.png' },
+  
   // Gallery Section
   'gallery-cta-1': { bucket: 'website', folder: 'gallery', filename: 'cta-1.jpg' },
   'gallery-widget-1': { bucket: 'website', folder: 'gallery', filename: 'thumb-widget-1.jpg' },

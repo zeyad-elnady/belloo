@@ -43,6 +43,10 @@ export default function WebsiteEditor() {
   const [uploading, setUploading] = useState(false);
   const [imageCategory, setImageCategory] = useState('all');
 
+  // Site Settings state
+  const [siteSettings, setSiteSettings] = useState(null);
+  const [savingSettings, setSavingSettings] = useState(false);
+
   useEffect(() => {
     checkAuthentication();
   }, []);
@@ -68,7 +72,8 @@ export default function WebsiteEditor() {
     await Promise.all([
       fetchProducts(),
       fetchNews(),
-      fetchMedia()
+      fetchMedia(),
+      fetchSiteSettings()
     ]);
     setLoading(false);
   };
@@ -113,6 +118,18 @@ export default function WebsiteEditor() {
       }
     } catch (error) {
       console.error('Error fetching media:', error);
+    }
+  };
+
+  const fetchSiteSettings = async () => {
+    try {
+      const response = await fetch('/api/site-settings');
+      const data = await response.json();
+      if (data.success) {
+        setSiteSettings(data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching site settings:', error);
     }
   };
 
@@ -1165,7 +1182,7 @@ export default function WebsiteEditor() {
     useEffect(() => {
       if (!imageConfigFetched) {
         imageConfigFetched = true;
-        fetchCurrentImages();
+      fetchCurrentImages();
       } else if (Object.keys(cachedImageUrls).length > 0) {
         // Use cached images if available
         setCurrentImageUrls(cachedImageUrls);
@@ -1250,6 +1267,40 @@ export default function WebsiteEditor() {
         currentPath: currentImageUrls['about-5'] || '/assets/images/about/about-5.jpg',
         usage: 'About page - Gallery image',
         category: 'About Section'
+      },
+      
+      // Sustainability Page Images
+      { 
+        id: 'sustainability-1',
+        name: 'Quality Control Image',
+        path: '/assets/images/Sustainability/sus 1.jpg',
+        currentPath: currentImageUrls['sustainability-1'] || '/assets/images/Sustainability/sus 1.jpg',
+        usage: 'Sustainability page - International Standards section (left image)',
+        category: 'Sustainability Page'
+      },
+      { 
+        id: 'sustainability-2',
+        name: 'Production Image',
+        path: '/assets/images/Sustainability/sus 2.jpg',
+        currentPath: currentImageUrls['sustainability-2'] || '/assets/images/Sustainability/sus 2.jpg',
+        usage: 'Sustainability page - International Standards section (right image)',
+        category: 'Sustainability Page'
+      },
+      { 
+        id: 'sustainability-3',
+        name: 'Global Reach Image',
+        path: '/assets/images/Sustainability/sus 3.jpg',
+        currentPath: currentImageUrls['sustainability-3'] || '/assets/images/Sustainability/sus 3.jpg',
+        usage: 'Sustainability page - Global Reach section',
+        category: 'Sustainability Page'
+      },
+      { 
+        id: 'sustainability-4',
+        name: 'Customer Promise Image',
+        path: '/assets/images/Sustainability/sus 4.png',
+        currentPath: currentImageUrls['sustainability-4'] || '/assets/images/Sustainability/sus 4.png',
+        usage: 'Sustainability page - Our Commitment to You section',
+        category: 'Sustainability Page'
       },
       
       // Gallery Section
@@ -1570,6 +1621,312 @@ export default function WebsiteEditor() {
             )}
           </>
         )}
+      </div>
+    );
+  };
+
+  // Site Settings Section Component
+  const SiteSettingsSection = () => {
+    const [formData, setFormData] = useState(siteSettings || {});
+
+    useEffect(() => {
+      if (siteSettings) {
+        setFormData(siteSettings);
+      }
+    }, [siteSettings]);
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setSavingSettings(true);
+
+      try {
+        const response = await fetch('/api/site-settings', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          setSiteSettings(result.data);
+          alert('✅ Site settings updated successfully!');
+        } else {
+          alert('❌ Failed to update settings: ' + result.error);
+        }
+      } catch (error) {
+        console.error('Error saving settings:', error);
+        alert('❌ Failed to save settings: ' + error.message);
+      } finally {
+        setSavingSettings(false);
+      }
+    };
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    };
+
+    if (!formData) {
+      return (
+        <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+          <i className="fas fa-spinner fa-spin" style={{ fontSize: '48px', color: '#4a7c59', marginBottom: '20px' }}></i>
+          <h3>Loading settings...</h3>
+        </div>
+      );
+    }
+
+    return (
+      <div className="cms-section">
+        <div className="cms-header">
+          <h2>
+            <i className="fas fa-cog"></i> Site Settings
+          </h2>
+          <p style={{ margin: '10px 0', color: '#666', fontSize: '14px' }}>
+            Manage your website's contact information and social media links
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          {/* Contact Information Section */}
+          <div className="form-section" style={{ background: 'white', padding: '30px', borderRadius: '12px', marginBottom: '25px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+            <h3 style={{ marginBottom: '25px', paddingBottom: '15px', borderBottom: '2px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <i className="fas fa-info-circle" style={{ color: '#5a7249' }}></i>
+              Contact Information
+            </h3>
+            
+            <div className="form-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '20px' }}>
+              <div className="form-group">
+                <label style={{ fontWeight: '600', marginBottom: '8px', display: 'block' }}>
+                  <i className="fas fa-building" style={{ marginRight: '8px', color: '#5a7249' }}></i>
+                  Company Name
+                </label>
+                <input
+                  type="text"
+                  name="company_name"
+                  value={formData.company_name || ''}
+                  onChange={handleChange}
+                  placeholder="Bello Food"
+                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+                />
+              </div>
+
+              <div className="form-group">
+                <label style={{ fontWeight: '600', marginBottom: '8px', display: 'block' }}>
+                  <i className="fas fa-envelope" style={{ marginRight: '8px', color: '#5a7249' }}></i>
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email || ''}
+                  onChange={handleChange}
+                  placeholder="marketing@bello-food.com"
+                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+                />
+              </div>
+            </div>
+
+            <div className="form-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '20px' }}>
+              <div className="form-group">
+                <label style={{ fontWeight: '600', marginBottom: '8px', display: 'block' }}>
+                  <i className="fas fa-phone" style={{ marginRight: '8px', color: '#5a7249' }}></i>
+                  Phone Number
+                </label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={formData.phone || ''}
+                  onChange={handleChange}
+                  placeholder="+20 11 0 15 111 85"
+                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+                />
+              </div>
+
+              <div className="form-group">
+                <label style={{ fontWeight: '600', marginBottom: '8px', display: 'block' }}>
+                  <i className="fas fa-globe" style={{ marginRight: '8px', color: '#5a7249' }}></i>
+                  Website
+                </label>
+                <input
+                  type="text"
+                  name="website"
+                  value={formData.website || ''}
+                  onChange={handleChange}
+                  placeholder="www.bello-food.com"
+                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+                />
+              </div>
+            </div>
+
+            <div className="form-group" style={{ marginBottom: '20px' }}>
+              <label style={{ fontWeight: '600', marginBottom: '8px', display: 'block' }}>
+                <i className="fas fa-map-marker-alt" style={{ marginRight: '8px', color: '#5a7249' }}></i>
+                Address
+              </label>
+              <textarea
+                name="address"
+                value={formData.address || ''}
+                onChange={handleChange}
+                placeholder="10th of Ramadan City, Industrial Area, Egypt"
+                rows="2"
+                style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0', resize: 'vertical' }}
+              />
+            </div>
+
+            <div className="form-group">
+              <label style={{ fontWeight: '600', marginBottom: '8px', display: 'block' }}>
+                <i className="fas fa-map" style={{ marginRight: '8px', color: '#5a7249' }}></i>
+                Google Maps URL
+              </label>
+              <input
+                type="url"
+                name="google_maps_url"
+                value={formData.google_maps_url || ''}
+                onChange={handleChange}
+                placeholder="https://maps.app.goo.gl/..."
+                style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+              />
+            </div>
+          </div>
+
+          {/* WhatsApp Settings Section */}
+          <div className="form-section" style={{ background: 'white', padding: '30px', borderRadius: '12px', marginBottom: '25px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+            <h3 style={{ marginBottom: '25px', paddingBottom: '15px', borderBottom: '2px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <i className="fab fa-whatsapp" style={{ color: '#25d366' }}></i>
+              WhatsApp Settings
+            </h3>
+
+            <div className="form-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '20px' }}>
+              <div className="form-group">
+                <label style={{ fontWeight: '600', marginBottom: '8px', display: 'block' }}>
+                  <i className="fab fa-whatsapp" style={{ marginRight: '8px', color: '#25d366' }}></i>
+                  WhatsApp Number (without + or spaces)
+                </label>
+                <input
+                  type="text"
+                  name="whatsapp_number"
+                  value={formData.whatsapp_number || ''}
+                  onChange={handleChange}
+                  placeholder="201101511185"
+                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+                />
+                <small style={{ color: '#64748b', fontSize: '12px' }}>Example: 201101511185 (country code + number)</small>
+              </div>
+
+              <div className="form-group">
+                <label style={{ fontWeight: '600', marginBottom: '8px', display: 'block' }}>
+                  <i className="fas fa-comment" style={{ marginRight: '8px', color: '#25d366' }}></i>
+                  Default WhatsApp Message
+                </label>
+                <input
+                  type="text"
+                  name="whatsapp_message"
+                  value={formData.whatsapp_message || ''}
+                  onChange={handleChange}
+                  placeholder="Hello, I would like to inquire..."
+                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Social Media Links Section */}
+          <div className="form-section" style={{ background: 'white', padding: '30px', borderRadius: '12px', marginBottom: '25px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+            <h3 style={{ marginBottom: '25px', paddingBottom: '15px', borderBottom: '2px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <i className="fas fa-share-alt" style={{ color: '#5a7249' }}></i>
+              Social Media Links
+            </h3>
+
+            <div className="form-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '20px' }}>
+              <div className="form-group">
+                <label style={{ fontWeight: '600', marginBottom: '8px', display: 'block' }}>
+                  <i className="fab fa-facebook-f" style={{ marginRight: '8px', color: '#1877f2' }}></i>
+                  Facebook URL
+                </label>
+                <input
+                  type="url"
+                  name="facebook_url"
+                  value={formData.facebook_url || ''}
+                  onChange={handleChange}
+                  placeholder="https://facebook.com/your-page"
+                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+                />
+              </div>
+
+            </div>
+
+            <div className="form-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+              <div className="form-group">
+                <label style={{ fontWeight: '600', marginBottom: '8px', display: 'block' }}>
+                  <i className="fab fa-instagram" style={{ marginRight: '8px', color: '#e4405f' }}></i>
+                  Instagram URL
+                </label>
+                <input
+                  type="url"
+                  name="instagram_url"
+                  value={formData.instagram_url || ''}
+                  onChange={handleChange}
+                  placeholder="https://instagram.com/your-account"
+                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+                />
+              </div>
+
+              <div className="form-group">
+                <label style={{ fontWeight: '600', marginBottom: '8px', display: 'block' }}>
+                  <i className="fab fa-linkedin-in" style={{ marginRight: '8px', color: '#0077b5' }}></i>
+                  LinkedIn URL
+                </label>
+                <input
+                  type="url"
+                  name="linkedin_url"
+                  value={formData.linkedin_url || ''}
+                  onChange={handleChange}
+                  placeholder="https://linkedin.com/company/your-company"
+                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+                />
+              </div>
+            </div>
+
+            <div style={{ marginTop: '20px', padding: '15px', background: '#f0f9ff', borderRadius: '8px', border: '1px solid #bfdbfe' }}>
+              <p style={{ margin: 0, fontSize: '13px', color: '#1e40af' }}>
+                <i className="fas fa-info-circle" style={{ marginRight: '8px' }}></i>
+                <strong>Note:</strong> Leave fields empty to hide social media icons. Only platforms with URLs will be displayed on your website.
+              </p>
+            </div>
+          </div>
+
+          {/* Save Button */}
+          <div style={{ 
+            marginTop: '30px', 
+            padding: '25px', 
+            background: '#fff', 
+            borderRadius: '12px', 
+            border: '2px solid #e2e8f0',
+            textAlign: 'center',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+          }}>
+            <button 
+              type="submit"
+              className="btn btn-primary" 
+              disabled={savingSettings}
+              style={{ fontSize: '16px', padding: '14px 50px', minWidth: '200px' }}
+            >
+              {savingSettings ? (
+                <>
+                  <i className="fas fa-spinner fa-spin"></i> Saving...
+                </>
+              ) : (
+                <>
+                  <i className="fas fa-save"></i> Save All Settings
+                </>
+              )}
+            </button>
+          </div>
+        </form>
       </div>
     );
   };
@@ -2037,6 +2394,15 @@ export default function WebsiteEditor() {
               </li>
               <li className="admin-tab-item">
                 <button 
+                  className={`admin-tab-button ${activeSection === 'site-settings' ? 'active' : ''}`}
+                  onClick={() => setActiveSection('site-settings')}
+                >
+                  <i className="fas fa-cog"></i>
+                  <span>Site Settings</span>
+                </button>
+              </li>
+              <li className="admin-tab-item">
+                <button 
                   className={`admin-tab-button`}
                   onClick={() => router.push('/admin/ad-management')}
                 >
@@ -2068,6 +2434,7 @@ export default function WebsiteEditor() {
               {activeSection === 'news' && <NewsSection />}
               {activeSection === 'homepage' && <HomepageSection />}
               {activeSection === 'replace-images' && <ImageReplacerSection />}
+              {activeSection === 'site-settings' && <SiteSettingsSection />}
             </div>
           )}
         </div>

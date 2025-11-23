@@ -11,6 +11,10 @@ const DEFAULT_IMAGES = {
   'about-3': '/assets/images/about/about-3.jpg',
   'about-4': '/assets/images/about/about-4.jpg',
   'about-5': '/assets/images/about/about-5.jpg',
+  'sustainability-1': '/assets/images/Sustainability/sus 1.jpg',
+  'sustainability-2': '/assets/images/Sustainability/sus 2.jpg',
+  'sustainability-3': '/assets/images/Sustainability/sus 3.jpg',
+  'sustainability-4': '/assets/images/Sustainability/sus 4.png',
   'gallery-cta-1': '/assets/images/gallery/cta-1.jpg',
   'gallery-widget-1': '/assets/images/gallery/thumb-widget-1.jpg',
   'gallery-widget-2': '/assets/images/gallery/thumb-widget-2.png',
@@ -67,7 +71,33 @@ export default async function handler(req, res) {
           imageConfig[imageId] = `${publicUrl}?v=${cacheBuster}&t=${cacheBuster}&cb=${Math.random()}`;
           console.log(`✅ Using Supabase URL for ${imageId} (${filename}): ${imageConfig[imageId]}`);
           return; // Skip the check below for category images
-        } else {
+        } 
+        // Handle sustainability images (always in Supabase)
+        else if (imageId.startsWith('sustainability-')) {
+          folder = 'sustainability';
+          // Map image IDs to actual filenames as stored in Supabase
+          const sustainabilityFilenameMap = {
+            'sustainability-1': 'sus 1.jpg',
+            'sustainability-2': 'sus 2.jpg',
+            'sustainability-3': 'sus 3.jpg',
+            'sustainability-4': 'sus 4.png',
+          };
+          filename = sustainabilityFilenameMap[imageId];
+          
+          // For sustainability images, always construct Supabase URL (files are uploaded there)
+          const storagePath = `${folder}/${filename}`;
+          const { data: { publicUrl } } = supabaseAdmin
+            .storage
+            .from('website')
+            .getPublicUrl(storagePath, { download: false });
+          
+          // Add strong cache-busting
+          const cacheBuster = Date.now();
+          imageConfig[imageId] = `${publicUrl}?v=${cacheBuster}&t=${cacheBuster}&cb=${Math.random()}`;
+          console.log(`✅ Using Supabase URL for ${imageId} (${filename}): ${imageConfig[imageId]}`);
+          return; // Skip the check below for sustainability images
+        } 
+        else {
           // Regular images - parse path
           const pathParts = defaultPath.replace('/assets/images/', '').split('/');
           folder = pathParts[0];
@@ -137,7 +167,7 @@ export default async function handler(req, res) {
       Promise.all(checkPromises),
       new Promise((resolve) => setTimeout(resolve, 5000)) // Max 5 seconds total
     ]);
-    
+
     return res.status(200).json({
       success: true,
       images: imageConfig

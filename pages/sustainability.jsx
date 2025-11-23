@@ -1,9 +1,37 @@
 import PageBanner from "@/src/components/PageBanner";
 import Layout from "@/src/layouts/Layout";
 import { useTranslation } from 'next-i18next';
+import { useState, useEffect } from 'react';
 
 const Sustainability = () => {
   const { t } = useTranslation('common');
+  const [images, setImages] = useState({
+    qualityControl: '/assets/images/Sustainability/sus 1.jpg',
+    production: '/assets/images/Sustainability/sus 2.jpg',
+    globalReach: '/assets/images/Sustainability/sus 3.jpg',
+    customerPromise: '/assets/images/Sustainability/sus 4.png'
+  });
+
+  // Fetch dynamic images from website configuration
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('/api/website-images/config');
+        const data = await response.json();
+        if (data.success && data.images) {
+          setImages({
+            qualityControl: data.images['sustainability-1'] || '/assets/images/Sustainability/sus 1.jpg',
+            production: data.images['sustainability-2'] || '/assets/images/Sustainability/sus 2.jpg',
+            globalReach: data.images['sustainability-3'] || '/assets/images/Sustainability/sus 3.jpg',
+            customerPromise: data.images['sustainability-4'] || '/assets/images/Sustainability/sus 4.png'
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
+    fetchImages();
+  }, []);
   
   return (
     <Layout header={3} footer={3}>
@@ -212,7 +240,7 @@ const Sustainability = () => {
                 <div className="row">
                   <div className="col-6 mb-20">
                     <img 
-                      src="/assets/images/about/about-3.jpg" 
+                      src={images.qualityControl}
                       alt="Quality Control"
                       style={{
                         width: '100%',
@@ -223,7 +251,7 @@ const Sustainability = () => {
                   </div>
                   <div className="col-6 mb-20">
                     <img 
-                      src="/assets/images/about/about-5.jpg" 
+                      src={images.production}
                       alt="Production"
                       style={{
                         width: '100%',
@@ -336,7 +364,7 @@ const Sustainability = () => {
             <div className="col-lg-7">
               <div className="wow fadeInRight">
                 <img 
-                  src="/assets/images/about/about-4.jpg"
+                  src={images.globalReach}
                   alt="Global Reach"
                   style={{
                     width: '100%',
@@ -357,7 +385,7 @@ const Sustainability = () => {
             <div className="col-lg-7 order-lg-1 order-2">
               <div className="wow fadeInLeft">
                 <img 
-                  src="/assets/images/about/about-1.jpg"
+                  src={images.customerPromise}
                   alt="Customer Promise"
                   style={{
                     width: '100%',
@@ -428,173 +456,6 @@ const Sustainability = () => {
         </div>
       </section>
 
-      {/* Final Statement Banner - Enhanced */}
-      <section 
-        className="statement-banner-section"
-        style={{
-          background: 'linear-gradient(135deg, #5a7249 0%, #4a5f3a 100%)',
-          position: 'relative',
-          overflow: 'hidden',
-          padding: '120px 0'
-        }}
-      >
-        {/* Decorative Background Elements */}
-        <div style={{
-          position: 'absolute',
-          top: '-50px',
-          left: '-50px',
-          width: '300px',
-          height: '300px',
-          borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.05)',
-          animation: 'float 6s ease-in-out infinite'
-        }} />
-        
-        <div style={{
-          position: 'absolute',
-          bottom: '-100px',
-          right: '-100px',
-          width: '400px',
-          height: '400px',
-          borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.03)',
-          animation: 'float 8s ease-in-out infinite reverse'
-        }} />
-        
-        {/* Leaf decorations */}
-        <img 
-          src="/assets/images/shape/leaf-1.png" 
-          alt="" 
-          style={{
-            position: 'absolute',
-            top: '30px',
-            left: '10%',
-            width: '80px',
-            opacity: '0.2',
-            animation: 'rotate 20s linear infinite'
-          }}
-        />
-        
-        <img 
-          src="/assets/images/shape/leaf-2.png" 
-          alt="" 
-          style={{
-            position: 'absolute',
-            bottom: '40px',
-            right: '15%',
-            width: '60px',
-            opacity: '0.2',
-            animation: 'rotate 15s linear infinite reverse'
-          }}
-        />
-        
-        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-          <div className="row justify-content-center">
-            <div className="col-lg-10">
-              <div className="text-center wow fadeInUp">
-                {/* Quote Icon with fancy background */}
-                <div style={{
-                  marginBottom: '40px',
-                  position: 'relative',
-                  display: 'inline-block'
-                }}>
-                  <div style={{
-                    width: '120px',
-                    height: '120px',
-                    borderRadius: '50%',
-                    background: 'rgba(240, 230, 140, 0.15)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0 auto',
-                    position: 'relative',
-                    animation: 'pulse 3s ease-in-out infinite'
-                  }}>
-                    <div style={{
-                      width: '90px',
-                      height: '90px',
-                      borderRadius: '50%',
-                      background: 'rgba(240, 230, 140, 0.2)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      <i className="fas fa-quote-left" style={{ 
-                        fontSize: '40px', 
-                        color: '#f0e68c',
-                        textShadow: '0 4px 8px rgba(0,0,0,0.2)'
-                      }} />
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Main Quote Text */}
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.08)',
-                  padding: '50px 60px',
-                  borderRadius: '20px',
-                  backdropFilter: 'blur(10px)',
-                  border: '2px solid rgba(240, 230, 140, 0.2)',
-                  boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
-                  maxWidth: '950px',
-                  margin: '0 auto'
-                }}>
-                  <p 
-                    style={{
-                      fontSize: '28px',
-                      lineHeight: '1.8',
-                      color: 'white',
-                      fontStyle: 'italic',
-                      margin: '0 0 30px 0',
-                      fontWeight: '300',
-                      textShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                      letterSpacing: '0.5px'
-                    }}
-                  >
-                    "{t('sustainabilityPage.statement')}"
-                  </p>
-                  
-                  {/* Decorative Divider */}
-                  <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center',
-                    gap: '15px'
-                  }}>
-                    <div style={{
-                      width: '50px',
-                      height: '2px',
-                      background: 'linear-gradient(to right, transparent, #f0e68c)'
-                    }} />
-                    <i className="fas fa-leaf" style={{ 
-                      color: '#f0e68c', 
-                      fontSize: '20px',
-                      animation: 'pulse 2s ease-in-out infinite'
-                    }} />
-                    <div style={{
-                      width: '50px',
-                      height: '2px',
-                      background: 'linear-gradient(to left, transparent, #f0e68c)'
-                    }} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Wave decoration at bottom */}
-        <div style={{
-          position: 'absolute',
-          bottom: '0',
-          left: '0',
-          width: '100%',
-          height: '100px',
-          background: 'white',
-          clipPath: 'ellipse(70% 100% at 50% 100%)',
-          opacity: '0.05'
-        }} />
-      </section>
 
       <style jsx>{`
         @keyframes float {
@@ -626,10 +487,6 @@ const Sustainability = () => {
           }
         }
         
-        .statement-banner-section {
-          transition: all 0.3s ease;
-        }
-        
         @media (max-width: 768px) {
           h1 {
             font-size: 36px !important;
@@ -650,25 +507,6 @@ const Sustainability = () => {
           .certifications-list > div {
             padding: 15px !important;
           }
-          
-          .statement-banner-section {
-            padding: 80px 0 !important;
-          }
-          
-          .statement-banner-section > div > div > div > div > div:first-child {
-            width: 80px !important;
-            height: 80px !important;
-          }
-          
-          .statement-banner-section > div > div > div > div > div:first-child > div {
-            width: 60px !important;
-            height: 60px !important;
-          }
-          
-          .statement-banner-section p {
-            font-size: 20px !important;
-            padding: 30px 25px !important;
-          }
         }
         
         @media (max-width: 576px) {
@@ -678,15 +516,6 @@ const Sustainability = () => {
           
           p[style*="fontSize: '28px'"] {
             font-size: 18px !important;
-          }
-          
-          .statement-banner-section {
-            padding: 60px 0 !important;
-          }
-          
-          .statement-banner-section p {
-            font-size: 18px !important;
-            padding: 25px 20px !important;
           }
         }
       `}</style>

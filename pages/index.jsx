@@ -812,20 +812,20 @@ const Index = () => {
                       {/* Featured Image */}
                       <Link href={`/news/${post.slug}`}>
                         <div className="post-thumbnail" style={{ cursor: 'pointer' }}>
-                          <img 
-                            src={featuredImage} 
-                            alt={getTitle(post)}
-                            style={{
-                              width: '100%',
-                              height: '250px',
-                              objectFit: 'cover',
-                              borderRadius: '8px 8px 0 0'
-                            }}
-                            onError={(e) => {
-                              e.target.src = '/assets/images/blog/blog-placeholder.jpg';
-                            }}
-                          />
-                        </div>
+                        <img 
+                          src={featuredImage} 
+                          alt={getTitle(post)}
+                          style={{
+                            width: '100%',
+                            height: '250px',
+                            objectFit: 'cover',
+                            borderRadius: '8px 8px 0 0'
+                          }}
+                          onError={(e) => {
+                            e.target.src = '/assets/images/blog/blog-placeholder.jpg';
+                          }}
+                        />
+                      </div>
                       </Link>
                       
                       {/* Post Content */}
@@ -849,8 +849,8 @@ const Index = () => {
                         {/* Title */}
                         <Link href={`/news/${post.slug}`}>
                           <h3 className="post-title" style={{ cursor: 'pointer' }}>
-                            {getTitle(post)}
-                          </h3>
+                          {getTitle(post)}
+                        </h3>
                         </Link>
                         
                         {/* Excerpt */}

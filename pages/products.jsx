@@ -370,15 +370,6 @@ const Products = () => {
     ]
   };
 
-  // Helper function to filter products based on search query
-  const filterProducts = (products) => {
-    if (!searchQuery.trim()) return products;
-    return products.filter(product =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.key.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  };
-
   // Get ONLY CMS products (database managed)
   const getAllProducts = () => {
     // Convert database products to display format
@@ -390,11 +381,19 @@ const Products = () => {
       return {
         key: p.slug,
         name: p.name_en,
+        name_en: p.name_en,
+        name_ar: p.name_ar,
+        name_ru: p.name_ru,
         description: p.description_en || p.short_description_en,
+        description_en: p.description_en || p.short_description_en,
+        description_ar: p.description_ar || p.short_description_ar,
+        description_ru: p.description_ru || p.short_description_ru,
         mainImage: p.main_image,  // Glass Jars (default)
         galleryImages: gallery,   // Other packaging types
         isFromDB: true,
-        category: p.category
+        category: p.category,
+        // Keep original product for search
+        originalProduct: p
       };
     });
 
@@ -410,15 +409,113 @@ const Products = () => {
   const getFilteredProducts = () => {
     let products = getAllProducts();
 
-    // Filter by search query
+    // Filter by search query with improved accuracy
     if (searchQuery.trim()) {
-      products = products.filter(product =>
-        product.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.name_en?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.name_ar?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.name_ru?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.key?.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      const query = searchQuery.toLowerCase().trim();
+      // Split query into individual words for more accurate matching
+      const queryWords = query.split(/\s+/).filter(word => word.length > 0);
+      
+      products = products.filter(product => {
+        // Collect all searchable text from product
+        const searchableTexts = [
+          product.name,
+          product.name_en,
+          product.name_ar,
+          product.name_ru,
+          product.key,
+          product.description,
+          product.description_en,
+          product.description_ar,
+          product.description_ru,
+          // Also search in original product fields if available
+          product.originalProduct?.name_en,
+          product.originalProduct?.name_ar,
+          product.originalProduct?.name_ru,
+          product.originalProduct?.slug,
+          product.originalProduct?.short_description_en,
+          product.originalProduct?.short_description_ar,
+          product.originalProduct?.short_description_ru,
+        ].filter(Boolean).map(text => text.toLowerCase().trim());
+        
+        // Create a combined searchable text
+        const combinedText = searchableTexts.join(' ');
+        
+        // If single word query, check for exact matches first, then partial
+        if (queryWords.length === 1) {
+          const word = queryWords[0];
+          // Exact match (highest priority)
+          if (searchableTexts.some(text => text === word)) {
+            return true;
+          }
+          // Word boundary match (starts with word)
+          if (searchableTexts.some(text => 
+            text.startsWith(word) || 
+            text.includes(` ${word}`) || 
+            text.includes(`${word} `) ||
+            text.includes(`-${word}`) ||
+            text.includes(`${word}-`)
+          )) {
+            return true;
+          }
+          // Partial match (contains word)
+          if (combinedText.includes(word)) {
+            return true;
+          }
+        } else {
+          // Multi-word query: all words must be found (AND logic)
+          const allWordsFound = queryWords.every(word => {
+            // Check for exact word match first
+            if (searchableTexts.some(text => 
+              text === word || 
+              text.startsWith(word + ' ') ||
+              text.endsWith(' ' + word) ||
+              text.includes(' ' + word + ' ') ||
+              text.includes('-' + word) ||
+              text.includes(word + '-')
+            )) {
+              return true;
+            }
+            // Then check for partial match
+            return combinedText.includes(word);
+          });
+          
+          if (allWordsFound) {
+            return true;
+          }
+        }
+        
+        return false;
+      });
+      
+      // Sort results by relevance (exact matches first, then partial matches)
+      products.sort((a, b) => {
+        const queryLower = query.toLowerCase();
+        const aName = (a.name || a.name_en || '').toLowerCase();
+        const bName = (b.name || b.name_en || '').toLowerCase();
+        
+        // Exact match gets highest priority
+        const aExact = aName === queryLower || a.key?.toLowerCase() === queryLower;
+        const bExact = bName === queryLower || b.key?.toLowerCase() === queryLower;
+        if (aExact && !bExact) return -1;
+        if (!aExact && bExact) return 1;
+        
+        // Starts with query gets second priority
+        const aStarts = aName.startsWith(queryLower);
+        const bStarts = bName.startsWith(queryLower);
+        if (aStarts && !bStarts) return -1;
+        if (!aStarts && bStarts) return 1;
+        
+        // Then by position of match (earlier in string = more relevant)
+        const aIndex = aName.indexOf(queryLower);
+        const bIndex = bName.indexOf(queryLower);
+        if (aIndex !== -1 && bIndex !== -1) {
+          return aIndex - bIndex;
+        }
+        if (aIndex !== -1) return -1;
+        if (bIndex !== -1) return 1;
+        
+        return 0;
+      });
     }
 
     return products;
@@ -677,26 +774,6 @@ const Products = () => {
       {/* Category Tabs Section */}
       <section className="products-tabs-section pt-50 pb-100">
         <div className="container">
-          {/* Search Bar */}
-          <div className="row justify-content-center mb-40">
-            <div className="col-lg-6">
-              <div className="product-search-wrapper">
-                <div className="search-form">
-                  <input
-                    type="text"
-                    className="form-control search-input"
-                    placeholder="Search products..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                  <button className="search-btn">
-                    <i className="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Category Tabs */}
           <div className="row justify-content-center mb-60">
             <div className="col-lg-12">
@@ -739,6 +816,26 @@ const Products = () => {
                       <span className="tab-name">{category.name}</span>
                     </button>
                   ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Search Bar */}
+          <div className="row justify-content-center mb-40">
+            <div className="col-lg-6">
+              <div className="product-search-wrapper">
+                <div className="search-form">
+                  <input
+                    type="text"
+                    className="form-control search-input"
+                    placeholder="Search products..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <button className="search-btn">
+                    <i className="fas fa-search"></i>
+                  </button>
                 </div>
               </div>
             </div>
