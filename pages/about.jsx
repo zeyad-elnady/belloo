@@ -377,6 +377,19 @@ const About = () => {
                 </div>
               </div>
             </div>
+            
+            {/* Sixth box - Private Labels */}
+            <div className="col-lg-3 col-md-6 col-sm-6 col-12 mb-4">
+              <div className="features-thumb-item-two enhanced-feature-box h-100 wow fadeInUp" data-wow-delay=".45s">
+                <div className="text">
+                  <div className="icon">
+                    <i className="fas fa-tags" style={{ fontSize: '21px', color: '#ffffff' }}></i>
+                  </div>
+                  <h5 className="title">{t('features.privateLabels.title')}</h5>
+                  <p>{t('features.privateLabels.description')}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

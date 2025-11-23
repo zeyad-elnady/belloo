@@ -39,6 +39,10 @@
     "logisticsStrength": {
       "title": "Logistics Strength",
       "description": "Customs clearance, timely delivery, ready-to-ship stock"
+    },
+    "privateLabels": {
+      "title": "Private Labels",
+      "description": "Custom branding solutions tailored to your business needs"
     }
   },
   "about": {
