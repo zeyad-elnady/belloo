@@ -45,11 +45,6 @@ const Sidebar = ({ show, handleClose }) => {
                       </li>
                       <li>
                         <a href="#">
-                          <i className="fab fa-twitter" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
                           <i className="fab fa-youtube" />
                         </a>
                       </li>

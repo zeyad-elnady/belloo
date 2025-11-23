@@ -45,11 +45,6 @@ const Header1 = () => {
                     </li>
                     <li>
                       <a href="#">
-                        <i className="fab fa-twitter" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
                         <i className="fab fa-youtube" />
                       </a>
                     </li>

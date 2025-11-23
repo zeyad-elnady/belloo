@@ -180,11 +180,6 @@ const Footer3 = () => {
                         </li>
                         <li>
                           <div className="social-icon">
-                            <i className="fab fa-twitter" />
-                          </div>
-                        </li>
-                        <li>
-                          <div className="social-icon">
                             <i className="fab fa-linkedin-in" />
                           </div>
                         </li>
