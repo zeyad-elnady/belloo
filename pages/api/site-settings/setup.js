@@ -59,6 +59,9 @@ CREATE TABLE IF NOT EXISTS public.site_settings (
   working_hours TEXT DEFAULT 'Sunday - Thursday: 9:00 AM - 6:00 PM',
   google_maps_url TEXT DEFAULT 'https://maps.app.goo.gl/j7Qa6LR51jspaizn8?g_st=com.google.maps.preview.copy',
   
+  -- Ad Settings
+  ad_image TEXT DEFAULT '/assets/images/promo-banner.jpg',
+  
   -- Timestamps
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -91,7 +94,8 @@ INSERT INTO public.site_settings (
   whatsapp_number,
   whatsapp_message,
   working_hours,
-  google_maps_url
+  google_maps_url,
+  ad_image
 ) VALUES (
   'Bello Food',
   '10th of Ramadan City, Industrial Area, Egypt',
@@ -101,7 +105,8 @@ INSERT INTO public.site_settings (
   '201101511185',
   'Hello Bello Food, I would like to inquire about your products',
   'Sunday - Thursday: 9:00 AM - 6:00 PM',
-  'https://maps.app.goo.gl/j7Qa6LR51jspaizn8?g_st=com.google.maps.preview.copy'
+  'https://maps.app.goo.gl/j7Qa6LR51jspaizn8?g_st=com.google.maps.preview.copy',
+  '/assets/images/promo-banner.jpg'
 );
 
 -- Create function to update updated_at timestamp
@@ -153,6 +158,8 @@ The table will store:
     });
   }
 }
+
+
 
 
 

@@ -1,9 +1,6 @@
-import { createClient } from '@supabase/supabase-js';
+const { supabaseAdmin } = require('../../lib/supabase');
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+const supabase = supabaseAdmin;
 
 export default async function handler(req, res) {
   // Add cache control headers to prevent caching
@@ -17,7 +14,6 @@ export default async function handler(req, res) {
       const { data, error } = await supabase
         .from('site_settings')
         .select('ad_image')
-        .eq('id', 1)
         .single();
 
       if (error) {
@@ -48,7 +44,6 @@ export default async function handler(req, res) {
       const { data: existingData } = await supabase
         .from('site_settings')
         .select('id')
-        .eq('id', 1)
         .single();
 
       let result;
@@ -57,12 +52,12 @@ export default async function handler(req, res) {
         result = await supabase
           .from('site_settings')
           .update({ ad_image: adImage, updated_at: new Date().toISOString() })
-          .eq('id', 1);
+          .eq('id', existingData.id);
       } else {
         // Insert new settings
         result = await supabase
           .from('site_settings')
-          .insert({ id: 1, ad_image: adImage });
+          .insert({ ad_image: adImage });
       }
 
       if (result.error) {
